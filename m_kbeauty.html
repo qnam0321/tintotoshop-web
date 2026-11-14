@@ -6,7 +6,7 @@
   <title>TINTORO - Mobile B2B Wholesale Distribution</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Poppins:wght@800&display=swap" rel="stylesheet">
-  <script src="accounts.js"></script>
+  <script src="account-client.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -75,6 +75,7 @@
     .summary-table th { background: #f8f9fa; padding: 8px; font-size: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
     .summary-table td { padding: 8px; font-size: 0.85rem; border-bottom: 1px solid #eee; vertical-align: middle; }
     .summary-total-box { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; font-weight: 700; padding: 8px 0; border-top: 2px solid #eaeaea; margin-bottom: 12px; }
+    .summary-shipping-note { margin: -8px 0 12px; color: #666; font-size: 0.75rem; text-align: right; }
     #summaryGrandTotal { color: #e53935; }
 
     /* 푸터 */
@@ -206,6 +207,7 @@
         <span>Grand Total:</span>
         <span id="summaryGrandTotal">$0.00</span>
       </div>
+      <p class="summary-shipping-note">Shipping costs will be added to the order total.</p>
 
       <form id="summaryOrderForm" action="https://formspree.io/f/mljjkdqq" method="POST" onsubmit="submitOrderFromSummary(event)" style="margin-top:15px;">
         <input type="hidden" name="form_type" value="[Mobile Wholesale Order]">
@@ -213,28 +215,37 @@
         <input type="hidden" id="hiddenGrandTotal" name="grand_total">
 
         <div class="form-group">
+          <label>Account Number *</label>
+          <input type="text" id="sumAccountNumber" name="account_number" required oninput="validateOrderForm()" placeholder="Enter your account number">
+          <p id="sumAccountNumberError" style="color:#b42318; font-size:0.75rem; margin:-6px 0 8px;" aria-live="polite"></p>
+        </div>
+        <div class="form-group">
           <label>Company / Store Name *</label>
-          <input type="text" id="sumCompany" name="company_name" required placeholder="Business name">
+          <input type="text" id="sumCompany" name="company_name" required oninput="updateOrderSubmitButton()" placeholder="Business name">
         </div>
         <div class="form-group">
           <label>Phone Number *</label>
-          <input type="text" id="sumPhone" name="phone_number" required placeholder="Phone number">
+          <input type="text" id="sumPhone" name="phone_number" required oninput="updateOrderSubmitButton()" placeholder="Phone number">
         </div>
         <div class="form-group">
           <label>Business Address *</label>
-          <input type="text" id="sumAddress" name="business_address" required placeholder="Address">
+          <input type="text" id="sumAddress" name="business_address" required oninput="updateOrderSubmitButton()" placeholder="Address">
         </div>
         <div class="form-group">
           <label>Email Address *</label>
-          <input type="email" id="sumEmail" name="email" required placeholder="Email">
+          <input type="email" id="sumEmail" name="email" required oninput="updateOrderSubmitButton()" placeholder="Email">
         </div>
         <div class="form-group">
           <label>Message / Memo</label>
           <textarea id="sumMemo" name="memo" rows="2" placeholder="Notes"></textarea>
         </div>
+        <div id="salesReviewNotice" role="note" style="background:#f7f5f1; border-left:3px solid #8a6d3b; padding:10px 12px; margin:4px 0 10px; color:#484848; font-size:0.78rem; line-height:1.45;">
+          <strong>Order Review:</strong> Your order request will be forwarded to your assigned sales representative for review. Order processing will proceed after the review. Please contact your sales representative with questions about order progress or processing.
+        </div>
+        <p style="font-size:0.75rem; color:#666; margin:0 0 10px;">Complete all fields marked * and enter a matching account number to enable submission.</p>
         <div class="modal-btns">
           <button type="button" class="btn-cancel" onclick="closeOrderSummaryModal()">Continue Shopping</button>
-          <button type="submit" id="submitOrderBtn" class="btn-submit">Submit Order</button>
+          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Submit Order</button>
         </div>
       </form>
     </div>
@@ -284,17 +295,26 @@
     function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
     function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
 
-    function handleLogin(event) {
+    async function handleLogin(event) {
       event.preventDefault();
       const code = document.getElementById('authInput').value.trim();
-      if (typeof validWholesaleAccounts !== 'undefined' && validWholesaleAccounts.includes(code)) { 
-        isWholesaleLoggedIn = true;
-        localStorage.setItem('tintoro_auth', 'true');
-        closeLoginModal();
-        updateAuthUI();
-        alert('Verified successfully.');
-      } else {
-        alert('Invalid account number or authorization code.');
+
+      const submitButton = event.submitter || event.target.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+      try {
+        if (await window.verifyWholesaleAccount(code)) {
+          isWholesaleLoggedIn = true;
+          localStorage.setItem('tintoro_auth', 'true');
+          closeLoginModal();
+          updateAuthUI();
+          alert('Verified successfully.');
+        } else {
+          alert('Invalid account number or authorization code.');
+        }
+      } catch (error) {
+        alert(error.message || 'Account verification is temporarily unavailable.');
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     }
 
@@ -307,6 +327,7 @@
 
     function openOrderSummaryModal() {
       renderSummaryTable();
+      validateOrderForm();
       document.getElementById('orderSummaryModal').classList.add('active');
     }
 
@@ -382,14 +403,85 @@
 
     function closeOrderSummaryModal() { document.getElementById('orderSummaryModal').classList.remove('active'); }
 
+    let orderAccountVerified = false;
+    let orderAccountCheckVersion = 0;
+    let orderAccountCheckTimeout;
+
+    function updateOrderSubmitButton() {
+      const form = document.getElementById('summaryOrderForm');
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const allRequiredFieldsValid = requiredFields.every(field => field.value.trim() !== '' && field.validity.valid);
+      const canSubmit = orderAccountVerified && allRequiredFieldsValid;
+      document.getElementById('submitOrderBtn').disabled = !canSubmit;
+      return canSubmit;
+    }
+
+    function validateOrderForm() {
+      const accountInput = document.getElementById('sumAccountNumber');
+      const errorMessage = document.getElementById('sumAccountNumberError');
+      const accountNumber = accountInput.value.trim();
+      const checkVersion = ++orderAccountCheckVersion;
+
+      clearTimeout(orderAccountCheckTimeout);
+      orderAccountVerified = false;
+      accountInput.setCustomValidity('');
+
+      if (!accountNumber) {
+        errorMessage.textContent = '';
+        return updateOrderSubmitButton();
+      }
+
+      errorMessage.textContent = 'Checking account number...';
+      errorMessage.style.color = '#666';
+      updateOrderSubmitButton();
+      orderAccountCheckTimeout = setTimeout(async () => {
+        try {
+          const isVerified = await window.verifyWholesaleAccount(accountNumber);
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          orderAccountVerified = isVerified;
+          errorMessage.textContent = isVerified ? 'Account verified.' : 'Account number not recognized.';
+          errorMessage.style.color = isVerified ? '#22623b' : '#b42318';
+        } catch (error) {
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          errorMessage.textContent = error.message || 'Unable to verify account number. Please try again.';
+          errorMessage.style.color = '#b42318';
+        }
+        updateOrderSubmitButton();
+      }, 350);
+      return false;
+    }
+
     async function submitOrderFromSummary(event) {
       event.preventDefault();
       const form = event.target;
+      if (!updateOrderSubmitButton()) {
+        form.reportValidity();
+        return;
+      }
+
       const submitBtn = document.getElementById('submitOrderBtn');
+      const accountInput = document.getElementById('sumAccountNumber');
+      const errorMessage = document.getElementById('sumAccountNumberError');
+      const submittedAccountNumber = accountInput.value.trim();
       submitBtn.innerText = "Submitting...";
       submitBtn.disabled = true;
 
       try {
+        const accountIsStillValid = await window.verifyWholesaleAccount(submittedAccountNumber);
+        if (!accountIsStillValid || accountInput.value.trim() !== submittedAccountNumber) {
+          orderAccountVerified = false;
+          errorMessage.textContent = accountIsStillValid
+            ? 'Account number changed. Please verify it again.'
+            : 'Account number not recognized.';
+          errorMessage.style.color = '#b42318';
+          updateOrderSubmitButton();
+          return;
+        }
+        if (!updateOrderSubmitButton()) {
+          form.reportValidity();
+          return;
+        }
+
         const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } });
         if (response.ok) {
           alert('Order inquiry successfully submitted!');
@@ -398,8 +490,11 @@
           updateAuthUI();
           form.reset();
         } else { alert('Submission failed. Please try again.'); }
-      } catch (error) { alert('Network error occurred.'); } 
-      finally { submitBtn.innerText = "Submit Order"; submitBtn.disabled = false; }
+      } catch (error) { alert(error.message || 'Network error occurred.'); }
+      finally {
+        submitBtn.innerText = "Submit Order";
+        validateOrderForm();
+      }
     }
 
     function openInquireModal() { document.getElementById('inquireModal').classList.add('active'); validateInquiryForm(); }
