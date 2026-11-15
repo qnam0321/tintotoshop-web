@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin/
+Disallow: /api/accounts/
+Disallow: /kbeauty
+Disallow: /m_kbeauty
+
+Sitemap: https://tintoroshop.com/sitemap.xml

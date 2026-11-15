@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TINTORO - B2B Wholesale Distribution</title>
+  <meta name="description" content="TINTORO SHOP wholesale access for retail businesses. Request access by email while protected customer ordering is prepared.">
+  <link rel="canonical" href="https://tintoroshop.com/wholesale/">
+  <title>Wholesale Access | TINTORO SHOP</title>
   <link rel="stylesheet" href="../styles.css">
-
-  <!-- 구글 웹폰트(Poppins) 로드 -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -34,8 +33,7 @@
     .hero-visual-banner {
       width: 100%;
       height: 150px;
-      background: linear-gradient(135deg, rgba(22, 25, 32, 0.85) 0%, rgba(15, 17, 21, 0.95) 100%),
-                  url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      background: linear-gradient(135deg, #242b3a 0%, #171a22 100%);
       border-bottom: 1px solid #252a34;
       display: flex;
       flex-direction: column;
@@ -60,7 +58,7 @@
     .company-intro p { font-size: 0.88rem; color: #a0a6b8; line-height: 1.6; }
 
     .hero-title {
-      font-family: 'Poppins', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 1.8rem;
       color: #ffffff;
       font-weight: 800;
@@ -120,84 +118,42 @@
   <header class="shop-header">
     <div class="header-brand-wrap">
       <div class="header-brand-row">
-        <h1>TINTORO</h1>
-        <a class="shop-return-link" href="../index.html" aria-label="Back to TINTORO SHOP">TINTORO SHOP</a>
+        <h1>TINTORO SHOP</h1>
+        <a class="shop-return-link" href="../" aria-label="Back to TINTORO SHOP">Consumer home</a>
       </div>
-      <span class="subtitle">B2B Wholesale Distribution</span>
+      <span class="subtitle">Wholesale access</span>
     </div>
-    <div class="header-channel-tag">Dedicated K-Beauty B2B Order Channel</div>
+    <div class="header-channel-tag">For retail partners</div>
   </header>
 
-  <!-- 메인 콘텐츠 카드 영역 -->
   <main class="hero-container">
     <div class="hero-card">
-      <!-- 물류와 글로벌 유통을 상징하는 시각적 배너 -->
       <div class="hero-visual-banner">
-        <div class="banner-badge">Nationwide B2B Wholesale Distribution</div>
+        <div class="banner-badge">Wholesale access update</div>
       </div>
 
       <div class="hero-content-body">
-
-        <!-- 회사 소개 (About Us) 인트로 섹션 -->
         <div class="company-intro">
-          <h3>about tintoro</h3>
-          <p>TINTORO is a specialized B2B beauty wholesale distributor and supply chain partner based in California, dedicated to delivering reliable beauty brand portfolios and streamlined ordering solutions for retail partners nationwide.</p>
+          <h3>Protected ordering is being prepared</h3>
+          <p>The wholesale catalog and order request are not available on this public page. Existing and prospective retail partners can request access by email; we’ll confirm the next steps after verifying your retail business.</p>
         </div>
 
-        <h2 class="hero-title">K-Beauty Wholesale Catalog</h2>
-        <p class="hero-desc">Streamlining seamless re-ordering for existing retail partners, with plans to expand our curated portfolio into high-demand K-Beauty and innovative lifestyle items.</p>
+        <h2 class="hero-title">Request Wholesale Access</h2>
+        <p class="hero-desc">Use the email link below to ask about wholesale access. This link opens your email application; it does not submit an order.</p>
 
-        <!-- PC버전과 모바일버전 선택 입장 버튼 2개 -->
         <div class="button-group">
-          <a href="../kbeauty.html" class="catalog-btn">Browse Wholesale Catalog →</a>
-          <a href="../m_kbeauty.html" class="catalog-btn mobile-version">Open Mobile Order Page →</a>
-        </div>
-
-        <div class="portal-share">
-          <div class="portal-share-copy">
-            <span class="portal-share-label">Shareable wholesale address</span>
-            <code id="wholesaleShareUrl">tintoroshop.com/wholesale</code>
-          </div>
-          <button type="button" class="portal-copy-btn" id="copyWholesaleUrl">Copy URL</button>
-          <span class="portal-copy-status" id="copyWholesaleStatus" aria-live="polite"></span>
-        </div>
-
-        <div class="expansion-notice">
-          Optimized for existing partner orders &bull; <span>Expanding into specialty K-Beauty & lifestyle items</span>
+          <a href="mailto:info@tintoroshop.com?subject=Wholesale%20Access%20Request" class="catalog-btn">Request Wholesale Access →</a>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- 푸터 -->
   <footer>
-    <div class="footer-brand">TINTORO B2B WHOLESALE DISTRIBUTION</div>
-    <div>Wholesale Supply & Distribution Partner</div>
+    <div class="footer-brand">TINTORO SHOP</div>
+    <div>Wholesale access for retail partners</div>
     <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved.</div>
-    <div class="footer-note"><a href="../admin/">Wholesale account admin</a></div>
     <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
-    <div class="legal-entity">Website managed by ASTERIKA LLC</div>
+    <div class="legal-entity">Operated by Asterika LLC</div>
   </footer>
-
-  <script>
-    const copyWholesaleUrl = document.getElementById('copyWholesaleUrl');
-    const copyWholesaleStatus = document.getElementById('copyWholesaleStatus');
-    const wholesaleShareUrl = 'https://tintoroshop.com/wholesale';
-
-    copyWholesaleUrl.addEventListener('click', async () => {
-      if (!navigator.clipboard || !window.isSecureContext) {
-        copyWholesaleStatus.textContent = 'Copy unavailable here. Select the URL above to copy it.';
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(wholesaleShareUrl);
-        copyWholesaleStatus.textContent = 'Wholesale URL copied.';
-      } catch (error) {
-        console.error('Unable to copy the wholesale URL.', error);
-        copyWholesaleStatus.textContent = 'Copy failed. Select the URL above to copy it.';
-      }
-    });
-  </script>
 </body>
 </html>

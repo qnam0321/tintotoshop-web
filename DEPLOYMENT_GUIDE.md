@@ -7,7 +7,10 @@
 - B2B 도매 포털: `https://tintoroshop.com/wholesale`
 - 프로덕션 브랜치: `backup/tintoro-final-20261114`
 - D1 데이터베이스 바인딩과 Cloudflare Access 설정은 완료되어 있습니다.
-- 마스터 주문 로그인을 사용하려면 아래 안내에 따라 `MASTER_WHOLESALE_CODE` Secret을 설정해야 합니다. 일반 계정은 `/admin/`에서 등록합니다.
+- `/admin/`과 `/api/admin/*`는 관리자용 Cloudflare Access 및 서버 측 권한 확인을 유지합니다.
+- 공개 도매 카탈로그와 주문 기능은 고객 인증이 준비될 때까지 비활성화되어 있습니다. `kbeauty.html`과 `m_kbeauty.html`은 가격이나 주문 데이터를 포함하지 않는 액세스 안내 페이지입니다.
+- `/api/accounts/verify`는 고객 계정번호를 공개 검증하지 않도록 일시 중지되어 있습니다.
+- 공개 배포 전 고객 인증, 개인정보 처리방침 및 실제 운영 주체를 다시 확인하세요.
 
 ## 🚀 Cloudflare Pages 배포 방법
 
@@ -52,8 +55,8 @@ git clone https://github.com/qnam0321/tintotoshop-web.git
 tintotoshop-web/
 ├── index.html          (메인 홈페이지)
 ├── page2.html          (추가 페이지)
-├── kbeauty.html        (K-Beauty 페이지)
-├── m_kbeauty.html      (모바일 K-Beauty 페이지)
+├── kbeauty.html        (도매 액세스 안내, 가격·주문 기능 없음)
+├── m_kbeauty.html      (모바일 도매 액세스 안내, 가격·주문 기능 없음)
 ├── styles.css          (스타일시트)
 ├── script.js           (JavaScript 로직)
 ├── wholesale/          (B2B 포털: /wholesale)
@@ -61,6 +64,8 @@ tintotoshop-web/
 ├── assets/             (카탈로그 상품 이미지)
 ├── product-images.js   (상품 이미지 매핑)
 ├── _redirects          (Cloudflare Pages 경로 리디렉션)
+├── robots.txt          (검색 크롤링 안내)
+├── sitemap.xml         (공개 URL 사이트맵)
 ├── account-client.js   (서버 계정 검증 호출)
 ├── admin/              (계정 관리자 화면)
 ├── functions/          (Pages Functions API)
@@ -100,9 +105,9 @@ tintotoshop-web/
 2. "Custom domains" 섹션
 3. 도메인 추가
 
-## 🔐 도매 계정 관리자 설정 (필수)
+## 🔐 관리자 계정 설정
 
-계정 번호는 브라우저 파일에 저장하지 않고 Cloudflare D1에 저장합니다. 현재 프로덕션에는 D1 바인딩과 Access가 설정되어 있습니다. 환경을 새로 구성할 때는 아래 설정을 적용하세요.
+도매 계정 정보는 Cloudflare D1에 저장됩니다. 현재 프로덕션에는 D1 바인딩과 관리자 전용 Access가 설정되어 있습니다. 환경을 새로 구성할 때는 아래 설정을 적용하세요.
 
 ### 1. D1 데이터베이스 생성 및 연결
 
@@ -129,19 +134,22 @@ Pages 프로젝트의 **Settings → Variables and Secrets**에 다음 변수를
 
 ### 3. 계정 정보 등록
 
-배포 및 설정 후 사이트 푸터의 **Wholesale account admin** 링크를 열고 Access로 로그인합니다. 계정번호와 점포 정보를 추가·수정하거나 비활성화할 수 있습니다. 기존에 프런트엔드 파일에 있었던 계정번호는 더 이상 포함되지 않으므로, 계정 검증을 재개하기 전에 관리자 화면에서 다시 등록하세요. 기존 파일은 공개되어 있었으므로 운영 전에 기존 번호를 교체하는 것을 권장합니다.
+Access 정책을 통과한 관리자는 `https://tintoroshop.com/admin/`에서 계정번호와 점포 정보를 추가·수정하거나 비활성화할 수 있습니다. 관리자 URL은 공개 도매 푸터에 링크하지 않습니다. 고객 포털은 별도 고객 인증이 설정되기 전까지 계정번호를 조회하거나 검증하지 않습니다.
 
-### 4. 마스터 주문 로그인 설정 (선택)
+## 🛡️ 고객용 도매 주문 재개 요건
 
-Cloudflare Pages 프로젝트의 **Settings → Variables and Secrets → Production**에서 `MASTER_WHOLESALE_CODE`라는 Secret을 추가합니다. Secret 값은 서버에서만 확인되며 브라우저 파일이나 Git에 넣지 마세요. 설정한 코드는 D1 계정 목록이 비어 있어도 주문 계정 검증을 통과합니다. 그 외 계정은 계속 활성 상태의 D1 계정과 대조됩니다.
+- 현재 Access 설정과 서버 권한 검사는 관리자 전용입니다. D1 계정번호 확인은 이전에 브라우저에서 호출하는 공개 API였으며 고객 신원 인증을 제공하지 않습니다. 해당 공개 검증 API는 비활성화했습니다.
+- 주문을 재개하기 전, 고객에게 적용할 로그인/이메일 allowlist 정책을 정하고 Cloudflare Access 또는 동등한 서버 측 인증을 구성하세요. 인증된 이메일과 D1 도매 계정을 연결하는 방식도 확정해야 합니다.
+- 데스크톱·모바일·확장자 유무의 모든 주문 URL과 가격 데이터 요청을 같은 인증 정책으로 보호하세요. 가격을 정적 HTML, JavaScript, JSON, 이미지 메타데이터 또는 공개 캐시에 두지 말고 인증이 확인된 서버 경로에서만 제공해야 합니다.
+- 주문 제출 역시 서버에서 인증과 입력을 검증해야 합니다. 기존 폼은 재고·가격·배송 확인 전 주문 요청 방식이었습니다. 향후 폼을 다시 만들 때는 버튼을 `Submit Order Request`로 표시하고, 제출 전 `We’ll confirm availability, pricing, and shipping before finalizing your order.`를 보여주며, 성공 응답 후 `Order request received`를 표시하세요.
+- 기존 도매 문의 폼은 일반 계정 문의에도 사업장 주소를 필수로 요구했지만, 액세스 승인에 주소가 필요한 근거는 확인되지 않았습니다. 주소를 요구하지 말고, 실제 주문을 처리할 때 필요한 배송 주소만 별도 수집하세요.
+- 기존 주문·문의 페이지는 Formspree를 사용했습니다. 새 액세스 안내 페이지에서는 전송 폼을 제거했지만, Formspree 계정에 기존 제출 기록이 남아 있는지와 보관·삭제 설정은 운영자가 확인해야 합니다.
 
-Secret을 추가하거나 변경한 뒤에는 새 배포를 실행해야 합니다. 마스터 코드를 바꾸려면 Cloudflare에서 Secret 값을 교체하고 다시 배포하세요. 이 Secret을 설정하지 않으면 기존 D1 계정 검증만 사용됩니다.
+## 🔏 개인정보 처리방침 검토
 
-`/api/accounts/verify`는 주문 사이트에서 계정번호를 확인하기 위한 공개 엔드포인트이며, 등록 여부만 반환합니다. 운영 시 Cloudflare WAF의 rate limiting 규칙을 적용해 반복 조회를 제한하세요.
-
-> 참고: 도매 가격과 카탈로그는 현재 브라우저에 전달되는 정적 페이지에 있습니다. 계정 검증은 계정 목록을 숨기지만, 가격 자체를 인증 사용자에게만 비공개로 제공하는 보안 기능은 아닙니다.
->
-> 주문 이메일은 현재 Formspree로 직접 전송됩니다. 주문 화면에서 계정번호를 재검증하지만, Formspree 자체는 그 번호를 검증하지 않습니다. 주문 제출까지 서버에서 강제 검증하려면 주문 접수도 Pages Function으로 전환해야 합니다.
+- 게시 가능한 최종 개인정보 처리방침은 아직 확인되지 않았으며, 액세스 요청 링크는 이메일 앱을 여는 mailto 방식입니다. 확정 전 정책 링크를 공개 페이지에 추가하지 마세요.
+- 과거 주문 요청 폼은 계정번호, 업체명, 전화번호, 사업장 주소, 이메일, 주문 품목·수량, 합계와 메모를 Formspree로 전송했습니다. 일반 계정 문의 폼도 이름, 업체명, 전화번호, 사업장 주소, 이메일과 메모를 수집했습니다.
+- 개인정보 처리방침 초안을 공개하기 전에 Formspree 계정과 처리 내역, Cloudflare Pages/Access/D1 로그 및 보관, `info@tintoroshop.com` 메일 서비스, Google Fonts 사용 여부, 쿠키·분석 도구 설정, 보관 기간 및 삭제 절차를 확인하세요. 확인되지 않은 보관·쿠키·분석 주장은 게시하지 마세요.
 
 ## ❓ 트러블슈팅
 
@@ -165,5 +173,4 @@ https://pages.github.com/
 
 ---
 
-**마지막 업데이트:** 2026-11-15
-**상태:** 배포 설정 완료. 주문 검증은 D1 계정 등록 또는 `MASTER_WHOLESALE_CODE` Secret 설정이 필요합니다.
+**상태:** 공개 도매 주문은 고객 인증 및 서버 측 가격 보호가 구현될 때까지 비활성화합니다.
