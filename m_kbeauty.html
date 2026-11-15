@@ -6,7 +6,7 @@
   <title>TINTORO - Mobile B2B Wholesale Distribution</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Poppins:wght@800&display=swap" rel="stylesheet">
-  <script src="account-client.js"></script>
+  <script src="/account-client.js?v=wholesale-prices-2"></script>
   <script src="product-images.js"></script>
   <script src="best-selling-products.js"></script>
   <script src="product-details.js"></script>
@@ -109,6 +109,9 @@
     .btn-submit { background: #111; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
     .btn-submit:disabled { background: #ccc; color: #666; cursor: not-allowed; }
     .order-prototype-status { margin: 0 0 10px; color: #795548; font-size: 0.75rem; line-height: 1.4; }
+    .order-prototype-status[data-state="error"] { padding: 9px 10px; border-radius: 6px; background: #fff1f0; color: #b42318; }
+    .order-submission-notice { margin-bottom: 14px; padding: 10px 12px; border: 1px solid #b7dfc3; border-radius: 8px; background: #edf8f0; color: #175c31; font-size: 0.82rem; line-height: 1.45; }
+    .order-submission-notice[hidden] { display: none; }
 
     /* 오더 서머리 테이블 */
     .summary-table { width: 100%; border-collapse: collapse; min-width: 450px; }
@@ -191,6 +194,7 @@
 
   <!-- 콘텐츠 영역 -->
   <main class="product-content">
+    <p id="orderSubmissionNotice" class="order-submission-notice" role="status" aria-live="polite" hidden></p>
     
     <div class="wholesale-notice">
       <strong>Wholesale Prices:</strong> Browse the catalog, then enter your assigned account number to unlock pricing and order controls. Need an account? <a href="mailto:info@tintoroshop.com?subject=Wholesale%20Access%20Request">Request Wholesale Access</a>.
@@ -532,7 +536,12 @@
     function openOrderSummaryModal() {
       document.getElementById('sumAccountNumber').value = activeWholesaleAccountNumber;
       renderSummaryTable();
-      document.getElementById('orderSubmissionStatus').textContent = '';
+      const status = document.getElementById('orderSubmissionStatus');
+      status.textContent = '';
+      status.removeAttribute('data-state');
+      const notice = document.getElementById('orderSubmissionNotice');
+      notice.textContent = '';
+      notice.hidden = true;
       document.getElementById('submitOrderBtn').textContent = 'Submit Order Request';
       document.getElementById('orderSummaryModal').classList.add('active');
       validateOrderForm();
@@ -692,6 +701,7 @@
       submitButton.disabled = true;
       submitButton.textContent = 'Submitting Order Request...';
       status.textContent = 'Submitting your order request...';
+      status.dataset.state = 'pending';
 
       try {
         const accountIsStillValid = await window.verifyWholesaleAccount(submittedAccountNumber, submittedEmail);
@@ -705,10 +715,14 @@
             ? 'Account details changed. Please verify them again.'
             : 'Account number and email do not match an active account.';
           errorMessage.style.color = '#b42318';
+          status.dataset.state = 'error';
+          status.textContent = errorMessage.textContent;
           updateOrderSubmitButton();
           return;
         }
         if (!updateOrderSubmitButton()) {
+          status.dataset.state = 'error';
+          status.textContent = 'Complete the required fields and select at least one item before submitting.';
           form.reportValidity();
           return;
         }
@@ -731,17 +745,23 @@
 
         requestReceived = true;
         status.textContent = 'Order request received';
+        status.dataset.state = 'success';
+        const notice = document.getElementById('orderSubmissionNotice');
+        notice.textContent = 'Order request received. We’ll confirm availability, pricing, and shipping before finalizing your order.';
+        notice.hidden = false;
         orderQuantities = {};
         orderAccountVerified = false;
         updateAuthUI();
         form.reset();
       } catch (error) {
+        status.dataset.state = 'error';
         status.textContent = error.message || 'Network error occurred. Please check your connection.';
       } finally {
         if (requestReceived) {
           submitButton.textContent = 'Order request received';
           submitButton.disabled = true;
           updateOrderSubmitButton();
+          closeOrderSummaryModal();
         } else {
           submitButton.textContent = 'Submit Order Request';
           validateOrderForm();
