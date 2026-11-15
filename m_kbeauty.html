@@ -149,13 +149,15 @@
   <!-- 상단 고정 가로 스크롤 브랜드 메뉴바 -->
   <nav class="mobile-brand-nav">
     <ul class="mobile-brand-list" id="brandList">
-      <li><button class="brand-btn active" onclick="filterBrand('Abib')">Abib</button></li>
+      <li><button class="brand-btn active" onclick="filterBrand('COSRX')">COSRX</button></li>
+      <li><button class="brand-btn" onclick="filterBrand('TOCOBO')">TOCOBO</button></li>
+      <li><button class="brand-btn" onclick="filterBrand('Medicube')">Medicube</button></li>
+      <li><button class="brand-btn" onclick="filterBrand('Abib')">Abib</button></li>
       <li><button class="brand-btn" onclick="filterBrand('AMPLEN')">AMPLEN</button></li>
       <li><button class="brand-btn" onclick="filterBrand('Anua')">Anua</button></li>
       <li><button class="brand-btn" onclick="filterBrand('ARENCIA')">ARENCIA</button></li>
       <li><button class="brand-btn" onclick="filterBrand('Beauty of Joseon')">Beauty of Joseon</button></li>
       <li><button class="brand-btn" onclick="filterBrand('Biodance')">Biodance</button></li>
-      <li><button class="brand-btn" onclick="filterBrand('COSRX')">COSRX</button></li>
       <li><button class="brand-btn" onclick="filterBrand('d Alba')">d Alba</button></li>
       <li><button class="brand-btn" onclick="filterBrand('Dr.Althea')">Dr.Althea</button></li>
       <li><button class="brand-btn" onclick="filterBrand('ELIZAVECCA')">ELIZAVECCA</button></li>
@@ -164,7 +166,6 @@
       <li><button class="brand-btn" onclick="filterBrand('ISNTREE')">ISNTREE</button></li>
       <li><button class="brand-btn" onclick="filterBrand('KOELF')">KOELF</button></li>
       <li><button class="brand-btn" onclick="filterBrand('LAGOM')">LAGOM</button></li>
-      <li><button class="brand-btn" onclick="filterBrand('Medicube')">Medicube</button></li>
       <li><button class="brand-btn" onclick="filterBrand('Missha')">Missha</button></li>
       <li><button class="brand-btn" onclick="filterBrand('MIXSOON')">MIXSOON</button></li>
       <li><button class="brand-btn" onclick="filterBrand('MIZON')">MIZON</button></li>
@@ -180,7 +181,6 @@
       <li><button class="brand-btn" onclick="filterBrand('Skin 1004')">Skin 1004</button></li>
       <li><button class="brand-btn" onclick="filterBrand('SOMEBYMI')">SOMEBYMI</button></li>
       <li><button class="brand-btn" onclick="filterBrand('TIRTIR')">TIRTIR</button></li>
-      <li><button class="brand-btn" onclick="filterBrand('TOCOBO')">TOCOBO</button></li>
       <li><button class="brand-btn" onclick="filterBrand('VT')">VT</button></li>
       <li><button class="brand-btn" onclick="filterBrand('ZEROID')">ZEROID</button></li>
     </ul>
@@ -768,7 +768,7 @@
       if (badge) { badge.innerText = `Total: $${grandTotal.toFixed(2)} 🛒`; }
     }
 
-    let currentActiveBrand = 'Abib';
+    let currentActiveBrand = 'COSRX';
     const brandProducts = {
       "Abib": [
         { title: "HEARTLEAF SPOT PAD CALMING TOUCH (80 pads)", price: "$9.10" },
