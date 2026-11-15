@@ -1249,7 +1249,7 @@
         let currentQty = orderQuantities[p.title] || 0;
         let unitPriceNum = parseFloat(p.price.replace('$', ''));
         let subtotal = (unitPriceNum * currentQty).toFixed(2);
-        const imageSrc = getProductImage(p.title);
+        const imageSrc = getProductImage(p.title, brandName);
         const productImage = imageSrc
           ? `<button type="button" class="catalog-product-image-button" aria-label="View larger product image"><img class="catalog-product-image" src="${imageSrc}" alt="${p.title}" loading="lazy" width="54" height="54"></button>`
           : `<div class="catalog-product-placeholder" role="img" aria-label="Photo coming soon">Photo coming soon</div>`;
