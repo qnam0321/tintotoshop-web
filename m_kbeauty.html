@@ -110,8 +110,35 @@
     .btn-submit:disabled { background: #ccc; color: #666; cursor: not-allowed; }
     .order-prototype-status { margin: 0 0 10px; color: #795548; font-size: 0.75rem; line-height: 1.4; }
     .order-prototype-status[data-state="error"] { padding: 9px 10px; border-radius: 6px; background: #fff1f0; color: #b42318; }
+    .order-prototype-status[data-state="pending"] { color: #555; }
     .order-submission-notice { margin-bottom: 14px; padding: 10px 12px; border: 1px solid #b7dfc3; border-radius: 8px; background: #edf8f0; color: #175c31; font-size: 0.82rem; line-height: 1.45; }
     .order-submission-notice[hidden] { display: none; }
+    .order-preview-document { margin: 12px 0; padding: 14px; border: 1px solid #e6e1d8; border-radius: 8px; background: #fff; }
+    .order-preview-heading { display: flex; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid #e6e1d8; }
+    .order-preview-kicker, .order-preview-field-label { color: #777; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .order-preview-heading h4 { margin: 4px 0; color: #111; font-size: 1.05rem; }
+    .order-preview-draft-label { color: #8a4b00; font-size: 0.64rem; font-weight: 700; }
+    .order-preview-date { color: #666; font-size: 0.7rem; text-align: right; }
+    .order-preview-date strong { display: block; margin-top: 4px; color: #222; }
+    .order-preview-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+    .order-preview-field { min-width: 0; }
+    .order-preview-field strong, .order-preview-field span:last-child { display: block; margin-top: 4px; color: #222; font-size: 0.78rem; line-height: 1.4; overflow-wrap: anywhere; }
+    .order-preview-items-wrap { overflow-x: auto; }
+    .order-preview-items { width: 100%; min-width: 390px; border-collapse: collapse; }
+    .order-preview-items th, .order-preview-items td { padding: 7px 5px; border-bottom: 1px solid #eee; font-size: 0.72rem; text-align: left; }
+    .order-preview-items th { color: #555; font-size: 0.64rem; text-transform: uppercase; }
+    .order-preview-items th:last-child, .order-preview-items td:last-child { text-align: right; white-space: nowrap; }
+    .order-preview-totals { margin: 10px 0; }
+    .order-preview-totals > div { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; color: #555; font-size: 0.76rem; }
+    .order-preview-totals strong { color: #222; text-align: right; }
+    .order-preview-grand-total { margin-top: 4px; padding-top: 8px !important; border-top: 1px solid #ddd; font-size: 0.86rem !important; font-weight: 700; }
+    .order-preview-memo { margin-top: 10px; color: #444; font-size: 0.74rem; line-height: 1.45; overflow-wrap: anywhere; }
+    .order-preview-disclaimer { margin-top: 10px; padding: 9px 10px; border-radius: 6px; background: #f7f5f1; color: #555; font-size: 0.7rem; line-height: 1.45; }
+    @media (max-width: 420px) {
+      .order-preview-document { padding: 11px; }
+      .order-preview-heading h4 { font-size: 0.95rem; }
+      .order-preview-meta { grid-template-columns: 1fr; gap: 8px; }
+    }
 
     /* 오더 서머리 테이블 */
     .summary-table { width: 100%; border-collapse: collapse; min-width: 450px; }
@@ -265,7 +292,7 @@
       </div>
       <p class="summary-shipping-note" style="margin:-8px 0 12px; color:#666; font-size:0.75rem; text-align:right;">Shipping costs will be added to the order total.</p>
 
-      <form id="summaryOrderForm" action="/api/wholesale/order" method="POST" onsubmit="submitOrderFromSummary(event)" style="margin-top:15px;">
+      <form id="summaryOrderForm" action="/api/wholesale/order" method="POST" onsubmit="openOrderPreview(event)" style="margin-top:15px;">
         <input type="hidden" name="form_type" value="[Mobile Wholesale Order]">
         <input type="hidden" id="hiddenOrderItems" name="order_items">
 
@@ -298,10 +325,70 @@
           We’ll confirm availability, pricing, and shipping before finalizing your order.
         </div>
         <p style="font-size:0.75rem; color:#666; margin:0 0 10px;">Use the account number and email registered to the same active wholesale account.</p>
-        <p class="order-prototype-status" id="orderSubmissionStatus" aria-live="polite"></p>
+        <p class="order-prototype-status" id="orderSummaryStatus" role="status" aria-live="polite"></p>
         <div class="modal-btns">
           <button type="button" class="btn-cancel" onclick="browseCatalogFromModal('orderSummaryModal')">Add Items</button>
-          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Submit Order Request</button>
+          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Review Draft Purchase Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="orderPreviewModal">
+    <div class="modal-card large">
+      <h3>Review Draft Purchase Order</h3>
+      <div class="order-preview-document">
+        <div class="order-preview-heading">
+          <div>
+            <p class="order-preview-kicker">TINTORO WHOLESALE</p>
+            <h4>Draft Purchase Order</h4>
+            <p class="order-preview-draft-label">ORDER REQUEST · NOT AN INVOICE</p>
+          </div>
+          <div class="order-preview-date">
+            <span>Prepared</span>
+            <strong id="orderPreviewDate"></strong>
+          </div>
+        </div>
+        <div class="order-preview-meta">
+          <div class="order-preview-field">
+            <span class="order-preview-field-label">Ordering Business</span>
+            <strong id="orderPreviewCompany"></strong>
+          </div>
+          <div class="order-preview-field">
+            <span class="order-preview-field-label">Wholesale Account</span>
+            <strong id="orderPreviewAccount"></strong>
+          </div>
+          <div class="order-preview-field">
+            <span class="order-preview-field-label">Contact</span>
+            <strong id="orderPreviewPhone"></strong>
+            <span id="orderPreviewEmail"></span>
+          </div>
+          <div class="order-preview-field">
+            <span class="order-preview-field-label">Ship To</span>
+            <strong id="orderPreviewAddress"></strong>
+          </div>
+        </div>
+        <div class="order-preview-items-wrap">
+          <table class="order-preview-items">
+            <thead>
+              <tr><th>Item</th><th>Qty</th><th>Unit Price</th><th>Estimated Total</th></tr>
+            </thead>
+            <tbody id="orderPreviewItems"></tbody>
+          </table>
+        </div>
+        <div class="order-preview-totals">
+          <div><span>Merchandise subtotal</span><strong id="orderPreviewSubtotal"></strong></div>
+          <div><span>Shipping</span><strong>To be confirmed</strong></div>
+          <div class="order-preview-grand-total"><span>Estimated request total</span><strong id="orderPreviewTotal"></strong></div>
+        </div>
+        <p class="order-preview-memo" id="orderPreviewMemoRow" hidden><strong>Order notes:</strong> <span id="orderPreviewMemo"></span></p>
+        <p class="order-preview-disclaimer">This draft is an order request only, not an invoice or payment request. TINTORO will confirm availability, final pricing, and shipping.</p>
+      </div>
+      <p class="order-prototype-status" id="orderPreviewStatus" role="status" aria-live="polite"></p>
+      <form id="orderPreviewForm" onsubmit="submitOrderFromSummary(event)">
+        <div class="modal-btns">
+          <button type="button" class="btn-cancel" id="returnToOrderSummaryBtn" onclick="returnToOrderSummary()">Back to Edit</button>
+          <button type="submit" id="confirmOrderBtn" class="btn-submit">Confirm &amp; Send Order Request</button>
         </div>
       </form>
     </div>
@@ -536,13 +623,16 @@
     function openOrderSummaryModal() {
       document.getElementById('sumAccountNumber').value = activeWholesaleAccountNumber;
       renderSummaryTable();
-      const status = document.getElementById('orderSubmissionStatus');
+      const status = document.getElementById('orderPreviewStatus');
       status.textContent = '';
       status.removeAttribute('data-state');
       const notice = document.getElementById('orderSubmissionNotice');
       notice.textContent = '';
       notice.hidden = true;
-      document.getElementById('submitOrderBtn').textContent = 'Submit Order Request';
+      const summaryStatus = document.getElementById('orderSummaryStatus');
+      summaryStatus.textContent = '';
+      summaryStatus.removeAttribute('data-state');
+      document.getElementById('submitOrderBtn').textContent = 'Review Draft Purchase Order';
       document.getElementById('orderSummaryModal').classList.add('active');
       validateOrderForm();
     }
@@ -601,6 +691,81 @@
       );
       calculateGrandTotal();
       updateOrderSubmitButton();
+    }
+
+    function renderOrderPreview() {
+      const itemBody = document.getElementById('orderPreviewItems');
+      itemBody.replaceChildren();
+      let subtotal = 0;
+      let itemCount = 0;
+
+      for (const [title, rawQuantity] of Object.entries(orderQuantities)) {
+        const quantity = Number(rawQuantity);
+        if (quantity <= 0) continue;
+
+        let product;
+        for (const products of Object.values(brandProducts)) {
+          product = products.find(item => item.title === title);
+          if (product) break;
+        }
+        if (!product || !/^\$\d+\.\d{2}$/.test(product.price)) {
+          throw new Error(`Pricing is unavailable for ${title}. Please contact TINTORO.`);
+        }
+
+        const unitPrice = Number(product.price.slice(1));
+        const lineTotal = unitPrice * quantity;
+        subtotal += lineTotal;
+        itemCount += 1;
+        const row = document.createElement('tr');
+        for (const value of [title, String(quantity), product.price, `$${lineTotal.toFixed(2)}`]) {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          row.appendChild(cell);
+        }
+        itemBody.appendChild(row);
+      }
+
+      if (!itemCount) throw new Error('Select at least one item before reviewing your order.');
+
+      document.getElementById('orderPreviewDate').textContent = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+      document.getElementById('orderPreviewCompany').textContent = document.getElementById('sumCompany').value.trim();
+      document.getElementById('orderPreviewAccount').textContent = document.getElementById('sumAccountNumber').value.trim();
+      document.getElementById('orderPreviewPhone').textContent = document.getElementById('sumPhone').value.trim();
+      document.getElementById('orderPreviewEmail').textContent = document.getElementById('sumEmail').value.trim();
+      document.getElementById('orderPreviewAddress').textContent = document.getElementById('sumAddress').value.trim();
+      document.getElementById('orderPreviewSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('orderPreviewTotal').textContent = `$${subtotal.toFixed(2)}`;
+      const memo = document.getElementById('sumMemo').value.trim();
+      document.getElementById('orderPreviewMemo').textContent = memo;
+      document.getElementById('orderPreviewMemoRow').hidden = !memo;
+    }
+
+    function openOrderPreview(event) {
+      event.preventDefault();
+      const form = document.getElementById('summaryOrderForm');
+      if (!form.reportValidity() || !updateOrderSubmitButton()) return;
+
+      try {
+        renderOrderPreview();
+        const status = document.getElementById('orderPreviewStatus');
+        status.textContent = '';
+        status.removeAttribute('data-state');
+        document.getElementById('orderSummaryModal').classList.remove('active');
+        document.getElementById('orderPreviewModal').classList.add('active');
+      } catch (error) {
+        const status = document.getElementById('orderSummaryStatus');
+        status.dataset.state = 'error';
+        status.textContent = error.message || 'Unable to prepare the order preview.';
+      }
+    }
+
+    function returnToOrderSummary() {
+      document.getElementById('orderPreviewModal').classList.remove('active');
+      document.getElementById('orderSummaryModal').classList.add('active');
     }
 
     let orderAccountVerified = false;
@@ -679,6 +844,7 @@
     }
 
     function closeOrderSummaryModal() { document.getElementById('orderSummaryModal').classList.remove('active'); }
+    function closeOrderPreviewModal() { document.getElementById('orderPreviewModal').classList.remove('active'); }
 
     function browseCatalogFromModal(modalId) {
       document.getElementById(modalId).classList.remove('active');
@@ -687,20 +853,27 @@
 
     async function submitOrderFromSummary(event) {
       event.preventDefault();
-      const form = event.target;
-      const status = document.getElementById('orderSubmissionStatus');
-      if (!form.reportValidity() || !updateOrderSubmitButton()) return;
+      const form = document.getElementById('summaryOrderForm');
+      const status = document.getElementById('orderPreviewStatus');
+      const confirmButton = document.getElementById('confirmOrderBtn');
+      const backButton = document.getElementById('returnToOrderSummaryBtn');
+      const hasItems = Object.values(orderQuantities).some(quantity => Number(quantity) > 0);
+      if (!form.checkValidity() || !hasItems || !isWholesaleLoggedIn) {
+        status.dataset.state = 'error';
+        status.textContent = 'Please go back and complete the order details before submitting.';
+        return;
+      }
 
-      const submitButton = document.getElementById('submitOrderBtn');
       const accountInput = document.getElementById('sumAccountNumber');
       const emailInput = document.getElementById('sumEmail');
       const errorMessage = document.getElementById('sumAccountNumberError');
       const submittedAccountNumber = accountInput.value.trim();
       const submittedEmail = emailInput.value.trim();
       let requestReceived = false;
-      submitButton.disabled = true;
-      submitButton.textContent = 'Submitting Order Request...';
-      status.textContent = 'Submitting your order request...';
+      confirmButton.disabled = true;
+      backButton.disabled = true;
+      confirmButton.textContent = 'Sending Order Request...';
+      status.textContent = 'Verifying your account and sending the order request...';
       status.dataset.state = 'pending';
 
       try {
@@ -718,12 +891,6 @@
           status.dataset.state = 'error';
           status.textContent = errorMessage.textContent;
           updateOrderSubmitButton();
-          return;
-        }
-        if (!updateOrderSubmitButton()) {
-          status.dataset.state = 'error';
-          status.textContent = 'Complete the required fields and select at least one item before submitting.';
-          form.reportValidity();
           return;
         }
 
@@ -758,12 +925,14 @@
         status.textContent = error.message || 'Network error occurred. Please check your connection.';
       } finally {
         if (requestReceived) {
-          submitButton.textContent = 'Order request received';
-          submitButton.disabled = true;
+          confirmButton.textContent = 'Order request sent';
           updateOrderSubmitButton();
           closeOrderSummaryModal();
+          closeOrderPreviewModal();
         } else {
-          submitButton.textContent = 'Submit Order Request';
+          confirmButton.textContent = 'Confirm & Send Order Request';
+          confirmButton.disabled = false;
+          backButton.disabled = false;
           validateOrderForm();
         }
       }

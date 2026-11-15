@@ -153,7 +153,7 @@ Pages 프로젝트의 **Settings → Variables and Secrets**에 다음 변수를
 
 ## 🛡️ 고객용 도매 주문 흐름
 
-- 주문은 즉시 확정이 아닌 주문 요청입니다. 폼은 `Submit Order Request`를 사용하고, 제출 전에 `We’ll confirm availability, pricing, and shipping before finalizing your order.`를 표시합니다. 서버가 주문 요청을 접수하면 `Order request received`를 표시합니다.
+- 주문은 즉시 확정이 아닌 주문 요청입니다. `Review Draft Purchase Order`를 누르면 업체·배송 정보와 품목·예상 합계를 미리 보여주며, `Confirm & Send Order Request`를 눌렀을 때만 서버가 주문 이메일을 전송합니다. 배송비와 최종 가격은 확인 후 확정되며, 주문 요청 접수 후 `Order request received`를 표시합니다.
 - 일반 계정 문의에서 사업장 주소를 제거했습니다. 실제 주문 요청에는 배송 확인을 위해 `Shipping Address`를 별도로 받습니다.
 - `/api/accounts/verify`는 활성 계정번호만 확인하고, `/api/wholesale/prices`는 일치하는 경우에만 서버 보관 가격표를 반환합니다. 두 응답 모두 캐시되지 않습니다.
 - `/api/wholesale/order`는 활성 계정번호와 등록 이메일을 확인하고, 서버 가격표 기준으로 주문 품목과 합계를 재계산한 뒤 설정된 전용 Formspree endpoint로 전달합니다. 브라우저가 보낸 가격이나 합계는 신뢰하지 않습니다.
