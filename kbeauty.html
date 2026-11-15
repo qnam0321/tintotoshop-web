@@ -3,54 +3,1482 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Request protected wholesale access from TINTORO SHOP.">
-  <title>Wholesale Access Request | TINTORO SHOP</title>
+  <title>TINTORO - B2B Wholesale Distribution</title>
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- 구글 웹폰트 로드 -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Poppins:wght@800&display=swap" rel="stylesheet">
+  
+  <script src="account-client.js"></script>
+  <script src="product-images.js"></script>
+  <script src="best-selling-products.js"></script>
+  <script src="product-details.js"></script>
+
   <style>
-    :root {
-      color-scheme: light;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #242033;
-      background: #fbfaff;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #fafafa; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+    
+    /* 상단바 고정(Sticky Header) 설정 */
+    .shop-header { position: sticky; top: 0; z-index: 999; background: #111; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header-brand-wrap { display: flex; flex-direction: column; }
+    .header-brand-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .shop-header h1 { font-size: 1.3rem; letter-spacing: 1.5px; color: #fff; text-decoration: none; }
+    .shop-header .subtitle { font-size: 0.7rem; color: #aaa; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+    .shop-return-link { color: #ffb74d; border: 1px solid rgba(255,143,0,0.4); border-radius: 999px; padding: 5px 11px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .shop-return-link:hover { background: #ff8f00; color: #161920; }
+    
+    .auth-box { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .header-total-badge { background: #ff8f00; color: #fff; padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; display: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .header-total-badge:hover { background: #f57c00; }
+    .auth-status { background: #222; padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; color: #4caf50; display: none; align-items: center; gap: 8px; }
+    .login-toggle-btn { background: #ff8f00; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+    .login-toggle-btn:hover { background: #f57c00; }
+    .logout-btn { background: #444; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; }
+    
+    .layout-container { display: flex; max-width: 1400px; margin: 0 auto; flex: 1; width: 100%; position: relative; }
+    
+    /* 사이드바 기본 (PC버전) */
+    .brand-sidebar { width: 280px; background: #fff; border-right: 1px solid #eaeaea; padding: 25px 20px; overflow-y: auto; max-height: calc(100vh - 90px); position: sticky; top: 90px; flex-shrink: 0; }
+    
+    /* K-BEAUTY 타이틀 스타일 */
+    .sidebar-section-title { 
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.15rem; 
+      color: #e53935; 
+      font-weight: 800; 
+      text-transform: uppercase; 
+      letter-spacing: 2px; 
+      margin-bottom: 8px; 
     }
-    * { box-sizing: border-box; }
-    body { display: flex; min-height: 100vh; flex-direction: column; margin: 0; }
-    header, footer { padding: 22px max(24px, calc((100% - 1040px) / 2)); }
-    header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    header a { color: inherit; }
-    .wordmark { font-weight: 800; letter-spacing: -.05em; text-decoration: none; }
-    main { display: grid; flex: 1; place-content: center; gap: 18px; width: min(760px, calc(100% - 40px)); margin: 0 auto; padding: 52px 0; }
-    .eyebrow { color: #6042c2; font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    h1 { margin: 0; font-size: clamp(2.2rem, 8vw, 4rem); letter-spacing: -.06em; line-height: 1.04; }
-    p { max-width: 620px; margin: 0; color: #625e70; font-size: 1.05rem; line-height: 1.7; }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-    .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 20px; border-radius: 999px; background: #6042c2; color: #fff; font-weight: 700; text-decoration: none; }
-    .secondary { display: inline-flex; min-height: 48px; align-items: center; color: #6042c2; font-weight: 700; }
-    footer { border-top: 1px solid rgba(57, 43, 99, .1); color: #716d80; font-size: .85rem; text-align: center; }
-    @media (max-width: 520px) {
-      header { padding: 18px 20px; }
-      main { width: calc(100% - 40px); padding: 36px 0; }
-      .actions { align-items: stretch; flex-direction: column; }
-      .button { width: 100%; }
-      footer { padding: 18px 20px; }
+    
+    .brand-sidebar h3 { font-size: 0.85rem; margin-bottom: 15px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+    .brand-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .brand-btn { text-align: left; background: none; border: none; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; cursor: pointer; color: #444; width: 100%; transition: all 0.2s; white-space: nowrap; }
+    .brand-btn:hover, .brand-btn.active { background: #f1f3f5; color: #000; font-weight: 600; }
+
+    /* 콘텐츠 영역 */
+    .product-content { flex: 1; padding: 40px; background: #fafafa; min-width: 0; }
+    .category-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 20px; color: #111; text-transform: uppercase; word-break: break-word; }
+    
+    .wholesale-notice { background: #fff8e1; border: 1px solid #ffe082; padding: 15px 20px; border-radius: 8px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .wholesale-notice p { font-size: 0.9rem; color: #795548; font-weight: 500; line-height: 1.4; flex: 1; min-width: 240px; }
+    .login-req-btn { background: #ff8f00; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+    .login-req-btn:hover { background: #f57c00; }
+
+    /* 텍스트 카탈로그 테이블 스타일 (모바일 가로 스크롤 지원 컨테이너) */
+    .catalog-table-container { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.03); -webkit-overflow-scrolling: touch; }
+    .catalog-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+    .catalog-table th { background: #f8f9fa; color: #555; font-size: 0.85rem; font-weight: 700; padding: 16px 20px; border-bottom: 1px solid #eaeaea; text-transform: uppercase; letter-spacing: 0.5px; }
+    .catalog-table td { padding: 16px 20px; border-bottom: 1px solid #f1f3f5; font-size: 0.95rem; vertical-align: middle; }
+    .catalog-table tr:last-child td { border-bottom: none; }
+    .catalog-table tr:hover { background: #fcfcfc; }
+
+    .col-title { font-weight: 600; color: #111; width: 45%; }
+    .product-title-cell { min-width: 260px; }
+    .catalog-product-info { display: flex; align-items: center; gap: 12px; }
+    .catalog-product-image { width: 64px; height: 64px; flex: 0 0 64px; object-fit: cover; border: 1px solid #eaeaea; border-radius: 8px; background: #fafafa; }
+    .catalog-product-image-button { width: 64px; height: 64px; flex: 0 0 64px; padding: 0; border: 0; border-radius: 8px; background: transparent; cursor: zoom-in; line-height: 0; }
+    .catalog-product-image-button:focus-visible { outline: 3px solid #ff8f00; outline-offset: 3px; }
+    .catalog-product-placeholder { width: 64px; height: 64px; flex: 0 0 64px; display: flex; align-items: center; justify-content: center; padding: 4px; box-sizing: border-box; border: 1px dashed #d8dce2; border-radius: 8px; background: #f8f9fb; color: #858b96; font-size: 0.62rem; font-weight: 600; text-align: center; line-height: 1.2; }
+    .best-selling-brand-badge { display: inline-block; flex: 0 0 auto; padding: 2px 7px; border: 1px solid #ffd08a; border-radius: 999px; background: #fff3e0; color: #8a4b00; font-size: 0.68rem; font-weight: 700; line-height: 1.3; white-space: nowrap; }
+    .catalog-product-name { line-height: 1.45; }
+    .product-image-hover-preview { display: none; position: fixed; z-index: 1050; padding: 6px; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-shadow: 0 8px 28px rgba(0,0,0,0.22); pointer-events: none; }
+    .product-image-hover-preview img { display: block; max-width: 280px; max-height: 280px; object-fit: contain; border-radius: 6px; }
+    .product-image-modal { z-index: 1100; background: rgba(0,0,0,0.84); }
+    .product-image-modal-card { position: relative; width: min(900px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow-y: auto; padding: 24px; border-radius: 12px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+    .product-image-modal-caption { margin: 0 48px 18px 0; color: #111; font-size: 1.2rem; line-height: 1.35; }
+    .product-image-modal-body { display: flex; align-items: flex-start; justify-content: center; gap: 24px; }
+    .product-image-modal-body.has-details { justify-content: space-between; }
+    .product-image-modal-image { display: block; max-width: 100%; max-height: 72vh; width: auto; height: auto; object-fit: contain; border-radius: 8px; background: #fff; }
+    .product-image-modal-body.has-details .product-image-modal-image { flex: 0 1 360px; width: 42%; max-height: 62vh; }
+    .product-image-modal-details { display: none; flex: 1; min-width: 0; margin: 0; border-top: 1px solid #e6e8eb; }
+    .product-image-modal-body.has-details .product-image-modal-details { display: block; }
+    .product-image-detail { display: grid; grid-template-columns: minmax(110px, 0.36fr) 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e6e8eb; }
+    .product-image-detail dt { color: #555; font-size: 0.85rem; font-weight: 700; }
+    .product-image-detail dd { margin: 0; color: #333; font-size: 0.9rem; line-height: 1.5; }
+    .product-image-modal-close { position: absolute; top: 12px; right: 12px; z-index: 1; width: 40px; height: 40px; border: 0; border-radius: 50%; background: #f1f3f5; color: #111; font-size: 1.75rem; cursor: pointer; }
+    @media (max-width: 650px) {
+      .product-image-modal-card { padding: 18px; }
+      .product-image-modal-caption { font-size: 1.05rem; }
+      .product-image-modal-body, .product-image-modal-body.has-details { flex-direction: column; align-items: center; gap: 16px; }
+      .product-image-modal-body.has-details .product-image-modal-image { width: auto; max-width: 100%; max-height: 38vh; }
+      .product-image-modal-details { width: 100%; }
+      .product-image-detail { grid-template-columns: 105px 1fr; gap: 8px; padding: 8px 0; }
+      .product-image-detail dt, .product-image-detail dd { font-size: 0.82rem; }
+    }
+    .col-price { font-weight: 600; color: #555; width: 15%; white-space: nowrap; }
+    .col-qty { width: 25%; white-space: nowrap; }
+    .col-subtotal { font-weight: 700; color: #e53935; width: 15%; text-align: right; white-space: nowrap; }
+    
+    .qty-control { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #eee; border: none; width: 28px; height: 28px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem; flex-shrink: 0; }
+    .qty-btn:hover { background: #ddd; }
+    .qty-input { width: 50px; text-align: center; border: 1px solid #ddd; border-radius: 4px; padding: 4px; font-size: 0.95rem; font-weight: 600; outline: none; }
+
+    .locked-price { color: #888; font-style: italic; font-size: 0.85rem; background: #f1f3f5; padding: 6px 12px; border-radius: 4px; display: inline-block; }
+
+    /* 모달 팝업 창 스타일 */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
+    .modal-overlay.active { display: flex; }
+    .modal-card { background: #fff; width: 100%; max-width: 450px; border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-card.large { max-width: 700px; }
+    .modal-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 15px; color: #111; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; outline: none; }
+    .form-group input:focus { border-color: #111; }
+    .access-code-field { display: flex; align-items: center; gap: 8px; }
+    .access-code-field input { flex: 1; min-width: 0; width: auto; }
+    .access-code-toggle { flex-shrink: 0; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; background: #f1f3f5; color: #333; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .access-code-toggle:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+    .modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-cancel { background: #f1f3f5; color: #333; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-submit { background: #111; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-submit:hover { background: #333; }
+    .btn-submit:disabled { background: #ccc; color: #666; cursor: not-allowed; }
+    .order-prototype-status { margin: 0 0 12px; color: #795548; font-size: 0.8rem; line-height: 1.45; }
+
+    /* 오더 서머리 테이블 */
+    .summary-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    .summary-table-wrapper { max-height: 250px; overflow-y: auto; overflow-x: auto; border: 1px solid #eaeaea; border-radius: 8px; margin-bottom: 20px; background: #fff; }
+    .summary-table th { background: #f8f9fa; padding: 10px; font-size: 0.8rem; text-align: left; border-bottom: 1px solid #ddd; }
+    .summary-table td { padding: 10px; font-size: 0.9rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+    
+    .summary-total-box { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 700; padding: 10px 0; border-top: 2px solid #eaeaea; margin-bottom: 15px; }
+    #summaryGrandTotal { color: #e53935; }
+
+    /* 푸터 디자인 */
+    footer { background: #111; color: #aaa; text-align: center; padding: 30px 20px; font-size: 0.85rem; margin-top: auto; border-top: 1px solid #222; line-height: 1.5; }
+    footer .footer-brand { color: #fff; font-weight: 700; margin-bottom: 5px; letter-spacing: 1px; }
+    footer .footer-note { font-size: 0.75rem; color: #777; margin-top: 8px; word-break: break-all; }
+    footer .legal-entity { font-size: 0.68rem; color: #777; margin-top: 5px; letter-spacing: 0.04em; }
+    footer .footer-contact { font-size: 0.75rem; color: #777; margin-top: 6px; }
+    footer .footer-contact a { color: inherit; }
+    .inquiry-eligibility { margin: 0 0 16px; padding: 12px 14px; border-left: 3px solid #ff8f00; border-radius: 0 6px 6px 0; background: #fff8e1; color: #795548; font-size: 0.84rem; line-height: 1.45; }
+
+    /* 스마트폰(모바일) 반응형 완벽 대응: 상단 가로 스크롤 메뉴바 형태로 변환 */
+    @media (max-width: 900px) {
+      .layout-container { flex-direction: column; }
+      .brand-sidebar { 
+        width: 100%; 
+        position: sticky; 
+        top: 73px; 
+        z-index: 990; 
+        background: #fff; 
+        border-right: none; 
+        border-bottom: 1px solid #eaeaea; 
+        padding: 12px 15px; 
+        max-height: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      }
+      .sidebar-section-title { display: none; } /* 모바일에서 공간 절약을 위해 대제목 숨김 */
+      .brand-sidebar h3 { font-size: 0.75rem; margin-bottom: 8px; }
+      
+      /* 브랜드 버튼들을 상단 가로 스크롤 바 형태로 변경 */
+      .brand-list { 
+        display: flex; 
+        flex-direction: row; 
+        overflow-x: auto; 
+        gap: 6px; 
+        padding-bottom: 4px; 
+        -webkit-overflow-scrolling: touch;
+      }
+      .brand-btn { 
+        flex: 0 0 auto; 
+        width: auto; 
+        padding: 6px 12px; 
+        font-size: 0.82rem; 
+        background: #f1f3f5; 
+        border-radius: 20px; 
+        border: 1px solid #e2e8f0;
+      }
+      .brand-btn.active { 
+        background: #111; 
+        color: #fff; 
+        font-weight: 600; 
+      }
+      .product-content { padding: 20px 15px; }
+      .shop-header { padding: 15px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .auth-box { width: 100%; justify-content: space-between; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <a class="wordmark" href="/" aria-label="TINTORO SHOP home">TINTORO SHOP</a>
-    <a href="/wholesale/">Wholesale portal</a>
-  </header>
-  <main>
-    <span class="eyebrow">Retail partner access</span>
-    <h1>Wholesale Ordering Is Temporarily Unavailable</h1>
-    <p>Catalog browsing and order requests are disabled on this public route while protected customer access is being prepared.</p>
-    <p>Existing and prospective retail partners can request access by email. Please do not include payment details in your message.</p>
-    <div class="actions">
-      <a class="button" href="mailto:info@tintoroshop.com?subject=Wholesale%20Access%20Request">Request Wholesale Access</a>
-      <a class="secondary" href="/wholesale/">Visit the wholesale portal</a>
+
+  <!-- 상단 네비게이션 -->
+  <header class="shop-header">
+    <div class="header-brand-wrap">
+      <div class="header-brand-row">
+        <a href="wholesale/" aria-label="TINTORO Wholesale home" style="text-decoration:none;"><h1>TINTORO</h1></a>
+        <a class="shop-return-link" href="/" aria-label="Back to TINTORO SHOP">TINTORO SHOP</a>
+      </div>
+      <span class="subtitle">B2B Wholesale Distribution</span>
     </div>
-  </main>
-  <footer>Operated by Asterika LLC</footer>
+    <div class="auth-box">
+      <div id="headerTotalBadge" class="header-total-badge" onclick="openOrderSummaryModal()">Total: $0.00 🛒</div>
+      <div id="authStatusText" class="auth-status">✓ Wholesale Account Logged In <button class="logout-btn" onclick="logoutAccount()">Logout</button></div>
+      <button id="loginToggleBtn" class="login-toggle-btn" onclick="openLoginModal()">🔒 Wholesale Login</button>
+    </div>
+  </header>
+
+  <div class="layout-container">
+    <!-- 브랜드 사이드바 (모바일에서는 상단 가로 스크롤 메뉴바형식으로 전환) -->
+    <aside class="brand-sidebar">
+      <div class="sidebar-section-title">K-BEAUTY</div>
+      <h3>Brands (34)</h3>
+      <ul class="brand-list" id="brandList">
+        <li><button class="brand-btn" onclick="filterBrand('Best Selling')">Best Selling</button></li>
+        <li><button class="brand-btn active" onclick="filterBrand('COSRX')">COSRX</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('TOCOBO')">TOCOBO</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Medicube')">Medicube</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Biodance')">Biodance</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Abib')">Abib</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('AMPLEN')">AMPLEN</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Anua')">Anua</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('ARENCIA')">ARENCIA</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Beauty of Joseon')">Beauty of Joseon</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('d Alba')">d Alba</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Dr.Althea')">Dr.Althea</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('ELIZAVECCA')">ELIZAVECCA</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Goodal')">Goodal</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('HYAAH')">HYAAH</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('ISNTREE')">ISNTREE</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('KOELF')">KOELF</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('LAGOM')">LAGOM</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Missha')">Missha</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('MIXSOON')">MIXSOON</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('MIZON')">MIZON</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('NACIFIC')">NACIFIC</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('NEEDLY')">NEEDLY</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('NEOGEN')">NEOGEN</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Numbuzin')">Numbuzin</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('PCALM')">PCALM</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('PURITOSEOUL')">PURITOSEOUL</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('REALBARRIER')">REALBARRIER</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Round Lab')">Round Lab</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('SEOHAESOL')">SEOHAESOL</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('Skin 1004')">Skin 1004</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('SOMEBYMI')">SOMEBYMI</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('TIRTIR')">TIRTIR</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('VT')">VT</button></li>
+        <li><button class="brand-btn" onclick="filterBrand('ZEROID')">ZEROID</button></li>
+      </ul>
+    </aside>
+
+    <!-- 콘텐츠 영역 -->
+    <main class="product-content">
+      
+      <!-- 도매 계정 전용 가격 고지 문구 배너 -->
+      <div class="wholesale-notice">
+        <p>🔒 <strong>Wholesale Price Notice:</strong> Prices shown reflect updated wholesale supply rates and are strictly valid for approved retail partners with active credentials. Contact info@tintoroshop.com for account approval.</p>
+        <button class="login-req-btn" onclick="openInquireModal()">Inquire Account</button>
+      </div>
+
+      <h2 id="currentBrandTitle" class="category-title">Abib</h2>
+
+      <!-- 텍스트 카탈로그 테이블 (모바일 가로 스크롤 지원 컨테이너) -->
+      <div class="catalog-table-container">
+        <table class="catalog-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Unit Price</th>
+              <th>Order Qty</th>
+              <th style="text-align: right;">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="catalogTableBody">
+            <!-- 데이터 렌더링 영역 -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-brand">TINTORO B2B WHOLESALE DISTRIBUTION</div>
+    <div>Wholesale Supply & Distribution Partner</div>
+    <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved.</div>
+    <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
+    <div class="legal-entity">Website managed by ASTERIKA LLC</div>
+  </footer>
+
+  <!-- 도매 로그인 모달 (인증 코드 입력) -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card">
+      <h3>Wholesale Account Login</h3>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Enter the wholesale access code provided by TINTORO to view wholesale pricing.</p>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="authInput">Wholesale Account Number *</label>
+          <div class="access-code-field">
+            <input type="password" id="authInput" required placeholder="Enter your assigned account number">
+            <button type="button" class="access-code-toggle" aria-controls="authInput" aria-label="Show access code" aria-pressed="false" onclick="toggleAccessCodeVisibility(this)">Show</button>
+          </div>
+        </div>
+        <div class="modal-btns">
+          <button type="button" class="btn-cancel" onclick="closeLoginModal()">Cancel</button>
+          <button type="submit" class="btn-submit">Verify Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 최종 오더 내역 확인 및 편집/제출 서머리 모달 -->
+  <div class="modal-overlay" id="orderSummaryModal">
+    <div class="modal-card large">
+      <h3>🛒 Review & Edit Order Summary</h3>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">You can directly adjust quantities or remove items below before submitting your order.</p>
+      
+      <div class="summary-table-wrapper">
+        <table class="summary-table" id="summaryTableContent">
+          <!-- 선택된 상품 목록 및 편집 필드 렌더링 -->
+        </table>
+      </div>
+
+      <div class="summary-total-box">
+        <span>Grand Total Amount:</span>
+        <span id="summaryGrandTotal">$0.00</span>
+      </div>
+      <p class="summary-shipping-note" style="margin:-8px 0 15px; color:#666; font-size:0.8rem; text-align:right;">Shipping costs will be added to the order total.</p>
+
+      <form id="summaryOrderForm" action="/api/wholesale/order" method="POST" onsubmit="submitOrderFromSummary(event)" style="margin-top:20px;">
+        <input type="hidden" name="form_type" value="[Wholesale Order]">
+        <input type="hidden" id="hiddenOrderDetails" name="order_details">
+        <input type="hidden" id="hiddenGrandTotal" name="grand_total">
+
+        <div class="form-group">
+          <label>Wholesale Account Number *</label>
+          <input type="text" id="sumAccountNumber" name="account_number" required oninput="validateOrderForm()" placeholder="Enter your assigned account number" autocomplete="off">
+          <p id="sumAccountNumberError" style="color:#b42318; font-size:0.8rem; margin:-8px 0 10px;" aria-live="polite"></p>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <div class="form-group" style="flex:1; min-width: 200px;">
+            <label>Company / Store Name *</label>
+            <input type="text" id="sumCompany" name="company_name" required oninput="updateOrderSubmitButton()" placeholder="Enter business name">
+          </div>
+          <div class="form-group" style="flex:1; min-width: 200px;">
+            <label>Phone Number *</label>
+            <input type="text" id="sumPhone" name="phone_number" required oninput="updateOrderSubmitButton()" placeholder="Enter phone number">
+          </div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <div class="form-group" style="flex:1; min-width: 200px;">
+            <label>Shipping Address *</label>
+            <input type="text" id="sumAddress" name="shipping_address" required oninput="updateOrderSubmitButton()" placeholder="Enter shipping address">
+          </div>
+          <div class="form-group" style="flex:1; min-width: 200px;">
+            <label>Email Address *</label>
+            <input type="email" id="sumEmail" name="email" required oninput="updateOrderSubmitButton()" placeholder="Use your approved wholesale account email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Message / Memo</label>
+          <textarea id="sumMemo" name="memo" rows="2" placeholder="Enter order notes or requests"></textarea>
+        </div>
+        <div id="salesReviewNotice" role="note" style="background:#f7f5f1; border-left:3px solid #8a6d3b; padding:10px 12px; margin:4px 0 12px; color:#484848; font-size:0.82rem; line-height:1.5;">
+          We’ll confirm availability, pricing, and shipping before finalizing your order.
+        </div>
+        <p style="font-size:0.8rem; color:#666; margin:0 0 12px;">Complete all fields marked * and enter a matching account number to enable submission.</p>
+        <p class="order-prototype-status" id="orderSubmissionStatus" aria-live="polite"></p>
+        <div class="modal-btns">
+          <button type="button" class="btn-cancel" onclick="browseCatalogFromModal('orderSummaryModal')">Add Items</button>
+          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Submit Order Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 계정 및 도매 견적 문의 팝업 모달 -->
+  <div class="modal-overlay" id="inquireModal">
+    <div class="modal-card">
+      <h3>Wholesale Account Inquiry</h3>
+      <p class="inquiry-eligibility">Wholesale accounts are available only to businesses with a valid Seller's Permit or Resale Certificate.</p>
+      <form id="inquireForm" action="/api/wholesale/inquiry" method="POST" onsubmit="submitInquiry(event)">
+        <input type="hidden" name="form_type" value="[Account Inquiry]">
+        <div class="form-group">
+          <label>Your Name *</label>
+          <input type="text" id="inqName" name="inquiry_name" required oninput="validateInquiryForm()" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label>Company / Store Name *</label>
+          <input type="text" id="inqCompany" name="company_name" required oninput="validateInquiryForm()" placeholder="Enter business name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="text" id="inqPhone" name="phone_number" required oninput="validateInquiryForm()" placeholder="Enter phone number">
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="inqEmail" name="email" required oninput="validateInquiryForm()" placeholder="Enter email address">
+        </div>
+        <div class="form-group">
+          <label>Message / Memo</label>
+          <textarea id="inqMemo" name="memo" rows="3" placeholder="Enter your order or account inquiry details"></textarea>
+        </div>
+        <div class="modal-btns">
+          <button type="button" class="btn-cancel" onclick="closeInquireModal()">Cancel</button>
+          <button type="button" class="btn-cancel" onclick="browseCatalogFromModal('inquireModal')">Add Items</button>
+          <button type="submit" id="inquireSubmitBtn" class="btn-submit" disabled>Inquiry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="product-image-hover-preview" id="productImageHoverPreview" aria-hidden="true">
+    <img alt="">
+  </div>
+  <div class="modal-overlay product-image-modal" id="productImageModal" role="dialog" aria-modal="true" aria-labelledby="productImageModalCaption" aria-hidden="true">
+    <div class="product-image-modal-card">
+      <button type="button" class="product-image-modal-close" id="productImageModalClose" aria-label="Close enlarged product image">&times;</button>
+      <h2 class="product-image-modal-caption" id="productImageModalCaption"></h2>
+      <div class="product-image-modal-body" id="productImageModalBody">
+        <img class="product-image-modal-image" id="productImageModalImage" alt="">
+        <dl class="product-image-modal-details" id="productImageModalDetails"></dl>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isWholesaleLoggedIn = localStorage.getItem('tintoro_auth') === 'true';
+    let orderQuantities = {};
+    const catalogTableBody = document.getElementById('catalogTableBody');
+    const productImageHoverPreview = document.getElementById('productImageHoverPreview');
+    const productImageModal = document.getElementById('productImageModal');
+    const productImageModalImage = document.getElementById('productImageModalImage');
+    const productImageModalCaption = document.getElementById('productImageModalCaption');
+    const productImageModalBody = document.getElementById('productImageModalBody');
+    const productImageModalDetails = document.getElementById('productImageModalDetails');
+    const productImageModalClose = document.getElementById('productImageModalClose');
+    let productImageModalTrigger = null;
+    let previousBodyOverflow = '';
+
+    function hideProductImageHoverPreview() {
+      productImageHoverPreview.style.display = 'none';
+    }
+
+    function positionProductImageHoverPreview(event) {
+      productImageHoverPreview.style.display = 'block';
+      const left = Math.max(12, Math.min(event.clientX + 16, window.innerWidth - productImageHoverPreview.offsetWidth - 12));
+      const top = Math.max(12, Math.min(event.clientY + 16, window.innerHeight - productImageHoverPreview.offsetHeight - 12));
+      productImageHoverPreview.style.left = `${left}px`;
+      productImageHoverPreview.style.top = `${top}px`;
+    }
+
+    function openProductImageModal(image, trigger) {
+      hideProductImageHoverPreview();
+      productImageModalImage.src = image.currentSrc || image.src;
+      productImageModalImage.alt = image.alt;
+      const details = window.tintoroProductDetails[image.alt];
+      productImageModalCaption.textContent = details ? details.productName : image.alt;
+      productImageModalBody.classList.toggle('has-details', Boolean(details));
+      productImageModalDetails.replaceChildren();
+      if (details) {
+        Object.entries(details.fields).forEach(([label, value]) => {
+          const row = document.createElement('div');
+          const term = document.createElement('dt');
+          const description = document.createElement('dd');
+          row.className = 'product-image-detail';
+          term.textContent = label;
+          description.textContent = value;
+          row.append(term, description);
+          productImageModalDetails.append(row);
+        });
+      }
+      productImageModalTrigger = trigger;
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      productImageModal.classList.add('active');
+      productImageModal.setAttribute('aria-hidden', 'false');
+      productImageModalClose.focus();
+    }
+
+    function closeProductImageModal() {
+      productImageModal.classList.remove('active');
+      productImageModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = previousBodyOverflow;
+      if (productImageModalTrigger && document.contains(productImageModalTrigger)) {
+        productImageModalTrigger.focus();
+      }
+      productImageModalTrigger = null;
+    }
+
+    catalogTableBody.addEventListener('click', (event) => {
+      const button = event.target.closest('.catalog-product-image-button');
+      if (!button) return;
+      const image = button.querySelector('img');
+      if (image) openProductImageModal(image, button);
+    });
+
+    catalogTableBody.addEventListener('mouseover', (event) => {
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      const button = event.target.closest('.catalog-product-image-button');
+      if (!button || button.contains(event.relatedTarget)) return;
+      const image = button.querySelector('img');
+      if (!image) return;
+      const previewImage = productImageHoverPreview.querySelector('img');
+      previewImage.src = image.currentSrc || image.src;
+      previewImage.alt = image.alt;
+      positionProductImageHoverPreview(event);
+    });
+
+    catalogTableBody.addEventListener('mousemove', (event) => {
+      if (productImageHoverPreview.style.display === 'block') {
+        positionProductImageHoverPreview(event);
+      }
+    });
+
+    catalogTableBody.addEventListener('mouseout', (event) => {
+      const button = event.target.closest('.catalog-product-image-button');
+      if (button && (!event.relatedTarget || !button.contains(event.relatedTarget))) {
+        hideProductImageHoverPreview();
+      }
+    });
+
+    productImageModal.addEventListener('click', (event) => {
+      if (event.target === productImageModal || event.target === productImageModalClose) {
+        closeProductImageModal();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        hideProductImageHoverPreview();
+        if (productImageModal.classList.contains('active')) closeProductImageModal();
+      }
+    });
+
+    function updateAuthUI() {
+      const statusText = document.getElementById('authStatusText');
+      const loginBtn = document.getElementById('loginToggleBtn');
+      const totalBadge = document.getElementById('headerTotalBadge');
+
+      if (isWholesaleLoggedIn) {
+        statusText.style.display = 'flex';
+        loginBtn.style.display = 'none';
+        totalBadge.style.display = 'block';
+      } else {
+        statusText.style.display = 'none';
+        loginBtn.style.display = 'block';
+        totalBadge.style.display = 'none';
+      }
+      filterBrand(currentActiveBrand);
+    }
+
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.add('active');
+    }
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.remove('active');
+    }
+
+    function toggleAccessCodeVisibility(button) {
+      const input = document.getElementById('authInput');
+      const isVisible = input.type === 'text';
+      input.type = isVisible ? 'password' : 'text';
+      button.textContent = isVisible ? 'Show' : 'Hide';
+      button.setAttribute('aria-label', `${isVisible ? 'Show' : 'Hide'} access code`);
+      button.setAttribute('aria-pressed', String(!isVisible));
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const code = document.getElementById('authInput').value.trim();
+      const submitButton = event.submitter || event.target.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+
+      try {
+        if (await window.verifyWholesaleAccount(code)) {
+          isWholesaleLoggedIn = true;
+          localStorage.setItem('tintoro_auth', 'true');
+          closeLoginModal();
+          updateAuthUI();
+          alert('Wholesale account verified successfully.');
+        } else {
+          alert('Invalid account number or authorization code.');
+        }
+      } catch (error) {
+        alert(error.message || 'Unable to verify the account. Please try again.');
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
+    }
+
+    function logoutAccount() {
+      isWholesaleLoggedIn = false;
+      localStorage.removeItem('tintoro_auth');
+      orderQuantities = {};
+      updateAuthUI();
+    }
+
+    function openOrderSummaryModal() {
+      renderSummaryTable();
+      document.getElementById('orderSubmissionStatus').textContent = '';
+      document.getElementById('submitOrderBtn').textContent = 'Submit Order Request';
+      document.getElementById('orderSummaryModal').classList.add('active');
+      updateOrderSubmitButton();
+    }
+
+    function renderSummaryTable() {
+      const summaryTable = document.getElementById('summaryTableContent');
+      let rowsHTML = `<tr><th>Product Name</th><th>Unit Price</th><th>Qty (Editable)</th><th style="text-align:right;">Subtotal</th></tr>`;
+      let hasItems = false;
+      let grandTotal = 0;
+      let orderSummaryText = "";
+
+      for (let title in orderQuantities) {
+        let qty = orderQuantities[title];
+        if (qty > 0) {
+          hasItems = true;
+          let priceStr = "$0.00";
+          let priceNum = 0;
+          for (let b in brandProducts) {
+            let found = brandProducts[b].find(p => p.title === title);
+            if (found) {
+              priceStr = found.price;
+              priceNum = parseFloat(found.price.replace('$', ''));
+              break;
+            }
+          }
+          let subtotal = priceNum * qty;
+          grandTotal += subtotal;
+          orderSummaryText += `[${title}] - Qty: ${qty}ea - Subtotal: $${subtotal.toFixed(2)}\n`;
+
+          let escapedTitle = title.replace(/'/g, "\\'");
+
+          rowsHTML += `
+            <tr>
+              <td style="font-weight:600; color:#111;">${title}</td>
+              <td style="white-space:nowrap;">${priceStr}</td>
+              <td style="white-space:nowrap;">
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" onclick="updateSummaryQty('${escapedTitle}', -1)">-</button>
+                  <input type="number" class="qty-input" value="${qty}" min="0" oninput="setSummaryQty('${escapedTitle}', this.value)">
+                  <button type="button" class="qty-btn" onclick="updateSummaryQty('${escapedTitle}', 1)">+</button>
+                </div>
+              </td>
+              <td style="text-align:right; font-weight:700; color:#e53935; white-space:nowrap;">$${subtotal.toFixed(2)}</td>
+            </tr>
+          `;
+        }
+      }
+
+      if (!hasItems) {
+        rowsHTML += `<tr><td colspan="4" style="text-align:center; color:#888; padding:30px;">No items selected yet. Please select quantities from the catalog.</td></tr>`;
+      }
+
+      summaryTable.innerHTML = rowsHTML;
+      document.getElementById('summaryGrandTotal').innerText = `$${grandTotal.toFixed(2)}`;
+      
+      document.getElementById('hiddenOrderDetails').value = orderSummaryText || "No items selected";
+      document.getElementById('hiddenGrandTotal').value = `$${grandTotal.toFixed(2)}`;
+      calculateGrandTotal();
+      updateOrderSubmitButton();
+    }
+
+    let orderAccountVerified = false;
+    let orderAccountCheckVersion = 0;
+    let orderAccountCheckTimeout;
+
+    function updateOrderSubmitButton() {
+      const form = document.getElementById('summaryOrderForm');
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const allRequiredFieldsValid = requiredFields.every(field => field.value.trim() !== '' && field.validity.valid);
+      const hasItems = Object.values(orderQuantities).some(qty => Number(qty) > 0);
+      const canSubmit = orderAccountVerified && allRequiredFieldsValid && hasItems && isWholesaleLoggedIn;
+      document.getElementById('submitOrderBtn').disabled = !canSubmit;
+      return canSubmit;
+    }
+
+    function validateOrderForm() {
+      const accountInput = document.getElementById('sumAccountNumber');
+      const errorMessage = document.getElementById('sumAccountNumberError');
+      const accountNumber = accountInput.value.trim();
+      const checkVersion = ++orderAccountCheckVersion;
+
+      clearTimeout(orderAccountCheckTimeout);
+      orderAccountVerified = false;
+      updateOrderSubmitButton();
+
+      if (!accountNumber) {
+        errorMessage.textContent = '';
+        return;
+      }
+
+      errorMessage.textContent = 'Checking account number...';
+      errorMessage.style.color = '#666';
+      orderAccountCheckTimeout = setTimeout(async () => {
+        try {
+          const isVerified = await window.verifyWholesaleAccount(accountNumber);
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          orderAccountVerified = isVerified;
+          errorMessage.textContent = isVerified ? 'Account verified.' : 'Account number not recognized.';
+          errorMessage.style.color = isVerified ? '#22623b' : '#b42318';
+        } catch (error) {
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          errorMessage.textContent = error.message || 'Unable to verify account number. Please try again.';
+          errorMessage.style.color = '#b42318';
+        }
+        updateOrderSubmitButton();
+      }, 350);
+    }
+
+    function updateSummaryQty(title, delta) {
+      if (!orderQuantities[title]) orderQuantities[title] = 0;
+      orderQuantities[title] += delta;
+      if (orderQuantities[title] < 0) orderQuantities[title] = 0;
+
+      renderSummaryTable();
+      filterBrand(currentActiveBrand);
+    }
+
+    function setSummaryQty(title, value) {
+      let val = parseInt(value);
+      if (isNaN(val) || val < 0) val = 0;
+      orderQuantities[title] = val;
+
+      renderSummaryTable();
+      filterBrand(currentActiveBrand);
+    }
+
+    function closeOrderSummaryModal() {
+      document.getElementById('orderSummaryModal').classList.remove('active');
+    }
+
+    function browseCatalogFromModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      document.getElementById('currentBrandTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    async function submitOrderFromSummary(event) {
+      event.preventDefault();
+      const form = event.target;
+      const status = document.getElementById('orderSubmissionStatus');
+      if (!form.reportValidity() || !updateOrderSubmitButton()) return;
+
+      const submitButton = document.getElementById('submitOrderBtn');
+      const accountInput = document.getElementById('sumAccountNumber');
+      const errorMessage = document.getElementById('sumAccountNumberError');
+      const submittedAccountNumber = accountInput.value.trim();
+      let requestReceived = false;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting Order Request...';
+      status.textContent = 'Submitting your order request...';
+
+      try {
+        const accountIsStillValid = await window.verifyWholesaleAccount(submittedAccountNumber);
+        if (!accountIsStillValid || accountInput.value.trim() !== submittedAccountNumber) {
+          orderAccountVerified = false;
+          errorMessage.textContent = accountIsStillValid
+            ? 'Account number changed. Please verify it again.'
+            : 'Account number not recognized.';
+          errorMessage.style.color = '#b42318';
+          updateOrderSubmitButton();
+          return;
+        }
+        if (!updateOrderSubmitButton()) {
+          form.reportValidity();
+          return;
+        }
+
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (!response.ok) {
+          let result = {};
+          try {
+            result = await response.json();
+          } catch {
+            throw new Error('There was a problem submitting your order request. Please try again.');
+          }
+          throw new Error(result.error || 'There was a problem submitting your order request. Please try again.');
+        }
+
+        requestReceived = true;
+        status.textContent = 'Order request received';
+        orderQuantities = {};
+        updateAuthUI();
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || 'Network error occurred. Please check your connection.';
+      } finally {
+        if (requestReceived) {
+          submitButton.textContent = 'Order request received';
+          submitButton.disabled = true;
+          updateOrderSubmitButton();
+        } else {
+          submitButton.textContent = 'Submit Order Request';
+          validateOrderForm();
+        }
+      }
+    }
+
+    function openInquireModal() {
+      document.getElementById('inquireModal').classList.add('active');
+      validateInquiryForm();
+    }
+    function closeInquireModal() {
+      document.getElementById('inquireModal').classList.remove('active');
+    }
+
+    function validateInquiryForm() {
+      const name = document.getElementById('inqName').value.trim();
+      const company = document.getElementById('inqCompany').value.trim();
+      const phone = document.getElementById('inqPhone').value.trim();
+      const email = document.getElementById('inqEmail').value.trim();
+      const submitBtn = document.getElementById('inquireSubmitBtn');
+
+      if (name !== '' && company !== '' && phone !== '' && email !== '') {
+        submitBtn.removeAttribute('disabled');
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+      }
+    }
+
+    async function submitInquiry(event) {
+      event.preventDefault();
+      const form = event.target;
+      const submitBtn = document.getElementById('inquireSubmitBtn');
+      submitBtn.innerText = "Sending Inquiry...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (!response.ok) {
+          let result = {};
+          try {
+            result = await response.json();
+          } catch {
+            throw new Error('Failed to send inquiry. Please try again.');
+          }
+          throw new Error(result.error || 'Failed to send inquiry. Please try again.');
+        }
+        alert('Your account inquiry has been sent successfully! We will get back to you soon.');
+        closeInquireModal();
+        form.reset();
+        validateInquiryForm();
+      } catch (error) {
+        alert(error.message || 'Network error occurred.');
+      } finally {
+        submitBtn.innerText = "Inquiry";
+        validateInquiryForm();
+      }
+    }
+
+    function changeQty(title, delta) {
+      if (!orderQuantities[title]) orderQuantities[title] = 0;
+      orderQuantities[title] += delta;
+      if (orderQuantities[title] < 0) orderQuantities[title] = 0;
+      
+      updateRowCalculation(title);
+      calculateGrandTotal();
+    }
+
+    function setQty(title, value) {
+      let val = parseInt(value);
+      if (isNaN(val) || val < 0) val = 0;
+      orderQuantities[title] = val;
+
+      updateRowCalculation(title);
+      calculateGrandTotal();
+    }
+
+    function updateRowCalculation(title) {
+      const qtyInput = document.getElementById(`qty_${title}`);
+      const subtotalEl = document.getElementById(`sub_${title}`);
+      if (qtyInput && subtotalEl) {
+        let qty = orderQuantities[title] || 0;
+        qtyInput.value = qty;
+
+        let priceNum = 0;
+        for (let b in brandProducts) {
+          let found = brandProducts[b].find(p => p.title === title);
+          if (found) {
+            priceNum = parseFloat(found.price.replace('$', ''));
+            break;
+          }
+        }
+        let subtotal = priceNum * qty;
+        subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
+      }
+    }
+
+    function calculateGrandTotal() {
+      let grandTotal = 0;
+      for (let title in orderQuantities) {
+        let qty = orderQuantities[title] || 0;
+        if (qty > 0) {
+          let priceNum = 0;
+          for (let b in brandProducts) {
+            let found = brandProducts[b].find(p => p.title === title);
+            if (found) {
+              priceNum = parseFloat(found.price.replace('$', ''));
+              break;
+            }
+          }
+          grandTotal += priceNum * qty;
+        }
+      }
+      const badge = document.getElementById('headerTotalBadge');
+      if (badge) {
+        badge.innerText = `Total: $${grandTotal.toFixed(2)} 🛒`;
+      }
+    }
+
+    let currentActiveBrand = 'COSRX';
+
+    const brandProducts = {
+      "Abib": [
+        { title: "HEARTLEAF SPOT PAD CALMING TOUCH (80 pads)", price: "$9.10" },
+        { title: "GLUTATHIOSOME DARK SPOT PAD VITA TOUCH 220ml / 60pads", price: "$9.78" },
+        { title: "Sedum hyaluron foam_Deep clean foam cleanser 150ml", price: "$5.56" },
+        { title: "DARK SPOT WRAPPING MASK GLUTATHIONE FILM 100ml", price: "$10.39" },
+        { title: "[4EA] GLOW COLLAGEN MASK GLUTATHIONE FILM", price: "$8.22" },
+        { title: "[4ea] COLLAGEN GEL MASK JERICHO ROSE JELLY", price: "$7.23" },
+        { title: "[4ea] COLLAGEN GEL MASK SEDUM JELLY", price: "$7.23" },
+        { title: "COLLAGEN EYE PATCH JERICHO ROSE JELLY 60pcs", price: "$9.88" },
+        { title: "PDRN RETINAL EYE PATCH GLOW JELLY 84g(60ea: 30pairs)", price: "$9.88" },
+        { title: "Collagen eye crème Jericho rose tube 30ml", price: "$8.79" },
+        { title: "GLUTATHIOSOME DARK SPOT SERUM VITA DROP 50ml", price: "$10.44" },
+        { title: "Airy Sunstick - smoothing bar 23g (OTC ver.)", price: "$9.21" },
+        { title: "(OTC ver.) Quick Sunstick Protection Bar SPF50+ PA++++ 22g", price: "$9.70" },
+        { title: "PDRN COLLAGEN LIP MASK GLAZED JELLY 11g", price: "$8.64" },
+        { title: "[1ea] Mild Acidic pH Sheet Mask_HEARTLEAF FIT", price: "$1.25" },
+        { title: "[1ea] GUMMY SHEET MASK COLLAGEN MILK STICKER (2023)", price: "$1.25" },
+        { title: "[1ea] Mild Acidic pH Sheet Mask_Aqua Fit", price: "$1.25" },
+        { title: "[1ea] GUMMY SHEET MASK HEARTLEAF STICKER (2023)", price: "$1.25" },
+        { title: "[1ea] MILD ACIDIC pH SHEET MASK JERICHO ROSE FIT", price: "$1.25" },
+        { title: "[1ea] MILD ACIDIC PH SHEET MASK GLUTATHIOSOME FIT 30ml", price: "$1.32" }
+      ],
+      "AMPLEN": [
+        { title: "(1ea)PeptideShot Mask", price: "$0.73" },
+        { title: "(1ea)HyaluronShot Mask", price: "$0.73" },
+        { title: "(1ea)VCShot Mask", price: "$0.81" }
+      ],
+      "Anua": [
+        { title: "(OTC) ZERO-CAST MOISTURIZING FINISH SUNSCREEN", price: "$11.66" },
+        { title: "3 CERAMIDE PANTHENOL MOISTURE BARRIER CREAM 100ml", price: "$18.57" },
+        { title: "[RENEW] HEARTLEAF QUERCETINOL CLEANSING FOAM 150ml", price: "$7.94" },
+        { title: "HEARLEAF PORE CONTROL CLEANSING OIL MILD 200ml", price: "$12.35" },
+        { title: "HEARTLEAF PORE CONTROL CLEANSING OIL 200ml", price: "$12.35" },
+        { title: "HEARTLEAF 77% TONER PAD (70EA)", price: "$14.32" },
+        { title: "[RENEW] [1EA] HEARTLEAF 77% SOOTHING SHEET MASK", price: "$2.21" },
+        { title: "[RENEW] HEARTLEAF 70 DAILY LOTION 200ml", price: "$16.06" },
+        { title: "[RENEW] PEACH 70% NIACINAMIDE SERUM 30ml", price: "$14.86" },
+        { title: "[RENEW] PEACH 77 NIACIN ESSENCE TONER 250ml", price: "$15.04" },
+        { title: "PDRN HYALURONIC ACID 100 MOISTURE CREAM 60ML", price: "$19.68" },
+        { title: "PDRN HYALURONIC GLOW PAD 180ml (60EA)", price: "$15.00" },
+        { title: "ULTRA THIN SPOT COVER PATCH 75EA", price: "$9.38" },
+        { title: "Azelaic Acid 10 Hyaluron Redness Soothing Serum 30ml", price: "$18.58" },
+        { title: "PDRN Hyaluronic Acid Capsule 100 Serum 30ml", price: "$20.08" },
+        { title: "[RENEW] NIACINAMIDE10% + TXA 4% SERUM 30mL", price: "$14.86" },
+        { title: "RICE 70 INTENSIVE MOISTURIZING MILK 150ml", price: "$15.53" },
+        { title: "RICE ENZYME BRIGHTENING CLEANSING POWDER 40g", price: "$12.86" },
+        { title: "HEARTLEAF 77% SOOTHING TONER 250ml", price: "$14.31" },
+        { title: "NIACINAMIDE 5 TXA BRIGHTENING PAD 210ML (60EA)", price: "$15.00" },
+        { title: "RICE 7 CERAMIDE HYDRATING BARRIER SERUM 50ml", price: "$14.86" },
+        { title: "RICE 70 GLOW MILKY TONER 250ml", price: "$14.38" },
+        { title: "8 HYALURONIC ACID MOISTURIZING GENTLE GEL CLEANSER 150ml", price: "$9.38" },
+        { title: "[RENEW] [1EA] HEARTLEAF 80 MOISTURE SOOTHING AMPOULE MASK 27ml", price: "$2.66" },
+        { title: "[Worldwide] [1EA] PDRN HYALURONIC ACID CAPSULE 100 SERUM MASK 23ml", price: "$2.21" },
+        { title: "[Worldwide] [1EA] PEACH NIACIN SERUM MASK 25ml", price: "$2.21" }
+      ],
+      "ARENCIA": [
+        { title: "FRESH BLUE HYSSOP RICE MOCHI CLEANSER 120G", price: "$9.91" },
+        { title: "BLACK TEA RICE MOCHI CLEANSER 120G", price: "$9.91" },
+        { title: "CALENDULA RICE MOCHI CLEANSER 120G", price: "$9.91" },
+        { title: "FRESH GREEN RICE MOCHI CLEANSER 120G", price: "$9.91" },
+        { title: "Green Tea + LHA Deep Pore Rice Cake Cleanser 150g", price: "$11.26" },
+        { title: "RICE MUCIN CLEANSER 120G", price: "$9.91" },
+        { title: "FRESH ROSEHIP RICE MOCHI CLEANSER 120G", price: "$9.91" }
+      ],
+      "Beauty of Joseon": [
+        { title: "[US] Green Plum Refreshing Cleanser 100ml", price: "$6.91" },
+        { title: "[US] [RENEW]RADIANCE CLEANSING BALM 100ML", price: "$10.04" },
+        { title: "[US] Centella Asiatica Calming Mask(10ea)", price: "$9.05" },
+        { title: "[US] Red Bean Refreshing Pore Mask 140ml", price: "$10.84" },
+        { title: "[US] Revive Eye Serum : Ginseng + Retinal 30ml", price: "$9.23" },
+        { title: "[US] Glow Deep Seum : Rice +Alpha Arbutin 30ml", price: "$9.17" },
+        { title: "[US] Revive Serum : Ginseng+Snail Mucin 30ml", price: "$9.21" },
+        { title: "[US] Ginseng Essence Water 150ml", price: "$9.43" },
+        { title: "[US] Ginseng Cleansing Oil 210ml", price: "$10.68" },
+        { title: "[US] Hanbang Serum Discovery Kit", price: "$16.06" },
+        { title: "Glow Serum : Propolis+Niacinamide 30ml", price: "$9.44" },
+        { title: "[US] Red Bean Water Gel 100ml", price: "$10.30" },
+        { title: "10EA CENTELLA ASIATICA CALMING MASK", price: "$9.05" }
+      ],
+      "Biodance": [
+        { title: "COLLAGEN PEPTIDE JELLY SERUM MIST 50ML", price: "$10.44" },
+        { title: "Hydro Ceramide Cleansing Powder 1g*30ea", price: "$9.91" },
+        { title: "[EN][4ea] Bio-Collagen Real Deep Mask 4ea", price: "$10.44" },
+        { title: "Hydro Cera-nol Real Deep Mask 1Box (34g*4ea)", price: "$10.44" },
+        { title: "REJUVENATING CAVIAR PDRN REAL DEEP MASK 4EA", price: "$10.44" },
+        { title: "Refreshing Sea Kelp Real Deep Mask 1Box (34g*4ea)", price: "$10.44" },
+        { title: "PORE PERFECTING COLLAGEN PEPTIDE CREAM 50ml", price: "$18.74" },
+        { title: "Collagen Gel Toner Pads 60Pads", price: "$12.00" },
+        { title: "Cera-nol Gel Toner Pads 60Pads", price: "$12.00" },
+        { title: "REFRESHING SEA KELP SERUM 30ml", price: "$14.05" },
+        { title: "RADIANT VITA NIACINAMIDE SERUM 30ml", price: "$14.05" },
+        { title: "Sea Kelp Gel Toner Pad (60ea)", price: "$12.00" },
+        { title: "Vita Niacinamide Gel Toner Pad (60ea)", price: "$12.00" },
+        { title: "Skin Glow Vital Ampoule 50ml", price: "$25.66" },
+        { title: "Collagen Ampoule 50ml", price: "$24.32" },
+        { title: "[US] Serum Discovery Set", price: "$16.06" }
+      ],
+      "COSRX": [
+        { title: "PEPTIDE-132 Ultra Perfect Hair Bonding Shampoo 200ml", price: "$13.00" },
+        { title: "Poreless Clarifying Charcoal Mask", price: "$11.26" },
+        { title: "Advanced Snail Mucin Gel Cleanser 150 mL", price: "$11.97" },
+        { title: "Low pH Good Morning Gel Cleanser 150ml", price: "$7.49" },
+        { title: "Salicylic Acid Daily Gentle Cleanser 150ml", price: "$6.32" },
+        { title: "PEPTIDE-132 Ultra Perfect Hair Bonding Treatment 120ml", price: "$13.00" },
+        { title: "Acne Pimple Master 24 patches", price: "$2.14" },
+        { title: "Clear Fit Master Patch(Somadermspot-S)", price: "$2.36" },
+        { title: "[COSRX] Advanced Snail 96 Mucin Power Essence 100ml", price: "$11.25" },
+        { title: "Advanced Snail Radiance Dual Essence 80ml", price: "$20.92" },
+        { title: "AHA/BHA CLARIFYING TREATMENT TONER 150ml", price: "$8.56" },
+        { title: "Hyaluronic Hydra intensive cream 100ml", price: "$13.86" },
+        { title: "The 6 Peptide Skin Booster Serum 150mL", price: "$14.13" },
+        { title: "Refresh AHA BHA Vitamin C Booster Serum 30ml", price: "$13.77" },
+        { title: "All About Snail Kit", price: "$16.73" },
+        { title: "[Cosrx] Advanced Snail 92 All In One Cream 100g", price: "$12.05" },
+        { title: "Oil-Free Ultra-Moisturizing Lotion 100ml", price: "$11.57" }
+      ],
+      "d Alba": [
+        { title: "White truffle First Spray Serum 50ml (vegan)", price: "$9.26" },
+        { title: "Professional Repairing Hair Perfume Serum_Rose freesia 50ml", price: "$11.38" },
+        { title: "White Truffle Nourishing Treatment Mask 5ea", price: "$10.53" },
+        { title: "(OTC) Waterful Essence Sun cream 50ml", price: "$16.48" },
+        { title: "(OTC)Waterful Tone-Up Sun cream 50ml", price: "$16.48" },
+        { title: "White truffle First Spray Serum 100ml (vegan)", price: "$13.29" },
+        { title: "White Truffle Double Serum & Cream 70g", price: "$30.79" },
+        { title: "White truffle First Aromatic Spray Serum 120ml", price: "$18.73" },
+        { title: "White truffle First Aromatic Spray Serum 60ml", price: "$11.47" },
+        { title: "Vita Toning Capsule Cream 55g", price: "$23.39" },
+        { title: "Vita Toning Capsule Serum 100ml", price: "$22.49" },
+        { title: "(OTC) Waterfull Mild SunCream 50ml", price: "$16.48" },
+        { title: "White Truffle Vital Spray Serum 100ml", price: "$14.19" },
+        { title: "White Truffle First Aromatic Toner 155ml", price: "$11.00" }
+      ],
+      "Dr.Althea": [
+        { title: "EYE LASH BOOST SERUM 9ml", price: "$9.23" },
+        { title: "345 Cream Mask 4EA", price: "$8.52" },
+        { title: "[RENEW] MELACLEAR CREAM 20g", price: "$15.21" },
+        { title: "Rapid Firm Sculpting Cream 45ml", price: "$18.01" },
+        { title: "345 Repair Cream 15ml", price: "$5.75" },
+        { title: "ABC Glow Whipped Serum 100ml", price: "$12.45" },
+        { title: "Aqua Marine Deep Serum 30ml", price: "$9.64" },
+        { title: "345 Relief Serum 30ml", price: "$12.45" },
+        { title: "Pure Grinding Cleansing Balm 50ml", price: "$12.48" },
+        { title: "Pore Refresh Grinding Cleansing Balm 50ml", price: "$12.48" },
+        { title: "Green Relief Amino Gel Cleanser 100ml", price: "$7.49" },
+        { title: "Aqua Marine Watery Cream 50ml", price: "$9.51" },
+        { title: "PDRN Reju 5000 Cream 20g", price: "$15.21" },
+        { title: "Gentle Vitamin C Serum 30ml", price: "$10.82" },
+        { title: "Aqua Marine Jelly Mist 100ml", price: "$12.45" },
+        { title: "345 Relief Cream Mist 100ml", price: "$12.45" },
+        { title: "345 Relief Cream Mist 60ml", price: "$8.30" },
+        { title: "[Renew] Vitamin C Boosting Serum 30ml", price: "$11.05" },
+        { title: "15% Niacinamide Purity Serum 30ml", price: "$10.70" },
+        { title: "No.9 NAD Retinol Volumetox Eye Cream 10ml", price: "$11.52" },
+        { title: "5ea) No.9 NAD Collagen Under Eye Patches", price: "$8.30" },
+        { title: "OTC) No.9 NAD+ BIO Super Defense Glow Sunscreen 50ml", price: "$11.38" },
+        { title: "147 Barrier Cream 50ml", price: "$15.21" },
+        { title: "345 Relief Cream 50ml", price: "$15.21" }
+      ],
+      "ELIZAVECCA": [
+        { title: "[Elizavecca] Milky Piggy Water Lock Hydrogel Melting Mask", price: "$7.01" },
+        { title: "Milky Piggy Carbonated Bubble Clay Mask 100g", price: "$7.16" },
+        { title: "Milky Piggy Glutinous 80% Mask 100ml", price: "$9.12" }
+      ],
+      "Goodal": [
+        { title: "(5EA) GOODAL TANGERINE VITA C DARK SPOT CARE SERUM SHEET MASK", price: "$6.69" },
+        { title: "BLACK CARROT VITA-A RETINOL FIRMING CREAM (50ml)", price: "$13.34" },
+        { title: "Black Carrot Vita A Retinal Intense Serum 8.0 (20ml)", price: "$17.14" },
+        { title: "HOUTTUYNIA CORDATA HYALURON SOOTHING CLEAR PAD 70ea", price: "$15.18" },
+        { title: "GREEN TANGERINE VITA C DARK SPOT CARE GEL MASK", price: "$2.74" },
+        { title: "(4EA) BLACK CARROT VITA-A RETINOL LIFTING GEL SHEET MASK", price: "$9.32" },
+        { title: "Green Tangerine Vita C Niacinamide 10 Blemish Ampoule 30ml", price: "$15.35" },
+        { title: "(Renew) GREEN TANGERINE VITA C 15 DARK SPOT CARE AMPOULE 16g", price: "$15.35" },
+        { title: "HEARTLEAF HYALURON SOOTHING TONER 350ml", price: "$12.84" },
+        { title: "BLACK CARROT VITA-A RETINOL FIRMING AMPOULE (30ml)", price: "$15.36" },
+        { title: "GREEN TANGERINE VITA C DARK SPOT CARE CREAM", price: "$13.82" },
+        { title: "GREEN TANGERINE VITA C DARK SPOT CARE SERUM", price: "$13.12" },
+        { title: "Vegan Rice Milk Moisturizing toner 250ml", price: "$10.31" },
+        { title: "Green Tangerine Vita C Eye Gel Patch 60ea", price: "$8.73" },
+        { title: "GREEN TANGERINE VITA C DARK CIRCLE EYE CREAM 30ml", price: "$12.94" },
+        { title: "HEARTLEAF SOOTHING MINERAL 100 SUNSCREEN 50ml", price: "$11.10" }
+      ],
+      "HYAAH": [
+        { title: "[RENEW] Synergy Mask Pad 60EA", price: "$9.95" }
+      ],
+      "ISNTREE": [
+        { title: "(OTC) HYALURONIC ACID DAILY SUN GEL _50ml", price: "$9.52" }
+      ],
+      "KOELF": [
+        { title: "Rose Petal Foot Mask 1EA", price: "$1.30" },
+        { title: "Rose Petal Heel Mask 1EA", price: "$1.30" },
+        { title: "Rose Petal Hand Mask 1EA", price: "$1.30" },
+        { title: "Rose Petal Leg Mask 1EA", price: "$3.09" }
+      ],
+      "LAGOM": [
+        { title: "WHITE KAOLIN MUD MASK 110ml", price: "$17.26" }
+      ],
+      "Medicube": [
+        { title: "COLLAGEN MILK TONING WRAPPING MASK 75ml", price: "$14.19" },
+        { title: "KOJIC ACID TURMERIC NIGHT WRAPPING MASK 75ML 2.0", price: "$14.86" },
+        { title: "PDRN PINK ONE DAY SERUM", price: "$8.04" },
+        { title: "KOJIC ACID TURMERIC VITA CAPSULE CREAM", price: "$16.06" },
+        { title: "AGE-R BOOSTER PRO MINI PLUS BEIGE", price: "$79.35" },
+        { title: "AGE-R BOOSTER PRO MINI PLUS PINK", price: "$79.35" },
+        { title: "ZERO FOAM CLEANSER 120G", price: "$9.70" },
+        { title: "ZERO PORE CLEARING CAPSULE CLEANSING FOAM 120g", price: "$10.04" },
+        { title: "PDRN PINK NIACINEAMIDE WHIP CLEANSER 120g", price: "$11.19" },
+        { title: "COLLAGEN NIGHT WRAPPING MASK 75ml", price: "$14.19" },
+        { title: "PDRN PINK COLLAGEN GEL MASK 4ea", price: "$11.27" },
+        { title: "KOJIC ACID TURMERIC BRIGHTENING GEL MASK 4ea", price: "$11.27" },
+        { title: "ONE DAY EXOSOME SHOT PORE AMPOULE 7500 30ml", price: "$16.40" },
+        { title: "ZERO PORE CREAM 2.0 50ML", price: "$12.17" },
+        { title: "ZERO PORE SERUM 2.0 37ML", price: "$10.31" },
+        { title: "ZERO PORE PAD 2.0 (70pcs)", price: "$13.12" },
+        { title: "DEEP VITA C CAPSULE CREAM 55g", price: "$16.06" },
+        { title: "[RENEW]DEEP VITA C PAD (70PCS)", price: "$15.00" },
+        { title: "COLLAGEN JELLY CREAM 50ml", price: "$9.64" },
+        { title: "TRIPLE COLLAGEN SERUM 4.0 55ml", price: "$10.04" },
+        { title: "[Renew]TRIPLE COLLAGEN TONER 4.0 140ml", price: "$8.91" },
+        { title: "PDRN PINK PEPTIDE SERUM 30ML", price: "$13.79" },
+        { title: "PDRN PINK PEPTIDE EYE CREAM 30ml", price: "$11.34" },
+        { title: "PDRN PINK COLLAGEN TONING GEL TONER PAD 70EA", price: "$14.32" },
+        { title: "KOJIC ACID TERMERIC VITA JELLY MIST SERUM 100ml", price: "$11.55" },
+        { title: "TXA NIACINAMAIDE CAPSULE CREAM 55g", price: "$16.97" },
+        { title: "AGE-R BOOSTER PRO X2 PINK", price: "$187.44" },
+        { title: "AGE-R V ROLLER PINK", price: "$72.30" },
+        { title: "AGE-R V ROLLER BEIGE", price: "$72.30" },
+        { title: "HYALURONIC MOISTURIZING CAPSULE CREAM 55G", price: "$16.06" },
+        { title: "HYALURONIC CERAMIDE JELLY CREAM 50ML", price: "$9.10" },
+        { title: "KOJIC ACID TURMERIC VITA EYE GEL SERUM 30ml", price: "$13.86" },
+        { title: "Glow Collagen Sunscreen 50ml SPF 50", price: "$13.79" },
+        { title: "PDRN PINK VITA COATING MASK 1EA", price: "$1.68" },
+        { title: "(1EA) ZERO PORE COOLING MASK 27g", price: "$1.61" },
+        { title: "1EA) COLLAGEN LIFTING MASK 27g", price: "$1.61" },
+        { title: "(1EA) DEEP PEPTIDE RADIANCE MASK 27ml", price: "$1.61" },
+        { title: "[1EA] DEEP VITA C GLUTATHIONE BRIGHTENING MASK", price: "$1.61" }
+      ],
+      "Missha": [
+        { title: "[Missha] M Perfect Cover BB Cream DUAL PACK #21 (50ml)", price: "$19.53" },
+        { title: "[Missha] M Perfect Cover BB Cream #23 Natural Beige (50ml)", price: "$11.97" },
+        { title: "[Missha] M Perfect Cover BB Cream #25 Warm Beige (50ml)", price: "$11.97" },
+        { title: "[Missha] M Perfect Cover BB Cream #27 Honey Beige (50ml)", price: "$11.97" },
+        { title: "[Missha] M Perfect Cover BB Cream #29 Caramel Beige (50ml)", price: "$11.97" },
+        { title: "[Missha] M Perfect Cover BB Cream #31 Golden Beige (50ml)", price: "$11.97" },
+        { title: "[Missha] M Perfect Cover BB Cream #33 Tan (50ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover BB Cream #33 Deep Mocha (50ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #13 Light Fair (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #17 Fair (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #19 Ivory (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #21 Light Beige (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #23 Natural Beige (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #25 Warm Beige (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #27 Honey Beige (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #33 Tan (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover Serum BB Cream #41 Medium Tan (35ml)", price: "$17.01" },
+        { title: "[Missha] M Perfect Cover BB Cream #21 Light Beige (50ml)", price: "$11.97" }
+      ],
+      "MIXSOON": [
+        { title: "[5EA] bifida mask pack", price: "$8.03" },
+        { title: "Centella Hyal Sunscreen SPF 50 (50ml)", price: "$11.39" },
+        { title: "Bean Sunscreen SPF 50 (50ml)", price: "$9.66" }
+      ],
+      "MIZON": [
+        { title: "JOYFUL TIME ESSENCE MASK ACAI BERRY", price: "$0.53" }
+      ],
+      "NACIFIC": [
+        { title: "Rice Pepta Collagen Gel Mask (4ea)", price: "$10.71" },
+        { title: "Fresh Herb Origin Daily Mask pack 30 sheets", price: "$8.19" },
+        { title: "*Renew* NIACINAMIDE Brightening Mask Pack 30g 1ea", price: "$1.21" },
+        { title: "Rice Pepta Collagen Peel-off Wrapping Mask 70g", price: "$10.71" },
+        { title: "Green Tea Cica Collagen Gel Mask (4ea)", price: "$11.65" }
+      ],
+      "NEEDLY": [
+        { title: "Crossbarrier Mask 30sheets", price: "$14.44" }
+      ],
+      "NEOGEN": [
+        { title: "(5EA) HIGH G EXOSOME MASK 39g", price: "$9.96" }
+      ],
+      "Numbuzin": [
+        { title: "No.1 Pantothenic B5 Active Soothing Serum 50ml", price: "$14.36" },
+        { title: "5ea) No.2 Rose PDRN Collagen Plumping Sheet Mask", price: "$7.18" },
+        { title: "(4EA) No.2 Rose PDRN Overnight Collagen Mask", price: "$11.49" },
+        { title: "No.3 Skin Softening Serum 50ml", price: "$17.64" },
+        { title: "(4EA) No.9 NAD Bio Lifting Full Cover Facial Mask (+GWP)", price: "$9.75" },
+        { title: "No.9 NAD Bio Lifting Essence 50ml", price: "$14.73" },
+        { title: "No.2 Rose PDRN Collagen 2X Plumping Serum 30ml", price: "$14.36" },
+        { title: "No.1 Pure-full Calming Herb Toner 300ml", price: "$12.58" },
+        { title: "No.9 NAD PDRN Glow Boosting Toner 150ml", price: "$10.04" },
+        { title: "No.5+ Vitamin-Niacinamide Concentrated Pad 180ml(70Pads)", price: "$13.79" },
+        { title: "No.1 Pantothenic B5 Active Soothing Cream 80ml", price: "$14.57" },
+        { title: "No.5+ Glutathione Vitamin Concentrated Serum 30ml", price: "$13.79" },
+        { title: "No.3 Super Glowing Essence Toner 200ml", price: "$11.38" },
+        { title: "[1EA] No.5+ Glutathione Vitamin Concentrated Mask", price: "$1.56" },
+        { title: "5ea) No.1 Pantothenic B5 Hyaluronic Active Clear Mask", price: "$7.40" }
+      ],
+      "PCALM": [
+        { title: "HOLY BASIL BUBBLE DEEP MASK 90g", price: "$11.12" }
+      ],
+      "PURITOSEOUL": [
+        { title: "Wonder Releaf Centella Toner Unscented 200ml", price: "$12.68" },
+        { title: "Mighty Bamboo Panthenol Cream 100ml", price: "$12.68" },
+        { title: "*Renewal Oat-in Calming Gel Cream 100ml", price: "$10.65" },
+        { title: "Mighty Bamboo Panthenol Cleanser 150ml", price: "$6.17" },
+        { title: "Oat In Gentle Exfoliating Face Cleanser 150ml", price: "$12.39" },
+        { title: "Wonder Releaf Centella Cream Unscented 50ml", price: "$11.32" },
+        { title: "Wonder Releaf Centella Eye Cream 30ml", price: "$8.66" },
+        { title: "Wonder Releaf Centella Eye Cream Unscented 30ml", price: "$8.66" },
+        { title: "Wonder Releaf Centella Serum Unscented 60ml", price: "$12.68" },
+        { title: "Wonder Releaf Centella Mini Kit Unscented", price: "$8.83" },
+        { title: "EP) Purito Seoul Bamboo Panthenol Cream Set", price: "$14.29" },
+        { title: "Oat PDRN Gentle Refining Toner 200ml", price: "$12.86" },
+        { title: "(OTC) Sun Day Adventure Sunscreen 50ml", price: "$11.78" },
+        { title: "(OTC) Sun Day Adventure Sunscreen 60ml", price: "$12.14" }
+      ],
+      "REALBARRIER": [
+        { title: "[Renew][10ea] Extreme Cream Mask 27ml", price: "$14.30" }
+      ],
+      "Round Lab": [
+        { title: "(Renewal) Birch Juice Moisturizing Mask(10EA)", price: "$10.97" },
+        { title: "BIRCH JUICE TRIAL KIT", price: "$6.95" },
+        { title: "*Renewal 1025 DOKDO LOTION_200ml", price: "$9.10" },
+        { title: "(Renewal) Birch Juice Moisturizing Toner 300ml", price: "$8.90" },
+        { title: "(Renewal) 1025 DOKDO CLEANSING TISSUE_30ea", price: "$3.06" },
+        { title: "*Renewal Birch Juice Moisturizing Cream 80ml", price: "$13.14" },
+        { title: "*Renewal Birch Juice MOISTURIZING PAD_80ea", price: "$8.60" },
+        { title: "(Renewal) 1025 DOKDO CLEANSER_150ml", price: "$6.69" },
+        { title: "(Renewal) Dokdo Cleansing Oil 200ml", price: "$11.31" },
+        { title: "(Renewal) Birch Juice Moisturizing Cleanser 150ml", price: "$6.48" },
+        { title: "(Renewal) 1025 DOKDO CREAM_80ml", price: "$12.45" },
+        { title: "(Renewal) 1025 DOKDO TONER_200ml", price: "$7.47" },
+        { title: "(Renewal) Birch Juice Moisturizing Serum 50ml", price: "$9.73" },
+        { title: "(OTC) BIRCH JUICE MOISTURIZING UVLOCK SUN 50ml", price: "$10.57" },
+        { title: "1025 DOKDO CLEANSING BALM 50ml", price: "$11.49" },
+        { title: "(OTC) BIRCH JUICE MILD-UP UVLOCK_50ml", price: "$9.27" },
+        { title: "(OTC) BIRCH JUICE MOISTURIZING UVLOCK SUN CUSHION_15g", price: "$8.04" },
+        { title: "(OTC) BIRCH JUICE MOISTURIZING UVLOCK SUN STICK_19g", price: "$8.77" },
+        { title: "1025 DOKDO TRIAL KIT", price: "$6.95" }
+      ],
+      "SEOHAESOL": [
+        { title: "[5ea] Chi-Ki-Da Maskpack", price: "$18.17" }
+      ],
+      "Skin 1004": [
+        { title: "Madagascar Centella Poremizing Deep Cleansing Foam 125ml", price: "$9.51" },
+        { title: "Madagascar Centella Poremizing Fresh Ampoule 100ml", price: "$11.78" },
+        { title: "Madagascar Centella Toning Toner 210ml", price: "$10.84" },
+        { title: "Madagascar Centella Poremizing Quick Clay Stick Mask 27g", price: "$12.99" },
+        { title: "Madagascar Centella Soothing Cream 75ml", price: "$13.26" },
+        { title: "Madagascar Hyalu-cica Moisture Cream 75ml", price: "$14.45" },
+        { title: "Madagascar Centella Poremizing Light Gel Cream 75ml", price: "$11.65" },
+        { title: "MADAGASCAR CENTELLA PROBIO-CICA ENRICH CREAM 50ml", price: "$14.32" },
+        { title: "MADAGASCAR CENTELLA PROBIO-CICA BAKUCHIOL EYE CREAM 20ML", price: "$11.38" },
+        { title: "Madagascar Centella Hyalu-Cica Cloudy Mist 120ml", price: "$10.91" },
+        { title: "Madagascar Centella Travel Kit", price: "$18.48" },
+        { title: "Madagascar Centella Matrixyl 10 Boosting Shot Ampoule 30ml", price: "$15.06" },
+        { title: "Madagascar Centella Niacinamide 10 Boosting Shot Ampoule 30ml", price: "$11.25" },
+        { title: "Madagascar Centella Ampoule Foam 125ml", price: "$10.04" },
+        { title: "Madagascar Centella Light Cleansing OIl 200ml", price: "$12.58" },
+        { title: "Madagascar Centella Ampoule 100ml", price: "$13.66" },
+        { title: "Madagascar Centella Tone Brightening Capsule Ampoule 100ml", price: "$13.66" },
+        { title: "MADAGASCAR CENTELLA PROBIO-CICA INTENSIVE AMPOULE 50ml", price: "$12.86" },
+        { title: "Zombie Pack & Activator Kit 3.5mlx8ea", price: "$12.58" },
+        { title: "[1ea] Madagascar Centella Watergel Sheet Ampoule Mask", price: "$1.51" },
+        { title: "[1ea] Madagascar Centella Tone Brightening Glow Mask 25ml", price: "$1.51" },
+        { title: "[1ea] Madagascar Centella Poremizing Clarifying Mask 23ml", price: "$1.56" },
+        { title: "[1ea] Madagascar Centella Tea-Trica Relaxing Mask 24ml", price: "$1.56" },
+        { title: "[1ea] SKIN1004 Madagascar Centella Hyalu-Cica Hydrating Mask", price: "$1.56" }
+      ],
+      "SOMEBYMI": [
+        { title: "AHA·BHA·PHA MIRACLE BODY TONER MIST 140ml", price: "$11.78" },
+        { title: "AHA BHA PHA MIRACLE CALMING BODY LOTION 200ML", price: "$8.21" },
+        { title: "AHA.BHA.PHA 30 Days Miracle Foam 100ml", price: "$8.17" },
+        { title: "AHA.BHA.PHA 30 Days Miracle Cream 60ml", price: "$11.92" },
+        { title: "AHA.BHA.PHA 30 Days Miracle Serum 50ml", price: "$11.92" },
+        { title: "AHA.BHA.PHA 30 Days Miracle Toner 150ml", price: "$11.66" },
+        { title: "AHA.BHA.PHA 14DAYS Super miracle Spot All Kill Cream", price: "$10.30" },
+        { title: "CLEAR SPOT PATCH 18pcs", price: "$2.25" },
+        { title: "RETINOL INTENSE ADVANCED TRIPLE ACTION EYE CREAM 30ml", price: "$10.16" },
+        { title: "RETINOL INTENSE REACTIVATING SERUM 30ml", price: "$13.66" },
+        { title: "[OTC] V10 HYAL AIR FIT SUNSCREEN", price: "$11.05" },
+        { title: "BYE BYE BLACKHEAD 30 DAYS MILACLE GREEN TEA TOX", price: "$9.16" },
+        { title: "AHA.BHA.PHA 30 Days Miracle clear body cleanser 400g", price: "$10.71" },
+        { title: "AHA.BHA.PHA 30 Days Miracle Starter Kit", price: "$12.05" }
+      ],
+      "TIRTIR": [
+        { title: "Mask Fit Red Cushion 17N Vanilla", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 13C Fair", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 13N Fair Ivory", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 13W CREAM", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 21W NATURAL IVORY", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 22W SHEER BEIGE", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 24N LATTE", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 24W SOFT BEIGE", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 27N CAMEL", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 28N OAT", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 29C TAUPE BEIGE", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 30N RICH HONEY", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 33C Hazel", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 33W GINGER", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 34C AMBER", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 34N PECAN", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 34W TOFFEE", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 47N EBONY", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 55N ESPRESSO", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 17W French Vanilla", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 21N IVORY", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 23N SAND", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 25N MOCHA", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 37C ALMOND", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 43N Deep Cocoa", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 45N SADDLE BROWN", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 15C Fair Porcelain", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 17C PORCELAIN", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 21C Cool Ivory", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 33N Macchiato", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 35N Walnut", price: "$15.00" },
+        { title: "Mask Fit Red Cushion 40N Cinnamon", price: "$15.00" },
+        { title: "MASK FIT RED CUSHION 45W CHESTNUT", price: "$15.00" },
+        { title: "(OTC) UV SHIELD SUN SCEREEN 50ml", price: "$13.75" }
+      ],
+      "TOCOBO": [
+        { title: "BIFIDA BIOME ESSENCE 50mL", price: "$10.42" },
+        { title: "(OTC)BIO WATERY SUN SCREEN", price: "$9.92" },
+        { title: "Coconut Clay Cleansing Foam 150ml", price: "$4.87" },
+        { title: "AHA BHA LEMON TONER 150mL", price: "$8.31" },
+        { title: "MULTI CERAMIDE CREAM 50mL", price: "$9.88" },
+        { title: "Vita Glazed Lip Mask 20ml", price: "$7.90" },
+        { title: "[GL] Collagen Boosting Lip Mask 20ml", price: "$7.90" },
+        { title: "(OTC) COTTON AIRY SUN STICK", price: "$9.96" },
+        { title: "[OTC] COTTON AIRY SUN STICK MINI", price: "$8.16" },
+        { title: "JUICY BERRY PLUMPING LIP OIL GLAM MAX 00", price: "$6.29" },
+        { title: "[GLOBAL] JUICY BERRY PLUMPING LIP OIL 18 COZY PINK", price: "$6.29" },
+        { title: "[GLOBAL] JUICY BERRY PLUMPING LIP OIL 03 BLACK CHERRY", price: "$6.29" },
+        { title: "TOCOBO Double cleansing Duo", price: "$18.13" },
+        { title: "Collagen Brightening Eye Gel Cream", price: "$9.10" },
+        { title: "Cica Calming Aqua Toner 200ml", price: "$7.39" }
+      ],
+      "VT": [
+        { title: "VT Reedle shot 100", price: "$14.05" },
+        { title: "REEDLE SHOT 50", price: "$13.39" },
+        { title: "VT Reedle shot 700", price: "$21.42" },
+        { title: "COLLAGEN REEDLE SHOT 100", price: "$18.88" },
+        { title: "HYDROP REEDLE SHOT 300hL", price: "$20.08" },
+        { title: "PRO CICA REEDLE SHOT 100", price: "$18.88" },
+        { title: "RED BOOSTER REEDLE SHOT 300", price: "$25.44" },
+        { title: "VITA-LIGHT REEDLE SHOT 100", price: "$18.88" },
+        { title: "VT CICA COLLAGEN MASK", price: "$14.05" },
+        { title: "REEDLE SHOT EX CICA MODELLING PACK 25g", price: "$1.94" },
+        { title: "VT SPOT PATCH(3sets, 48ea)", price: "$3.23" },
+        { title: "VT Reedle shot 300", price: "$20.08" },
+        { title: "REEDLE SHOT EX COLLAGEN MODELLING PACK 25g", price: "$1.94" },
+        { title: "PDRN CAPSULE CREAM 100 50ML", price: "$15.00" },
+        { title: "[1EA] REEDLE SHOT 100 2-STEP MASK", price: "$1.73" },
+        { title: "[1EA] REEDLE SHOT 300 2-STEP MASK", price: "$1.82" }
+      ],
+      "ZEROID": [
+        { title: "Soothing Lotion 200ml", price: "$12.99" },
+        { title: "Intensive Lotion 200ml", price: "$15.61" },
+        { title: "Pimprove Moisturizer 100ml", price: "$11.30" }
+      ]
+    };
+
+    function filterBrand(brandName) {
+      currentActiveBrand = brandName;
+      document.getElementById('currentBrandTitle').innerText = brandName;
+      
+      const buttons = document.querySelectorAll('.brand-btn');
+      buttons.forEach(btn => {
+        if(btn.innerText.trim() === brandName.trim()) {
+          btn.classList.add('active');
+          // 모바일 화면에서 선택한 브랜드 버튼이 보이도록 중앙으로 스크롤 이동
+          btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const tbody = document.getElementById('catalogTableBody');
+      const products = brandName === 'Best Selling'
+        ? window.TINTORO_BEST_SELLING_PRODUCTS.map(({ brand, title }) => {
+            const product = (brandProducts[brand] || []).find(item => item.title === title);
+            if (!product) {
+              throw new Error(`Best Selling product is missing from ${brand}: ${title}`);
+            }
+            return { brand, product };
+          })
+        : (brandProducts[brandName] || [
+            { title: `${brandName} Signature Product`, price: "$12.00" }
+          ]).map(product => ({ brand: brandName, product }));
+
+      tbody.innerHTML = products.map(({ brand, product: p }) => {
+        let currentQty = orderQuantities[p.title] || 0;
+        let unitPriceNum = parseFloat(p.price.replace('$', ''));
+        let subtotal = (unitPriceNum * currentQty).toFixed(2);
+        const imageSrc = getProductImage(p.title, brand);
+        const productImage = imageSrc
+          ? `<button type="button" class="catalog-product-image-button" aria-label="View larger product image"><img class="catalog-product-image" src="${imageSrc}" alt="${p.title}" loading="lazy" width="64" height="64"></button>`
+          : `<div class="catalog-product-placeholder" role="img" aria-label="Photo coming soon">Photo coming soon</div>`;
+        const brandBadge = brandName === 'Best Selling'
+          ? `<span class="best-selling-brand-badge">${brand}</span>`
+          : '';
+
+        let rowContent = "";
+        if (isWholesaleLoggedIn) {
+          rowContent = `
+            <td class="col-price">${p.price}</td>
+            <td class="col-qty">
+              <div class="qty-control">
+                <button type="button" class="qty-btn" onclick="changeQty('${p.title.replace(/'/g, "\\'")}', -1)">-</button>
+                <input type="number" id="qty_${p.title}" class="qty-input" value="${currentQty}" min="0" oninput="setQty('${p.title.replace(/'/g, "\\'")}', this.value)">
+                <button type="button" class="qty-btn" onclick="changeQty('${p.title.replace(/'/g, "\\'")}', 1)">+</button>
+              </div>
+            </td>
+            <td class="col-subtotal" id="sub_${p.title}">$${subtotal}</td>
+          `;
+        } else {
+          rowContent = `
+            <td colspan="3"><span class="locked-price">🔒 Login with Account Number to view price & order</span></td>
+          `;
+        }
+
+        return `
+          <tr>
+            <td class="col-title product-title-cell">
+              <div class="catalog-product-info">
+                ${productImage}
+                ${brandBadge}
+                <span class="catalog-product-name">${p.title}</span>
+              </div>
+            </td>
+            ${rowContent}
+          </tr>
+        `;
+      }).join('');
+    }
+
+    updateAuthUI();
+  </script>
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.querySelectorAll('a[href="wholesale/"]').forEach((link) => {
+        link.href = 'wholesale/index.html';
+      });
+    }
+  </script>
 </body>
 </html>

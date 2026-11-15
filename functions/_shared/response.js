@@ -37,6 +37,22 @@ export async function readJsonRequest(request, maxBytes = 16384) {
   }
 }
 
+export function readFormFields(formData, fieldRules) {
+  const values = {};
+  for (const [name, rule] of Object.entries(fieldRules)) {
+    const entries = formData.getAll(name);
+    if (entries.length > 1 || (entries.length === 1 && typeof entries[0] !== "string")) {
+      return { error: `${name} is invalid.` };
+    }
+
+    const value = entries.length === 1 ? entries[0].trim() : "";
+    if (rule.required !== false && !value) return { error: `${name} is required.` };
+    if (value.length > rule.maxLength) return { error: `${name} is too long.` };
+    values[name] = value;
+  }
+  return { values };
+}
+
 export function hasSameOrigin(request) {
   const origin = request.headers.get("origin");
   if (!origin) return false;

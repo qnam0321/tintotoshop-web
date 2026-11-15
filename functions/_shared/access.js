@@ -16,10 +16,8 @@ function decodeJsonSegment(value) {
   return JSON.parse(new TextDecoder().decode(decodeBase64Url(value)));
 }
 
-function configurationError() {
-  return {
-    response: jsonResponse({ error: "Admin access is not configured." }, 503)
-  };
+function configurationError(message) {
+  return { response: jsonResponse({ error: message }, 503) };
 }
 
 async function getAccessKeys(teamDomain, forceRefresh = false) {
@@ -46,17 +44,14 @@ async function getAccessKeys(teamDomain, forceRefresh = false) {
   return cachedKeys;
 }
 
-export async function requireAdmin(context) {
+async function requireAccessIdentity(context, audienceVariable, configurationMessage, signInMessage) {
   const rawTeamDomain = context.env.ACCESS_TEAM_DOMAIN;
-  const audiences = (context.env.ACCESS_AUDS || "").split(",").map(value => value.trim()).filter(Boolean);
-  const allowedEmails = (context.env.ADMIN_EMAILS || "")
+  const audiences = (context.env[audienceVariable] || "")
     .split(",")
-    .map(value => value.trim().toLowerCase())
+    .map(value => value.trim())
     .filter(Boolean);
 
-  if (!rawTeamDomain || audiences.length === 0 || allowedEmails.length === 0) {
-    return configurationError();
-  }
+  if (!rawTeamDomain || audiences.length === 0) return configurationError(configurationMessage);
 
   let teamDomain;
   try {
@@ -68,17 +63,15 @@ export async function requireAdmin(context) {
       domainUrl.search ||
       domainUrl.hash
     ) {
-      return configurationError();
+      return configurationError(configurationMessage);
     }
     teamDomain = domainUrl.origin;
   } catch {
-    return configurationError();
+    return configurationError(configurationMessage);
   }
 
   const token = context.request.headers.get("cf-access-jwt-assertion");
-  if (!token) {
-    return { response: jsonResponse({ error: "Administrator sign-in is required." }, 401) };
-  }
+  if (!token) return { response: jsonResponse({ error: signInMessage }, 401) };
 
   try {
     const parts = token.split(".");
@@ -126,10 +119,9 @@ export async function requireAdmin(context) {
 
     const now = Math.floor(Date.now() / 1000);
     const tokenAudiences = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
-    const audienceIsValid = tokenAudiences.some(audience => audiences.includes(audience));
     if (
       payload.iss !== teamDomain ||
-      !audienceIsValid ||
+      !tokenAudiences.some(audience => audiences.includes(audience)) ||
       !Number.isFinite(payload.exp) ||
       payload.exp <= now ||
       (Number.isFinite(payload.nbf) && payload.nbf > now) ||
@@ -138,14 +130,56 @@ export async function requireAdmin(context) {
       throw new Error("Access token claims are invalid.");
     }
 
-    const email = typeof payload.email === "string" ? payload.email.toLowerCase() : "";
-    if (!allowedEmails.includes(email)) {
-      return { response: jsonResponse({ error: "This account is not authorized to manage wholesale accounts." }, 403) };
-    }
-
+    const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+    if (!email) throw new Error("Access token has no email identity.");
     return { email };
   } catch (error) {
     console.error("Cloudflare Access validation failed.", error instanceof Error ? error.message : "Unknown error");
-    return { response: jsonResponse({ error: "Administrator access could not be verified." }, 401) };
+    return { response: jsonResponse({ error: "Access could not be verified." }, 401) };
+  }
+}
+
+export async function requireAdmin(context) {
+  const allowedEmails = (context.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map(value => value.trim().toLowerCase())
+    .filter(Boolean);
+  if (allowedEmails.length === 0) return configurationError("Admin access is not configured.");
+
+  const identity = await requireAccessIdentity(
+    context,
+    "ACCESS_AUDS",
+    "Admin access is not configured.",
+    "Administrator sign-in is required."
+  );
+  if (identity.response) return identity;
+  if (!allowedEmails.includes(identity.email)) {
+    return { response: jsonResponse({ error: "This account is not authorized to manage wholesale accounts." }, 403) };
+  }
+  return identity;
+}
+
+export async function requireWholesaleCustomer(context) {
+  const identity = await requireAccessIdentity(
+    context,
+    "WHOLESALE_ACCESS_AUDS",
+    "Wholesale customer access is not configured.",
+    "Wholesale customer sign-in is required."
+  );
+  if (identity.response) return identity;
+  if (!context.env.DB) return configurationError("Wholesale account storage is not configured.");
+
+  try {
+    const account = await context.env.DB
+      .prepare("SELECT 1 AS found FROM wholesale_accounts WHERE lower(email) = ? AND is_active = 1 LIMIT 1")
+      .bind(identity.email)
+      .first();
+    if (!account) {
+      return { response: jsonResponse({ error: "This email is not linked to an active wholesale account." }, 403) };
+    }
+    return identity;
+  } catch (error) {
+    console.error("Wholesale customer lookup failed.", error instanceof Error ? error.message : "Unknown error");
+    return { response: jsonResponse({ error: "Wholesale customer access could not be verified." }, 500) };
   }
 }
