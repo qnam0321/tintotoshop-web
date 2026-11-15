@@ -7,7 +7,7 @@
 - B2B 도매 포털: `https://tintoroshop.com/wholesale`
 - 프로덕션 브랜치: `backup/tintoro-final-20261114`
 - D1 데이터베이스 바인딩과 Cloudflare Access 설정은 완료되어 있습니다.
-- D1 계정 목록은 비어 있으므로 주문 검증을 사용하기 전에 `/admin/`에서 계정을 등록해야 합니다.
+- 마스터 주문 로그인을 사용하려면 아래 안내에 따라 `MASTER_WHOLESALE_CODE` Secret을 설정해야 합니다. 일반 계정은 `/admin/`에서 등록합니다.
 
 ## 🚀 Cloudflare Pages 배포 방법
 
@@ -131,6 +131,12 @@ Pages 프로젝트의 **Settings → Variables and Secrets**에 다음 변수를
 
 배포 및 설정 후 사이트 푸터의 **Wholesale account admin** 링크를 열고 Access로 로그인합니다. 계정번호와 점포 정보를 추가·수정하거나 비활성화할 수 있습니다. 기존에 프런트엔드 파일에 있었던 계정번호는 더 이상 포함되지 않으므로, 계정 검증을 재개하기 전에 관리자 화면에서 다시 등록하세요. 기존 파일은 공개되어 있었으므로 운영 전에 기존 번호를 교체하는 것을 권장합니다.
 
+### 4. 마스터 주문 로그인 설정 (선택)
+
+Cloudflare Pages 프로젝트의 **Settings → Variables and Secrets → Production**에서 `MASTER_WHOLESALE_CODE`라는 Secret을 추가합니다. Secret 값은 서버에서만 확인되며 브라우저 파일이나 Git에 넣지 마세요. 설정한 코드는 D1 계정 목록이 비어 있어도 주문 계정 검증을 통과합니다. 그 외 계정은 계속 활성 상태의 D1 계정과 대조됩니다.
+
+Secret을 추가하거나 변경한 뒤에는 새 배포를 실행해야 합니다. 마스터 코드를 바꾸려면 Cloudflare에서 Secret 값을 교체하고 다시 배포하세요. 이 Secret을 설정하지 않으면 기존 D1 계정 검증만 사용됩니다.
+
 `/api/accounts/verify`는 주문 사이트에서 계정번호를 확인하기 위한 공개 엔드포인트이며, 등록 여부만 반환합니다. 운영 시 Cloudflare WAF의 rate limiting 규칙을 적용해 반복 조회를 제한하세요.
 
 > 참고: 도매 가격과 카탈로그는 현재 브라우저에 전달되는 정적 페이지에 있습니다. 계정 검증은 계정 목록을 숨기지만, 가격 자체를 인증 사용자에게만 비공개로 제공하는 보안 기능은 아닙니다.
@@ -160,4 +166,4 @@ https://pages.github.com/
 ---
 
 **마지막 업데이트:** 2026-11-15
-**상태:** 배포 설정 완료. 주문 검증을 사용하려면 관리자 화면에서 계정을 등록해야 합니다.
+**상태:** 배포 설정 완료. 주문 검증은 D1 계정 등록 또는 `MASTER_WHOLESALE_CODE` Secret 설정이 필요합니다.
