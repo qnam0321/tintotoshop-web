@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Poppins:wght@800&display=swap" rel="stylesheet">
   <script src="account-client.js"></script>
   <script src="product-images.js"></script>
+  <script src="product-details.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -50,8 +51,34 @@
     .product-title-cell { min-width: 240px; }
     .catalog-product-info { display: flex; align-items: center; gap: 10px; }
     .catalog-product-image { width: 54px; height: 54px; flex: 0 0 54px; object-fit: cover; border: 1px solid #eaeaea; border-radius: 7px; background: #fafafa; }
+    .catalog-product-image-button { width: 54px; height: 54px; flex: 0 0 54px; padding: 0; border: 0; border-radius: 7px; background: transparent; cursor: zoom-in; line-height: 0; }
+    .catalog-product-image-button:focus-visible { outline: 3px solid #ff8f00; outline-offset: 3px; }
     .catalog-product-placeholder { width: 54px; height: 54px; flex: 0 0 54px; display: flex; align-items: center; justify-content: center; padding: 4px; box-sizing: border-box; border: 1px dashed #d8dce2; border-radius: 7px; background: #f8f9fb; color: #858b96; font-size: 0.56rem; font-weight: 600; text-align: center; line-height: 1.2; }
     .catalog-product-name { line-height: 1.4; }
+    .product-image-hover-preview { display: none; position: fixed; z-index: 1050; padding: 6px; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-shadow: 0 8px 28px rgba(0,0,0,0.22); pointer-events: none; }
+    .product-image-hover-preview img { display: block; max-width: 280px; max-height: 280px; object-fit: contain; border-radius: 6px; }
+    .product-image-modal { z-index: 1100; background: rgba(0,0,0,0.84); }
+    .product-image-modal-card { position: relative; width: min(900px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow-y: auto; padding: 24px; border-radius: 12px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+    .product-image-modal-caption { margin: 0 48px 18px 0; color: #111; font-size: 1.15rem; line-height: 1.35; }
+    .product-image-modal-body { display: flex; align-items: flex-start; justify-content: center; gap: 20px; }
+    .product-image-modal-body.has-details { justify-content: space-between; }
+    .product-image-modal-image { display: block; max-width: 100%; max-height: 72vh; width: auto; height: auto; object-fit: contain; border-radius: 8px; background: #fff; }
+    .product-image-modal-body.has-details .product-image-modal-image { flex: 0 1 320px; width: 40%; max-height: 55vh; }
+    .product-image-modal-details { display: none; flex: 1; min-width: 0; margin: 0; border-top: 1px solid #e6e8eb; }
+    .product-image-modal-body.has-details .product-image-modal-details { display: block; }
+    .product-image-detail { display: grid; grid-template-columns: minmax(100px, 0.36fr) 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e6e8eb; }
+    .product-image-detail dt { color: #555; font-size: 0.8rem; font-weight: 700; }
+    .product-image-detail dd { margin: 0; color: #333; font-size: 0.82rem; line-height: 1.45; }
+    .product-image-modal-close { position: absolute; top: 10px; right: 10px; z-index: 1; width: 40px; height: 40px; border: 0; border-radius: 50%; background: #f1f3f5; color: #111; font-size: 1.75rem; cursor: pointer; }
+    @media (max-width: 650px) {
+      .product-image-modal-card { padding: 18px; }
+      .product-image-modal-caption { font-size: 1rem; }
+      .product-image-modal-body, .product-image-modal-body.has-details { flex-direction: column; align-items: center; gap: 14px; }
+      .product-image-modal-body.has-details .product-image-modal-image { width: auto; max-width: 100%; max-height: 32vh; }
+      .product-image-modal-details { width: 100%; }
+      .product-image-detail { grid-template-columns: 100px 1fr; gap: 8px; padding: 7px 0; }
+      .product-image-detail dt, .product-image-detail dd { font-size: 0.78rem; }
+    }
     .col-price { font-weight: 600; color: #555; width: 15%; white-space: nowrap; }
     .col-qty { width: 25%; white-space: nowrap; }
     .col-subtotal { font-weight: 700; color: #e53935; width: 15%; text-align: right; white-space: nowrap; }
@@ -289,9 +316,128 @@
     </div>
   </div>
 
+  <div class="product-image-hover-preview" id="productImageHoverPreview" aria-hidden="true">
+    <img alt="">
+  </div>
+  <div class="modal-overlay product-image-modal" id="productImageModal" role="dialog" aria-modal="true" aria-labelledby="productImageModalCaption" aria-hidden="true">
+    <div class="product-image-modal-card">
+      <button type="button" class="product-image-modal-close" id="productImageModalClose" aria-label="Close enlarged product image">&times;</button>
+      <h2 class="product-image-modal-caption" id="productImageModalCaption"></h2>
+      <div class="product-image-modal-body" id="productImageModalBody">
+        <img class="product-image-modal-image" id="productImageModalImage" alt="">
+        <dl class="product-image-modal-details" id="productImageModalDetails"></dl>
+      </div>
+    </div>
+  </div>
+
   <script>
     let isWholesaleLoggedIn = localStorage.getItem('tintoro_auth') === 'true';
     let orderQuantities = {};
+    const catalogTableBody = document.getElementById('catalogTableBody');
+    const productImageHoverPreview = document.getElementById('productImageHoverPreview');
+    const productImageModal = document.getElementById('productImageModal');
+    const productImageModalImage = document.getElementById('productImageModalImage');
+    const productImageModalCaption = document.getElementById('productImageModalCaption');
+    const productImageModalBody = document.getElementById('productImageModalBody');
+    const productImageModalDetails = document.getElementById('productImageModalDetails');
+    const productImageModalClose = document.getElementById('productImageModalClose');
+    let productImageModalTrigger = null;
+    let previousBodyOverflow = '';
+
+    function hideProductImageHoverPreview() {
+      productImageHoverPreview.style.display = 'none';
+    }
+
+    function positionProductImageHoverPreview(event) {
+      productImageHoverPreview.style.display = 'block';
+      const left = Math.max(12, Math.min(event.clientX + 16, window.innerWidth - productImageHoverPreview.offsetWidth - 12));
+      const top = Math.max(12, Math.min(event.clientY + 16, window.innerHeight - productImageHoverPreview.offsetHeight - 12));
+      productImageHoverPreview.style.left = `${left}px`;
+      productImageHoverPreview.style.top = `${top}px`;
+    }
+
+    function openProductImageModal(image, trigger) {
+      hideProductImageHoverPreview();
+      productImageModalImage.src = image.currentSrc || image.src;
+      productImageModalImage.alt = image.alt;
+      const details = window.tintoroProductDetails[image.alt];
+      productImageModalCaption.textContent = details ? details.productName : image.alt;
+      productImageModalBody.classList.toggle('has-details', Boolean(details));
+      productImageModalDetails.replaceChildren();
+      if (details) {
+        Object.entries(details.fields).forEach(([label, value]) => {
+          const row = document.createElement('div');
+          const term = document.createElement('dt');
+          const description = document.createElement('dd');
+          row.className = 'product-image-detail';
+          term.textContent = label;
+          description.textContent = value;
+          row.append(term, description);
+          productImageModalDetails.append(row);
+        });
+      }
+      productImageModalTrigger = trigger;
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      productImageModal.classList.add('active');
+      productImageModal.setAttribute('aria-hidden', 'false');
+      productImageModalClose.focus();
+    }
+
+    function closeProductImageModal() {
+      productImageModal.classList.remove('active');
+      productImageModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = previousBodyOverflow;
+      if (productImageModalTrigger && document.contains(productImageModalTrigger)) {
+        productImageModalTrigger.focus();
+      }
+      productImageModalTrigger = null;
+    }
+
+    catalogTableBody.addEventListener('click', (event) => {
+      const button = event.target.closest('.catalog-product-image-button');
+      if (!button) return;
+      const image = button.querySelector('img');
+      if (image) openProductImageModal(image, button);
+    });
+
+    catalogTableBody.addEventListener('mouseover', (event) => {
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      const button = event.target.closest('.catalog-product-image-button');
+      if (!button || button.contains(event.relatedTarget)) return;
+      const image = button.querySelector('img');
+      if (!image) return;
+      const previewImage = productImageHoverPreview.querySelector('img');
+      previewImage.src = image.currentSrc || image.src;
+      previewImage.alt = image.alt;
+      positionProductImageHoverPreview(event);
+    });
+
+    catalogTableBody.addEventListener('mousemove', (event) => {
+      if (productImageHoverPreview.style.display === 'block') {
+        positionProductImageHoverPreview(event);
+      }
+    });
+
+    catalogTableBody.addEventListener('mouseout', (event) => {
+      const button = event.target.closest('.catalog-product-image-button');
+      if (button && (!event.relatedTarget || !button.contains(event.relatedTarget))) {
+        hideProductImageHoverPreview();
+      }
+    });
+
+    productImageModal.addEventListener('click', (event) => {
+      if (event.target === productImageModal || event.target === productImageModalClose) {
+        closeProductImageModal();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        hideProductImageHoverPreview();
+        if (productImageModal.classList.contains('active')) closeProductImageModal();
+      }
+    });
 
     function updateAuthUI() {
       const statusText = document.getElementById('authStatusText');
@@ -1089,7 +1235,7 @@
         let subtotal = (unitPriceNum * currentQty).toFixed(2);
         const imageSrc = getProductImage(p.title);
         const productImage = imageSrc
-          ? `<img class="catalog-product-image" src="${imageSrc}" alt="${p.title}" loading="lazy" width="54" height="54">`
+          ? `<button type="button" class="catalog-product-image-button" aria-label="View larger product image"><img class="catalog-product-image" src="${imageSrc}" alt="${p.title}" loading="lazy" width="54" height="54"></button>`
           : `<div class="catalog-product-placeholder" role="img" aria-label="Photo coming soon">Photo coming soon</div>`;
         let rowContent = "";
 
