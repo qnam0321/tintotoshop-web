@@ -1,17 +1,7 @@
 {
   "version": 1,
   "include": [
-    "/api/*",
-    "/kbeauty",
-    "/kbeauty.html",
-    "/kbeauty/*",
-    "/m_kbeauty",
-    "/m_kbeauty.html",
-    "/m_kbeauty/*",
-    "/product-images.js",
-    "/product-details.js",
-    "/best-selling-products.js",
-    "/assets/products/*"
+    "/api/*"
   ],
   "exclude": []
 }

@@ -9,9 +9,11 @@
 - D1 데이터베이스 바인딩과 Cloudflare Access 설정은 완료되어 있습니다.
 - `/admin/`과 `/api/admin/*`는 관리자용 Cloudflare Access 및 서버 측 권한 확인을 유지합니다.
 - 소비자 홈페이지는 현재 공개 준비 버전을 유지합니다. 도매 포털은 `TINTORO` 브랜드로 제공하며, 별도 `TINTORO SHOP` 버튼은 소비자 홈으로 연결합니다.
-- 데스크톱·모바일 카탈로그와 상품 이미지/스크립트는 고객 Access JWT와 활성 D1 도매 계정 이메일을 모두 확인한 뒤 제공하도록 구현되어 있습니다. 운영 Access 앱, 고객 audience, 계정 이메일 매핑을 설정하기 전에는 배포하지 마세요.
-- `/api/accounts/verify`는 로그인 이메일과 일치하는 활성 계정의 계정번호만 확인합니다. 주문·계정 문의는 서버 API가 입력을 검증한 뒤 각각 별도 Formspree endpoint로 전달합니다.
-- 공개 배포 전에 고객 인증과 Formspree endpoint 설정, 개인정보 처리방침 검토를 완료하세요.
+- 데스크톱·모바일 카탈로그와 상품 이미지/설명은 공개되며, 도매 가격은 Functions 내부에만 보관합니다. 활성 D1 계정번호를 확인한 `/api/wholesale/prices` 응답으로만 가격을 전달합니다.
+- 계정번호만으로 가격을 열 수 있으므로 계정번호를 추측하기 어려운 비순차 코드로 관리하고 고객에게 개별 전달하세요. 브라우저 저장 상태만으로 가격 접근을 승인하지 않습니다.
+- `/admin/`과 `/api/admin/*`는 관리자용 Cloudflare Access 및 서버 측 권한 확인을 유지합니다. 포털 헤더의 관리자 링크는 이 보호된 화면으로 연결되며 공개 푸터에는 관리자 링크를 두지 않습니다.
+- 주문 API는 활성 계정번호와 등록 이메일을 함께 확인하고 서버 측 가격표로 합계를 다시 계산한 뒤 전용 Formspree endpoint로 전달합니다. 문의는 별도 endpoint를 사용합니다.
+- 공개 배포 전에 D1, 관리자 Access, Formspree endpoint와 개인정보 처리방침 검토를 완료하세요.
 
 ## 🚀 Cloudflare Pages 배포 방법
 
@@ -56,8 +58,8 @@ git clone https://github.com/qnam0321/tintotoshop-web.git
 tintotoshop-web/
 ├── index.html          (메인 홈페이지)
 ├── page2.html          (추가 페이지)
-├── kbeauty.html        (고객 인증이 필요한 데스크톱 도매 카탈로그/주문 요청)
-├── m_kbeauty.html      (고객 인증이 필요한 모바일 도매 카탈로그/주문 요청)
+├── kbeauty.html        (공개 상품 목록, 계정번호 확인 후 가격/주문 요청)
+├── m_kbeauty.html      (모바일 공개 상품 목록, 계정번호 확인 후 가격/주문 요청)
 ├── styles.css          (스타일시트)
 ├── script.js           (JavaScript 로직)
 ├── wholesale/          (B2B 포털: /wholesale)
@@ -69,7 +71,7 @@ tintotoshop-web/
 ├── sitemap.xml         (공개 URL 사이트맵)
 ├── account-client.js   (서버 계정 검증 호출)
 ├── admin/              (계정 관리자 화면)
-├── functions/          (Pages Functions 인증, 계정 검증, 문의/주문 API)
+├── functions/          (관리자 인증, 서버 가격표, 계정 검증, 문의/주문 API)
 ├── migrations/         (D1 데이터베이스 스키마)
 ├── _routes.json        (API 요청 라우팅)
 ├── package.json        (프로젝트 메타데이터)
@@ -135,30 +137,26 @@ Pages 프로젝트의 **Settings → Variables and Secrets**에 다음 변수를
 
 ### 3. 고객용 도매 Access와 주문 설정
 
-1. 고객 전용 Access 애플리케이션을 만들고 승인된 도매 고객 이메일만 허용합니다. 관리자 앱과 다른 Audience를 사용합니다.
-2. 해당 앱의 보호 경로에 다음을 모두 포함하고 `pages.dev`와 사용자 지정 도메인에도 같은 보호를 적용합니다.
-   - `/kbeauty*`, `/m_kbeauty*`
-   - `/product-images.js`, `/product-details.js`, `/assets/products/*`
-   - `/api/accounts/verify`, `/api/wholesale/order`
-3. Pages의 **Settings → Variables and Secrets**에 추가합니다.
-   - `WHOLESALE_ACCESS_AUDS`: 고객 전용 Access 앱 Audience 값
-   - `FORMSPREE_ORDER_ENDPOINT`: 주문 요청 전용 Formspree URL (`https://formspree.io/f/<endpoint-id>`)
-   - `FORMSPREE_INQUIRY_ENDPOINT`: 계정 문의 전용 Formspree URL (`https://formspree.io/f/<endpoint-id>`)
-4. D1의 각 승인 고객 레코드에서 `email`을 Access 로그인 이메일과 정확히 일치시키고 `is_active = 1`로 둡니다. 비어 있거나 일치하지 않는 이메일은 접근할 수 없습니다.
-5. Pages Functions 한도 초과 시에도 정적 카탈로그가 공개되지 않도록 Pages의 Functions 실행을 **Fail closed**로 설정합니다.
-6. 이전에 데스크톱·모바일에서 직접 사용한 공용 Formspree endpoint는 새 별도 endpoint가 동작하는지 확인한 뒤 Formspree에서 비활성화하세요. 이전 endpoint가 활성 상태면 공개된 예전 경로로 주문 요청을 직접 위조할 수 있습니다.
+1. 고객용 카탈로그에는 Access 애플리케이션을 적용하지 않습니다. `/kbeauty*`, `/m_kbeauty*`, 상품 이미지와 설명 파일은 누구나 볼 수 있고, 가격은 정적 HTML·JavaScript·자산에 포함하지 않습니다.
+2. D1의 승인 계정에 고유한 `account_number`와 `is_active = 1`을 등록합니다. 계정번호 확인과 가격 응답은 `/api/accounts/verify`, `/api/wholesale/prices`가 서버에서 수행합니다.
+3. 주문을 처리할 계정에는 등록 이메일도 입력하세요. 가격을 여는 데는 계정번호만 필요하지만 주문 제출은 계정번호와 등록 이메일이 모두 일치해야 합니다.
+4. Pages의 **Settings → Variables and Secrets**에 다음 전용 Formspree URL을 Production 환경에 추가합니다.
+   - `FORMSPREE_ORDER_ENDPOINT`: 주문 요청 전용 URL (`https://formspree.io/f/<endpoint-id>`)
+   - `FORMSPREE_INQUIRY_ENDPOINT`: 계정 문의 전용 URL (`https://formspree.io/f/<endpoint-id>`)
+5. 이전에 데스크톱·모바일에서 직접 사용한 공용 Formspree endpoint는 새 별도 endpoint가 동작하는지 확인한 뒤 Formspree에서 비활성화하세요.
 
-인증 미설정이나 D1 확인 실패 시 카탈로그는 fail-closed로 거부됩니다. 주문 제출은 로그인 이메일·계정번호를 서버에서 다시 확인한 후 Formspree로 전달되며, 주문 확정 전 재고·가격·배송 확인이 필요합니다.
+새 도매 Access audience는 필요하지 않습니다. 다만 `/admin/`과 `/api/admin/*`는 기존 관리자 이메일 allowlist, Access 앱과 서버 측 권한 검사를 계속 적용합니다. Pages Functions 또는 D1이 실패하면 가격 API와 주문 API는 가격이나 성공 응답을 반환하지 않습니다.
 
 ### 4. 계정 정보 등록
 
-Access 정책을 통과한 관리자는 `https://tintoroshop.com/admin/`에서 계정번호와 점포 정보를 추가·수정하거나 비활성화할 수 있습니다. 관리자 URL은 공개 도매 푸터에 링크하지 않습니다. 고객 포털 검증은 고객 Access 설정과 D1 이메일 매핑이 완료된 후에만 사용할 수 있습니다.
+관리자는 도매 포털 헤더의 **Admin: Manage Accounts** 링크 또는 `https://tintoroshop.com/admin/`에서 계정번호와 점포 정보를 추가·수정하거나 비활성화할 수 있습니다. 이 화면과 API는 관리자 Access 및 서버 권한으로 보호됩니다. 새 계정번호는 순차 번호 대신 추측하기 어려운 고유값을 사용하세요.
 
 ## 🛡️ 고객용 도매 주문 흐름
 
 - 주문은 즉시 확정이 아닌 주문 요청입니다. 폼은 `Submit Order Request`를 사용하고, 제출 전에 `We’ll confirm availability, pricing, and shipping before finalizing your order.`를 표시합니다. 서버가 주문 요청을 접수하면 `Order request received`를 표시합니다.
 - 일반 계정 문의에서 사업장 주소를 제거했습니다. 실제 주문 요청에는 배송 확인을 위해 `Shipping Address`를 별도로 받습니다.
-- `/api/wholesale/order`는 인증된 고객 이메일과 계정번호의 D1 일치를 확인하고, 설정된 전용 Formspree endpoint로만 전달합니다. 주문 endpoint가 미설정이면 제출을 거부합니다.
+- `/api/accounts/verify`는 활성 계정번호만 확인하고, `/api/wholesale/prices`는 일치하는 경우에만 서버 보관 가격표를 반환합니다. 두 응답 모두 캐시되지 않습니다.
+- `/api/wholesale/order`는 활성 계정번호와 등록 이메일을 확인하고, 서버 가격표 기준으로 주문 품목과 합계를 재계산한 뒤 설정된 전용 Formspree endpoint로 전달합니다. 브라우저가 보낸 가격이나 합계는 신뢰하지 않습니다.
 - `/api/wholesale/inquiry`는 일반 문의를 별도 Formspree endpoint로 전달합니다. 실제 전송을 확인하기 전까지 양식 성공을 가정하지 마세요.
 - Formspree의 기존 endpoint와 과거 제출 기록, 보관·삭제 설정은 운영자가 확인해야 합니다. 이전 endpoint는 주문용 새 경로를 확인한 후 비활성화하세요.
 
@@ -190,4 +188,4 @@ https://pages.github.com/
 
 ---
 
-**상태:** 고객 Access 앱, `WHOLESALE_ACCESS_AUDS`, D1 고객 이메일, 전용 Formspree endpoint 및 Fail-closed 설정을 확인한 후에만 도매 주문 복원 변경을 배포합니다.
+**상태:** 공개 카탈로그/계정번호 기반 서버 가격 확인을 사용합니다. 관리자 Access, D1 계정, 전용 Formspree endpoint를 확인한 후 배포하세요.

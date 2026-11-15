@@ -23,6 +23,8 @@
     .shop-header .subtitle { font-size: 0.72rem; color: #9ba1a6; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; font-weight: 500; }
     .shop-return-link { color: #ffb74d; border: 1px solid rgba(255,143,0,0.4); border-radius: 999px; padding: 5px 11px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
     .shop-return-link:hover { background: #ff8f00; color: #161920; }
+    .admin-entry-link { color: #b7bdc8; font-size: 0.72rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+    .admin-entry-link:hover { color: #fff; text-decoration: underline; }
 
     /* 우측 상단 K-Beauty 전용 채널 안내 뱃지/문구 */
     .header-channel-tag { font-size: 0.78rem; color: #ff8f00; font-weight: 600; background: rgba(255,143,0,0.1); border: 1px solid rgba(255,143,0,0.25); padding: 6px 12px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
@@ -82,8 +84,8 @@
 
     .catalog-btn.mobile-version { background: #252a34; border: 1px solid #ff8f00; color: #ff8f00; }
     .catalog-btn.mobile-version:hover { background: #ff8f00; color: #fff; }
-    .catalog-btn.request-access { background: transparent; border: 1px solid #555d6c; color: #e1e1e6; box-shadow: none; }
-    .catalog-btn.request-access:hover { background: #252a34; }
+    .access-request-copy { margin: 18px 0 0; color: #a0a6b8; font-size: 0.84rem; line-height: 1.6; }
+    .access-request-copy a { color: #ffb74d; font-weight: 700; }
     .portal-share { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 24px auto 0; padding: 14px 16px; border: 1px solid #303541; border-radius: 10px; background: #12151b; text-align: left; }
     .portal-share-copy { display: flex; flex-direction: column; gap: 4px; }
     .portal-share-label { color: #9ba1a6; font-size: 0.72rem; }
@@ -126,6 +128,7 @@
       <div class="header-brand-row">
         <h1>TINTORO</h1>
         <a class="shop-return-link" href="/" aria-label="Back to TINTORO SHOP">TINTORO SHOP ↗</a>
+        <a class="admin-entry-link" href="/admin/">Admin: Manage Accounts</a>
       </div>
       <span class="subtitle">B2B Wholesale Distribution</span>
     </div>
@@ -155,8 +158,8 @@
         <div class="button-group">
           <a href="../kbeauty.html" class="catalog-btn">Browse Wholesale Catalog →</a>
           <a href="../m_kbeauty.html" class="catalog-btn mobile-version">Open Mobile Order Page →</a>
-          <a href="mailto:info@tintoroshop.com?subject=Wholesale%20Access%20Request" class="catalog-btn request-access">Request Wholesale Access</a>
         </div>
+        <p class="access-request-copy">Need an approved wholesale account? <a href="mailto:info@tintoroshop.com?subject=Wholesale%20Access%20Request">Request Wholesale Access</a>.</p>
 
         <div class="portal-share">
           <div class="portal-share-copy">

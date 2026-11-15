@@ -1,10 +1,71 @@
-import { requireWholesaleCustomer } from "../../_shared/access.js";
 import { hasSameOrigin, jsonResponse, readFormFields } from "../../_shared/response.js";
 import { getFormspreeEndpoint, sendFormspreeForm } from "../../_shared/formspree.js";
+import { findActiveWholesaleAccount } from "../../_shared/wholesale-accounts.js";
+import {
+  wholesaleDefaultProductPrice,
+  wholesalePricesByTitle
+} from "../../_shared/wholesale-prices.js";
+
+function getUnitPriceCents(title) {
+  const price = wholesalePricesByTitle[title] ||
+    (title.endsWith("Signature Product") || title.endsWith(" Product")
+      ? wholesaleDefaultProductPrice
+      : "");
+  const match = /^\$(\d+)\.(\d{2})$/.exec(price);
+  return match ? Number(match[1]) * 100 + Number(match[2]) : null;
+}
+
+function formatPrice(cents) {
+  return `$${Math.floor(cents / 100)}.${String(cents % 100).padStart(2, "0")}`;
+}
+
+function calculateOrder(orderItemsText) {
+  let items;
+  try {
+    items = JSON.parse(orderItemsText);
+  } catch {
+    return { error: "The order items are invalid." };
+  }
+  if (!Array.isArray(items) || items.length === 0 || items.length > 500) {
+    return { error: "Select at least one catalog item." };
+  }
+
+  const seenTitles = new Set();
+  const details = [];
+  let totalCents = 0;
+  for (const item of items) {
+    if (
+      !item ||
+      typeof item !== "object" ||
+      Array.isArray(item) ||
+      typeof item.title !== "string" ||
+      !Number.isInteger(item.quantity) ||
+      item.quantity < 1 ||
+      item.quantity > 100000 ||
+      item.title.length > 500 ||
+      seenTitles.has(item.title)
+    ) {
+      return { error: "The order items are invalid." };
+    }
+
+    const unitPriceCents = getUnitPriceCents(item.title);
+    if (unitPriceCents === null) {
+      return { error: "The order contains an item that is not in the catalog." };
+    }
+
+    seenTitles.add(item.title);
+    const subtotalCents = unitPriceCents * item.quantity;
+    totalCents += subtotalCents;
+    if (!Number.isSafeInteger(totalCents)) {
+      return { error: "The order total is too large." };
+    }
+    details.push(`[${item.title}] - Qty: ${item.quantity}ea - Subtotal: ${formatPrice(subtotalCents)}`);
+  }
+
+  return { orderDetails: details.join("\n"), grandTotal: formatPrice(totalCents) };
+}
 
 export async function onRequestPost(context) {
-  const customer = await requireWholesaleCustomer(context);
-  if (customer.response) return customer.response;
   if (!hasSameOrigin(context.request)) {
     return jsonResponse({ error: "Requests must come from this site." }, 403);
   }
@@ -28,35 +89,22 @@ export async function onRequestPost(context) {
     phone_number: { maxLength: 64 },
     shipping_address: { maxLength: 500 },
     email: { maxLength: 254 },
-    order_details: { maxLength: 100000 },
-    grand_total: { maxLength: 32 },
+    order_items: { maxLength: 100000 },
     memo: { maxLength: 4000, required: false }
   });
   if (parsed.error) return jsonResponse({ error: parsed.error }, 400);
 
   const values = parsed.values;
-  if (
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) ||
-    values.email.toLowerCase() !== customer.email
-  ) {
-    return jsonResponse({ error: "Use the email address linked to your wholesale account." }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+    return jsonResponse({ error: "Enter a valid email address." }, 400);
   }
-  if (!/^\$\d+(?:\.\d{2})?$/.test(values.grand_total)) {
-    return jsonResponse({ error: "The order total is invalid." }, 400);
-  }
+  const calculatedOrder = calculateOrder(values.order_items);
+  if (calculatedOrder.error) return jsonResponse({ error: calculatedOrder.error }, 400);
 
   try {
-    const account = await context.env.DB
-      .prepare(`
-        SELECT 1 AS found
-        FROM wholesale_accounts
-        WHERE lower(email) = ? AND account_number = ? AND is_active = 1
-        LIMIT 1
-      `)
-      .bind(customer.email, values.account_number)
-      .first();
+    const account = await findActiveWholesaleAccount(context.env.DB, values.account_number, values.email);
     if (!account) {
-      return jsonResponse({ error: "The account number is not linked to this wholesale account." }, 403);
+      return jsonResponse({ error: "The account number and email do not match an active wholesale account." }, 403);
     }
   } catch (error) {
     console.error("Could not verify the order account.", error instanceof Error ? error.message : "Unknown error");
@@ -70,9 +118,9 @@ export async function onRequestPost(context) {
       company_name: values.company_name,
       phone_number: values.phone_number,
       shipping_address: values.shipping_address,
-      email: customer.email,
-      order_details: values.order_details,
-      grand_total: values.grand_total,
+      email: values.email.toLowerCase(),
+      order_details: calculatedOrder.orderDetails,
+      grand_total: calculatedOrder.grandTotal,
       memo: values.memo
     });
     if (!response.ok) {

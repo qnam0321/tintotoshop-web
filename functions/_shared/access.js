@@ -158,28 +158,3 @@ export async function requireAdmin(context) {
   }
   return identity;
 }
-
-export async function requireWholesaleCustomer(context) {
-  const identity = await requireAccessIdentity(
-    context,
-    "WHOLESALE_ACCESS_AUDS",
-    "Wholesale customer access is not configured.",
-    "Wholesale customer sign-in is required."
-  );
-  if (identity.response) return identity;
-  if (!context.env.DB) return configurationError("Wholesale account storage is not configured.");
-
-  try {
-    const account = await context.env.DB
-      .prepare("SELECT 1 AS found FROM wholesale_accounts WHERE lower(email) = ? AND is_active = 1 LIMIT 1")
-      .bind(identity.email)
-      .first();
-    if (!account) {
-      return { response: jsonResponse({ error: "This email is not linked to an active wholesale account." }, 403) };
-    }
-    return identity;
-  } catch (error) {
-    console.error("Wholesale customer lookup failed.", error instanceof Error ? error.message : "Unknown error");
-    return { response: jsonResponse({ error: "Wholesale customer access could not be verified." }, 500) };
-  }
-}
