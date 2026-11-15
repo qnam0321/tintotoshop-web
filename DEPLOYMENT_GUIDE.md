@@ -2,54 +2,37 @@
 
 ## 📋 현재 상태
 
-**정적 사이트:**
-- GitHub 저장소 생성: `qnam0321/tintotoshop-web`
-- 모든 웹사이트 파일 업로드
-- 정적 HTML/CSS/JS 파일 준비 완료
-- Git 저장소에 커밋 및 푸시
-
-**도매 계정 관리자:** 코드 준비 완료. D1, Pages 바인딩, Cloudflare Access를 설정해야 운영 가능합니다.
+- Cloudflare Pages 프로젝트: `tintoro`
+- 기본 도메인: `https://tintoroshop.com`
+- B2B 도매 포털: `https://tintoroshop.com/wholesale`
+- 프로덕션 브랜치: `backup/tintoro-final-20261114`
+- D1 데이터베이스 바인딩과 Cloudflare Access 설정은 완료되어 있습니다.
+- D1 계정 목록은 비어 있으므로 주문 검증을 사용하기 전에 `/admin/`에서 계정을 등록해야 합니다.
 
 ## 🚀 Cloudflare Pages 배포 방법
 
-### 방법 1: 웹 인터페이스 (권장)
+### 기존 프로젝트에 배포
 
-#### Step 1: Cloudflare 대시보드 접속
-1. https://dash.cloudflare.com에 로그인
-2. 좌측 메뉴에서 **"Workers & Pages"** 클릭
+현재 Pages 프로젝트는 GitHub 저장소 `qnam0321/tintotoshop-web`의 프로덕션 브랜치 `backup/tintoro-final-20261114`를 배포합니다. 이 브랜치에 변경사항을 푸시하면 Cloudflare Pages가 자동으로 배포합니다.
 
-#### Step 2: 새 프로젝트 생성
-1. **"Create a project"** 또는 **"Create application"** 버튼 클릭
-2. **"Import an existing Git repository"** 선택
-3. **"Get started"** 클릭
-
-#### Step 3: GitHub 저장소 연결
-1. **"Connect to Git"** 클릭
-2. GitHub 로그인 (필요시)
-3. **"Authorize Cloudflare Workers and Pages"** 클릭
-4. 저장소 선택: `qnam0321/tintotoshop-web`
-5. Production branch: `main` (기본값)
-
-#### Step 4: 빌드 설정
-이 설정으로 유지:
-- **Framework**: None (또는 Skip)
-- **Build command**: (비워두기)
-- **Build output directory**: `.` (또는 `/`)
-
-#### Step 5: 배포
-1. **"Deploy"** 클릭
-2. 배포 진행 (2-3분 소요)
+빌드 명령은 비워 두고 출력 디렉터리는 저장소 루트(`.`)를 사용합니다. 새 Pages 프로젝트를 만들거나 프로덕션 브랜치를 `main`으로 변경하지 마세요.
 
 ### 배포 후 접속 정보
 
-**배포 URL (자동 생성):**
+**프로덕션 URL:**
 ```
-https://tintotoshop-web.pages.dev
+https://tintoroshop.com
 ```
 
-**자동 배포:**
-- 이제부터 GitHub에 코드를 푸시하면 자동으로 배포됩니다
-- 변경사항은 수 초 내에 반영됩니다
+**B2B 도매 포털:**
+```
+https://tintoroshop.com/wholesale
+```
+
+GitHub 백업/프로덕션 브랜치:
+```
+https://github.com/qnam0321/tintotoshop-web/tree/backup/tintoro-final-20261114
+```
 
 ## 🔗 GitHub 저장소
 
@@ -73,6 +56,11 @@ tintotoshop-web/
 ├── m_kbeauty.html      (모바일 K-Beauty 페이지)
 ├── styles.css          (스타일시트)
 ├── script.js           (JavaScript 로직)
+├── wholesale/          (B2B 포털: /wholesale)
+├── wholesale.html      (/wholesale 경로 호환 리디렉션)
+├── assets/             (카탈로그 상품 이미지)
+├── product-images.js   (상품 이미지 매핑)
+├── _redirects          (Cloudflare Pages 경로 리디렉션)
 ├── account-client.js   (서버 계정 검증 호출)
 ├── admin/              (계정 관리자 화면)
 ├── functions/          (Pages Functions API)
@@ -80,8 +68,7 @@ tintotoshop-web/
 ├── _routes.json        (API 요청 라우팅)
 ├── package.json        (프로젝트 메타데이터)
 ├── README.md           (프로젝트 설명)
-└── .github/
-    └── workflows/      (GitHub Actions 설정)
+└── DEPLOYMENT_GUIDE.md (배포 및 계정 관리자 안내)
 ```
 
 ## ⚡ 이후 작업
@@ -95,11 +82,11 @@ tintotoshop-web/
    # 파일 수정...
    ```
 
-2. **GitHub에 푸시:**
+2. **프로덕션 브랜치에 푸시:**
    ```bash
    git add .
    git commit -m "Update website content"
-   git push origin main
+   git push origin backup/tintoro-final-20261114
    ```
 
 3. **자동 배포:**
@@ -115,7 +102,7 @@ tintotoshop-web/
 
 ## 🔐 도매 계정 관리자 설정 (필수)
 
-계정 번호는 브라우저 파일에 저장하지 않고 Cloudflare D1에 저장합니다. 아래 설정이 끝나기 전까지 로그인·주문 계정 검증과 관리자 화면은 작동하지 않습니다.
+계정 번호는 브라우저 파일에 저장하지 않고 Cloudflare D1에 저장합니다. 현재 프로덕션에는 D1 바인딩과 Access가 설정되어 있습니다. 환경을 새로 구성할 때는 아래 설정을 적용하세요.
 
 ### 1. D1 데이터베이스 생성 및 연결
 
@@ -172,5 +159,5 @@ https://pages.github.com/
 
 ---
 
-**마지막 업데이트:** 2026-11-14
-**상태:** Cloudflare D1 및 Access 설정 후 운영 가능
+**마지막 업데이트:** 2026-11-15
+**상태:** 배포 설정 완료. 주문 검증을 사용하려면 관리자 화면에서 계정을 등록해야 합니다.

@@ -3,247 +3,382 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TINTORO - K-Beauty Wholesale Distribution | Authorized Reseller</title>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="TINTORO is an authorized K-Beauty and cosmetics wholesale distributor. Offering TELICA electronic shelf labels, CREBEE platform solutions, and POS integration for U.S. retailers.">
-  <meta name="keywords" content="K-Beauty wholesale, cosmetics distribution, TELICA reseller, CREBEE platform, ESL labels, POS integration, beauty supply distributor">
-  <meta name="author" content="TINTORO">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  
-  <!-- Open Graph (Social Media & Search Results) -->
-  <meta property="og:title" content="TINTORO - K-Beauty Wholesale Distribution">
-  <meta property="og:description" content="Authorized K-Beauty & cosmetics wholesaler with TELICA electronic shelf labels, CREBEE solutions, and global supply chain expertise.">
-  <meta property="og:type" content="business.business">
-  <meta property="og:url" content="https://tintotoshop.com">
-  <meta property="og:image" content="https://tintotoshop.com/tintoro-logo.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="TINTORO">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TINTORO - K-Beauty Wholesale Distribution">
-  <meta name="twitter:description" content="Authorized K-Beauty & cosmetics wholesaler with TELICA ESL solutions and CREBEE integration.">
-  <meta name="twitter:image" content="https://tintotoshop.com/tintoro-logo.png">
-  
-  <link rel="stylesheet" href="styles.css">
-  
-  <!-- 구글 웹폰트(Poppins) 로드 -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
-  
-  <!-- Structured Data: Organization Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "TINTORO",
-    "url": "https://tintotoshop.com",
-    "logo": "https://tintotoshop.com/tintoro-logo.png",
-    "description": "K-Beauty and cosmetics wholesale distribution company offering TELICA electronic shelf labels, CREBEE platform solutions, and POS integration support.",
-    "foundingDate": "2024",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+1-800-TINTORO",
-      "contactType": "Sales & Support"
-    },
-    "sameAs": [
-      "https://www.facebook.com/tintoro",
-      "https://www.instagram.com/tintoro",
-      "https://www.linkedin.com/company/tintoro"
-    ]
-  }
-  </script>
-  
-  <!-- Structured Data: Local Business Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "TINTORO",
-    "image": "https://tintotoshop.com/tintoro-logo.png",
-    "description": "Authorized K-Beauty wholesale distributor serving U.S. retailers with electronic shelf label solutions and cosmetics supply chain expertise.",
-    "priceRange": "$$",
-    "url": "https://tintotoshop.com",
-    "telephone": "+1-800-TINTORO",
-    "areaServed": "US"
-  }
-  </script>
-  
-  <!-- Structured Data: Product/Service Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "TELICA Electronic Shelf Labels & K-Beauty Distribution",
-    "description": "Professional wholesale distribution platform combining TELICA ESL technology, CREBEE solutions, and POS integration for retail beauty supply.",
-    "brand": {
-      "@type": "Brand",
-      "name": "TINTORO"
-    },
-    "manufacturer": {
-      "@type": "Organization",
-      "name": "TINTORO"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "USD",
-      "lowPrice": "0",
-      "highPrice": "10000",
-      "offerCount": "Multiple",
-      "availability": "https://schema.org/InStock"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "150"
-    }
-  }
-  </script>
-
+  <meta name="theme-color" content="#f6f2ff">
+  <meta name="description" content="Discover TINTORO SHOP's direction: selected K-beauty promotions, starting with skincare.">
+  <title>TINTORO SHOP — Curated K-Beauty Promotions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #0f1115; color: #e1e1e6; display: flex; flex-direction: column; min-height: 100vh; }
-    
-    /* 상단 네비게이션바 고정 (Sticky Header) */
-    .shop-header { position: sticky; top: 0; z-index: 999; background: #161920; border-bottom: 1px solid #252a34; color: #fff; padding: 22px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-    .header-brand-wrap { display: flex; flex-direction: column; }
-    .shop-header h1 { font-size: 1.4rem; letter-spacing: 2px; color: #fff; font-weight: 800; }
-    .shop-header .subtitle { font-size: 0.72rem; color: #9ba1a6; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; font-weight: 500; }
-
-    /* 우측 상단 K-Beauty 전용 채널 안내 뱃지/문구 */
-    .header-channel-tag { font-size: 0.78rem; color: #ff8f00; font-weight: 600; background: rgba(255,143,0,0.1); border: 1px solid rgba(255,143,0,0.25); padding: 6px 12px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
-
-    /* 메인 히어로 섹션 */
-    .hero-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 50px 20px; background: radial-gradient(circle at center, #1a1f2c 0%, #0f1115 100%); }
-    
-    .hero-card { background: #161920; border: 1px solid #252a34; border-radius: 12px; width: 100%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); overflow: hidden; text-align: center; }
-
-    /* 물류와 글로벌 유통을 상징하는 시각적 배너 영역 */
-    .hero-visual-banner {
-      width: 100%;
-      height: 150px;
-      background: linear-gradient(135deg, rgba(22, 25, 32, 0.85) 0%, rgba(15, 17, 21, 0.95) 100%), 
-                  url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      border-bottom: 1px solid #252a34;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+    :root {
+      color-scheme: light;
+      --ink: #242033;
+      --muted: #716d80;
+      --purple: #7658d6;
+      --purple-dark: #6042c2;
+      --paper: #fbfaff;
+      --line: rgba(57, 43, 99, 0.1);
     }
-    .banner-badge { font-size: 0.75rem; color: #ff8f00; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; z-index: 1; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,143,0,0.3); }
 
-    .hero-content-body { padding: 45px; }
-
-    /* 회사 소개 (About Us) 인트로 박스 */
-    .company-intro {
-      background: #1c212c;
-      border-left: 3px solid #ff8f00;
-      padding: 20px 24px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 30px;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .site-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1200px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 26px 0;
+    }
+    .wordmark {
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.07em;
+      text-decoration: none;
+    }
+    .wordmark span { color: var(--purple); }
+    .wholesale-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid #d88a24;
+      border-radius: 999px;
+      background: #fff1dc;
+      color: #704300;
+      font-size: .72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+    .wholesale-link:hover {
+      transform: translateY(-1px);
+      background: #ffe4bb;
+      border-color: #b96c08;
+    }
+    .wholesale-link .arrow {
+      display: grid;
+      width: 18px;
+      height: 18px;
+      place-items: center;
+      border-radius: 50%;
+      background: #f5c27b;
+      color: #704300;
+      font-size: .74rem;
+    }
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: center;
+      gap: 42px;
+      width: min(1200px, calc(100% - 64px));
+      min-height: 570px;
+      margin: 10px auto 28px;
+      padding: clamp(36px, 6vw, 78px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 34px;
+      background:
+        radial-gradient(ellipse at 82% 18%, rgba(255,255,255,.86) 0 1%, transparent 36%),
+        linear-gradient(125deg, #f1eaff 0%, #fae9f2 54%, #f9f0e5 100%);
+      box-shadow: 0 26px 80px rgba(83, 62, 132, .09);
+    }
+    .hero::before, .hero::after {
+      position: absolute;
+      content: "";
+      border: 1px solid rgba(118,88,214,.12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before { width: 410px; height: 410px; right: 7%; top: -220px; }
+    .hero::after { width: 260px; height: 260px; left: 36%; bottom: -190px; }
+    .hero-copy { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      padding: 9px 13px;
+      border: 1px solid rgba(118,88,214,.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,.58);
+      color: #6248b2;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow .tint-mark { width: 18px; height: 18px; flex: 0 0 18px; }
+    h1 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3.2rem, 6.7vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -.075em;
+      line-height: .99;
+    }
+    h1 .accent { color: var(--purple); }
+    .hero-copy p {
+      max-width: 470px;
+      margin: 22px auto 0;
+      color: #625e70;
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
+      line-height: 1.75;
+    }
+    .arrival-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 30px;
+      color: #49445a;
+      font-size: .91rem;
+      font-weight: 600;
+    }
+    .arrival-note .dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 10px;
+      border-radius: 50%;
+      background: #8b70e8;
+      box-shadow: 0 0 0 5px rgba(139,112,232,.13);
+    }
+    .retail-direction {
+      width: min(1200px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 30px 0 64px;
+      text-align: center;
+    }
+    .retail-direction h2 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
+      letter-spacing: -.04em;
+    }
+    .retail-direction p { margin: 9px 0 0; color: var(--muted); font-size: .94rem; }
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
       text-align: left;
     }
-    .company-intro h3 { font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .company-intro p { font-size: 0.88rem; color: #a0a6b8; line-height: 1.6; }
-
-    .hero-title { 
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.8rem; 
-      color: #ffffff; 
-      font-weight: 800; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-      margin-bottom: 12px; 
-      line-height: 1.3;
+    .direction-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.82);
     }
-    
-    .hero-desc { font-size: 0.92rem; color: #a0a6b8; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 400; }
-    
-    /* 버튼 그룹 영역 (PC버전 & 모바일버전 2개 버튼) */
-    .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
-    
-    .catalog-btn { background: #ff8f00; color: #fff; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 15px rgba(255, 143, 0, 0.25); }
-    .catalog-btn:hover { background: #f57c00; transform: translateY(-1px); }
-
-    .catalog-btn.mobile-version { background: #252a34; border: 1px solid #ff8f00; color: #ff8f00; }
-    .catalog-btn.mobile-version:hover { background: #ff8f00; color: #fff; }
-
-    /* 확장성 암시 텍스트 */
-    .expansion-notice { margin-top: 25px; font-size: 0.82rem; color: #8c92a4; border-top: 1px solid #252a34; padding-top: 20px; }
-    .expansion-notice span { color: #d0d4e2; font-weight: 600; }
-
-    /* 푸터 */
-    footer { background: #161920; border-top: 1px solid #252a34; color: #8c92a4; text-align: center; padding: 30px 20px; font-size: 0.82rem; line-height: 1.5; }
-    footer .footer-brand { color: #fff; font-weight: 700; margin-bottom: 5px; letter-spacing: 1px; }
-    footer .footer-note { font-size: 0.75rem; color: #606575; margin-top: 8px; }
-    footer .footer-admin-link { display: block; margin-top: 12px; text-align: right; font-size: 0.65rem; color: #8c92a4; }
-    footer .footer-admin-link:hover { color: #c4c8d2; }
-
-    /* 스마트폰 화면 깨짐 방지 미디어쿼리 */
-    @media (max-width: 768px) {
-      .shop-header { padding: 15px 20px; flex-wrap: wrap; gap: 10px; }
-      .header-channel-tag { font-size: 0.7rem; padding: 5px 8px; }
-      .hero-content-body { padding: 25px 15px; }
-      .hero-title { font-size: 1.4rem; }
-      .hero-desc { font-size: 0.88rem; }
-      .button-group { flex-direction: column; gap: 10px; }
-      .catalog-btn { width: 100%; text-align: center; }
+    .direction-card .number {
+      color: var(--purple);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+    .direction-card h3 {
+      margin: 12px 0 8px;
+      font-family: "Manrope", sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: -.03em;
+    }
+    .direction-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+    .shop-flow {
+      margin-top: 34px;
+      padding: 24px;
+      border-radius: 24px;
+      background: #f1edfc;
+      text-align: left;
+    }
+    .shop-flow h3 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: 1.1rem;
+    }
+    .shop-flow ol {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .shop-flow li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #625e70;
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+    .shop-flow li span {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      flex: 0 0 25px;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--purple-dark);
+      font-size: .73rem;
+      font-weight: 800;
+    }
+    .retail-status {
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+    .wholesale-prompt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 30px;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      text-align: left;
+    }
+    .wholesale-prompt p { margin: 4px 0 0; color: var(--muted); font-size: .86rem; }
+    .wholesale-prompt a {
+      flex: 0 0 auto;
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .wholesale-prompt a:hover { background: var(--purple-dark); }
+    footer {
+      padding: 22px;
+      border-top: 1px solid var(--line);
+      color: #8a8597;
+      font-size: .78rem;
+      text-align: center;
+    }
+    footer strong { color: #5c566b; }
+    footer .legal-entity { display: block; margin-top: 7px; color: #8a8597; font-size: .7rem; letter-spacing: .04em; }
+    footer .footer-contact { margin-top: 7px; color: #716d80; font-size: .72rem; }
+    footer .footer-contact a { color: inherit; }
+    @media (max-width: 760px) {
+      .site-header, .hero, .retail-direction { width: min(100% - 32px, 560px); }
+      .site-header { padding: 18px 0; }
+      .wordmark { font-size: 1rem; }
+      .wholesale-link { min-height: 32px; padding: 0 9px; font-size: .67rem; }
+      .wholesale-link .arrow { width: 18px; height: 18px; font-size: .74rem; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        min-height: auto;
+        margin-top: 8px;
+        padding: 38px 26px 25px;
+        border-radius: 27px;
+      }
+      .hero-copy { text-align: center; }
+      .eyebrow { margin-bottom: 17px; font-size: .65rem; }
+      .hero-copy p { margin: 17px auto 0; font-size: .96rem; }
+      .arrival-note { justify-content: center; margin-top: 23px; font-size: .82rem; }
+      .retail-direction { padding: 25px 0 46px; }
+      .direction-grid, .shop-flow ol { grid-template-columns: 1fr; }
+      .direction-card { padding: 19px; }
+      .shop-flow { padding: 20px; }
+      .wholesale-prompt { align-items: flex-start; flex-direction: column; padding: 19px; }
+      .wholesale-prompt a { width: 100%; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-
-  <!-- 상단 네비게이션바 -->
-  <header class="shop-header">
-    <div class="header-brand-wrap">
-      <h1>TINTORO</h1>
-      <span class="subtitle">B2B Wholesale Distribution</span>
-    </div>
-    <div class="header-channel-tag">Dedicated K-Beauty B2B Order Channel</div>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="TINTORO SHOP home">TINTORO <span>SHOP</span></a>
+    <a class="wholesale-link" href="wholesale/">Wholesale Portal <span class="arrow" aria-hidden="true">↗</span></a>
   </header>
 
-  <!-- 메인 콘텐츠 카드 영역 -->
-  <main class="hero-container">
-    <div class="hero-card">
-      <!-- 물류와 글로벌 유통을 상징하는 시각적 배너 -->
-      <div class="hero-visual-banner">
-        <div class="banner-badge">Global B2B Supply Chain & Distribution</div>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><svg class="tint-mark" viewBox="0 0 20 20" fill="none" aria-hidden="true"><defs><linearGradient id="tintGrow" x1="3" y1="15" x2="16" y2="4" gradientUnits="userSpaceOnUse"><stop stop-color="#E8B4C4"/><stop offset="1" stop-color="#B875A0"/></linearGradient></defs><path d="M3 14.8c3.4-.8 5.8-2.4 7.7-5.1 1.7-2.4 3.3-4 6.3-5.1" stroke="url(#tintGrow)" stroke-width="2.4" stroke-linecap="round"/><path d="M5.2 17c3.4-.7 6.1-2 8.4-4.4" stroke="#E8B4C4" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="4.3" r="1.15" fill="#B875A0"/></svg> A thoughtful K-beauty edit</div>
+        <h1 id="hero-title">K-beauty finds,<br>with a <span class="accent">purposeful</span><br>point of view.</h1>
+        <p>TINTORO SHOP is being built to spotlight selected K-beauty promotions, starting with skincare. This page will introduce each offer and explain how to purchase when retail launches.</p>
+        <div class="arrival-note"><span class="dot" aria-hidden="true"></span>Retail promotions are in preparation.</div>
       </div>
+    </section>
 
-      <div class="hero-content-body">
-        
-        <!-- 회사 소개 (About Us) 인트로 섹션 -->
-        <div class="company-intro">
-          <h3>about tintoro</h3>
-          <p>TINTORO is a specialized B2B beauty wholesale distributor and supply chain partner based in California, dedicated to delivering reliable beauty brand portfolios and streamlined ordering solutions for retail partners nationwide.</p>
-        </div>
-
-        <h2 class="hero-title">K-Beauty Wholesale Catalog</h2>
-        <p class="hero-desc">Streamlining seamless re-ordering for existing retail partners, with plans to expand our curated portfolio into high-demand K-Beauty and innovative lifestyle items.</p>
-        
-        <!-- PC버전과 모바일버전 선택 입장 버튼 2개 -->
-        <div class="button-group">
-          <a href="kbeauty.html" class="catalog-btn">💻 Enter PC Catalog →</a>
-          <a href="m_kbeauty.html" class="catalog-btn mobile-version">📱 Enter Mobile Catalog →</a>
-        </div>
-
-        <div class="expansion-notice">
-          Optimized for existing partner orders &bull; <span>Expanding into specialty K-Beauty & lifestyle items</span>
-        </div>
+    <section class="retail-direction" aria-labelledby="direction-title">
+      <h2 id="direction-title">What to expect from TINTORO SHOP</h2>
+      <p>A focused introduction to the products and offers we choose to feature.</p>
+      <div class="direction-grid">
+        <article class="direction-card">
+          <span class="number">01 / THE EDIT</span>
+          <h3>Selected promotions</h3>
+          <p>Promotional K-beauty items will be introduced here with the details shoppers need before they buy.</p>
+        </article>
+        <article class="direction-card">
+          <span class="number">02 / FIRST CHAPTER</span>
+          <h3>Skincare first</h3>
+          <p>Our retail direction begins with skincare, then expands to more thoughtfully selected K-beauty finds.</p>
+        </article>
+        <article class="direction-card">
+          <span class="number">03 / CHECKOUT</span>
+          <h3>A direct path to each offer</h3>
+          <p>Product and promotion details will be presented here. Purchase options will be announced with each offer, without requiring shoppers to use a particular marketplace.</p>
+        </article>
       </div>
-    </div>
+      <div class="shop-flow">
+        <h3>How the retail experience will work</h3>
+        <ol>
+          <li><span>1</span>Discover a featured promotion on TINTORO SHOP.</li>
+          <li><span>2</span>Review the product and offer details.</li>
+          <li><span>3</span>Choose the purchase option provided with that offer.</li>
+        </ol>
+      </div>
+      <p class="retail-status">Product features, promotion details and purchase links will be added as the retail launch is prepared.</p>
+      <div class="wholesale-prompt">
+        <div>
+          <strong>Looking for wholesale ordering?</strong>
+          <p>Visit the dedicated TINTORO B2B wholesale portal.</p>
+        </div>
+        <a href="wholesale/">Visit Wholesale Portal →</a>
+      </div>
+    </section>
   </main>
 
-  <!-- 푸터 -->
   <footer>
-    <div class="footer-brand">TINTORO B2B WHOLESALE DISTRIBUTION</div>
-    <div>Wholesale Supply & Distribution Partner</div>
-    <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved. | Wholesale Inquiries: info@tintoroshop.com</div>
-    <a class="footer-admin-link" href="admin/index.html">Wholesale account admin</a>
+    <strong>TINTORO SHOP</strong> · Curated K-beauty promotions, in preparation
+    <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
+    <span class="legal-entity">Website managed by ASTERIKA LLC</span>
   </footer>
-
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.querySelectorAll('a[href="wholesale/"]').forEach((link) => {
+        link.href = 'wholesale/index.html';
+      });
+    }
+  </script>
 </body>
 </html>

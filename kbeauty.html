@@ -3,42 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-Beauty Wholesale Catalog - TINTORO Authorized Distributor</title>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="TINTORO K-Beauty wholesale catalog - Browse premium Korean beauty products, cosmetics, and skincare for authorized retailers with TELICA ESL integration.">
-  <meta name="keywords" content="K-Beauty wholesale, Korean cosmetics, beauty products distribution, TELICA reseller, CREBEE platform, wholesale beauty catalog">
-  <meta name="author" content="TINTORO">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="K-Beauty Wholesale Catalog - TINTORO" />
-  <meta property="og:description" content="Explore TINTORO's comprehensive K-Beauty wholesale catalog with TELICA electronic shelf label solutions." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tintotoshop.com/kbeauty.html" />
-  <meta property="og:image" content="https://tintotoshop.com/tintoro-logo.png" />
-  
+  <title>TINTORO - B2B Wholesale Distribution</title>
   <link rel="stylesheet" href="styles.css">
   
   <!-- 구글 웹폰트 로드 -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Poppins:wght@800&display=swap" rel="stylesheet">
   
   <script src="account-client.js"></script>
-  
-  <!-- Structured Data: K-Beauty Product Collection -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "K-Beauty Wholesale Catalog",
-    "description": "Premium Korean beauty and cosmetics wholesale collection for authorized retailers.",
-    "url": "https://tintotoshop.com/kbeauty.html",
-    "isPartOf": {
-      "@type": "Organization",
-      "name": "TINTORO"
-    }
-  }
-  </script>
+  <script src="product-images.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -47,8 +19,11 @@
     /* 상단바 고정(Sticky Header) 설정 */
     .shop-header { position: sticky; top: 0; z-index: 999; background: #111; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .header-brand-wrap { display: flex; flex-direction: column; }
+    .header-brand-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .shop-header h1 { font-size: 1.3rem; letter-spacing: 1.5px; color: #fff; text-decoration: none; }
     .shop-header .subtitle { font-size: 0.7rem; color: #aaa; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+    .shop-return-link { color: #ffb74d; border: 1px solid rgba(255,143,0,0.4); border-radius: 999px; padding: 5px 11px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .shop-return-link:hover { background: #ff8f00; color: #161920; }
     
     .auth-box { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
     .header-total-badge { background: #ff8f00; color: #fff; padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; display: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
@@ -97,6 +72,11 @@
     .catalog-table tr:hover { background: #fcfcfc; }
 
     .col-title { font-weight: 600; color: #111; width: 45%; }
+    .product-title-cell { min-width: 260px; }
+    .catalog-product-info { display: flex; align-items: center; gap: 12px; }
+    .catalog-product-image { width: 64px; height: 64px; flex: 0 0 64px; object-fit: cover; border: 1px solid #eaeaea; border-radius: 8px; background: #fafafa; }
+    .catalog-product-placeholder { width: 64px; height: 64px; flex: 0 0 64px; display: flex; align-items: center; justify-content: center; padding: 4px; box-sizing: border-box; border: 1px dashed #d8dce2; border-radius: 8px; background: #f8f9fb; color: #858b96; font-size: 0.62rem; font-weight: 600; text-align: center; line-height: 1.2; }
+    .catalog-product-name { line-height: 1.45; }
     .col-price { font-weight: 600; color: #555; width: 15%; white-space: nowrap; }
     .col-qty { width: 25%; white-space: nowrap; }
     .col-subtotal { font-weight: 700; color: #e53935; width: 15%; text-align: right; white-space: nowrap; }
@@ -107,8 +87,6 @@
     .qty-input { width: 50px; text-align: center; border: 1px solid #ddd; border-radius: 4px; padding: 4px; font-size: 0.95rem; font-weight: 600; outline: none; }
 
     .locked-price { color: #888; font-style: italic; font-size: 0.85rem; background: #f1f3f5; padding: 6px 12px; border-radius: 4px; display: inline-block; }
-    .back-home { display: inline-block; margin-bottom: 20px; color: #666; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
-    .back-home:hover { color: #111; }
 
     /* 모달 팝업 창 스타일 */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
@@ -125,6 +103,7 @@
     .btn-submit { background: #111; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
     .btn-submit:hover { background: #333; }
     .btn-submit:disabled { background: #ccc; color: #666; cursor: not-allowed; }
+    .order-prototype-status { margin: 0 0 12px; color: #795548; font-size: 0.8rem; line-height: 1.45; }
 
     /* 오더 서머리 테이블 */
     .summary-table { width: 100%; border-collapse: collapse; min-width: 500px; }
@@ -133,13 +112,16 @@
     .summary-table td { padding: 10px; font-size: 0.9rem; border-bottom: 1px solid #eee; vertical-align: middle; }
     
     .summary-total-box { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 700; padding: 10px 0; border-top: 2px solid #eaeaea; margin-bottom: 15px; }
-    .summary-shipping-note { margin: -8px 0 15px; color: #666; font-size: 0.8rem; text-align: right; }
     #summaryGrandTotal { color: #e53935; }
 
     /* 푸터 디자인 */
     footer { background: #111; color: #aaa; text-align: center; padding: 30px 20px; font-size: 0.85rem; margin-top: auto; border-top: 1px solid #222; line-height: 1.5; }
     footer .footer-brand { color: #fff; font-weight: 700; margin-bottom: 5px; letter-spacing: 1px; }
     footer .footer-note { font-size: 0.75rem; color: #777; margin-top: 8px; word-break: break-all; }
+    footer .legal-entity { font-size: 0.68rem; color: #777; margin-top: 5px; letter-spacing: 0.04em; }
+    footer .footer-contact { font-size: 0.75rem; color: #777; margin-top: 6px; }
+    footer .footer-contact a { color: inherit; }
+    .inquiry-eligibility { margin: 0 0 16px; padding: 12px 14px; border-left: 3px solid #ff8f00; border-radius: 0 6px 6px 0; background: #fff8e1; color: #795548; font-size: 0.84rem; line-height: 1.45; }
 
     /* 스마트폰(모바일) 반응형 완벽 대응: 상단 가로 스크롤 메뉴바 형태로 변환 */
     @media (max-width: 900px) {
@@ -193,7 +175,10 @@
   <!-- 상단 네비게이션 -->
   <header class="shop-header">
     <div class="header-brand-wrap">
-      <a href="index.html" style="text-decoration:none;"><h1>TINTORO</h1></a>
+      <div class="header-brand-row">
+        <a href="wholesale/" aria-label="TINTORO Wholesale home" style="text-decoration:none;"><h1>TINTORO</h1></a>
+        <a class="shop-return-link" href="index.html" aria-label="Back to TINTORO SHOP">TINTORO SHOP</a>
+      </div>
       <span class="subtitle">B2B Wholesale Distribution</span>
     </div>
     <div class="auth-box">
@@ -248,7 +233,6 @@
 
     <!-- 콘텐츠 영역 -->
     <main class="product-content">
-      <a href="index.html" class="back-home">← Back to Home</a>
       
       <!-- 도매 계정 전용 가격 고지 문구 배너 -->
       <div class="wholesale-notice">
@@ -281,18 +265,20 @@
   <footer>
     <div class="footer-brand">TINTORO B2B WHOLESALE DISTRIBUTION</div>
     <div>Wholesale Supply & Distribution Partner</div>
-    <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved. | Wholesale Inquiries: info@tintoroshop.com</div>
+    <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved.</div>
+    <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
+    <div class="legal-entity">Website managed by ASTERIKA LLC</div>
   </footer>
 
   <!-- 도매 로그인 모달 (인증 코드 입력) -->
   <div class="modal-overlay" id="loginModal">
     <div class="modal-card">
       <h3>Wholesale Account Login</h3>
-      <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Please enter your registered account number or authorization code to view wholesale pricing.</p>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Enter the wholesale access code provided by TINTORO to view wholesale pricing.</p>
       <form onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label>Account Number / Auth Code *</label>
-          <input type="password" id="authInput" required placeholder="Enter account number">
+          <label>Wholesale Access Code *</label>
+          <input type="password" id="authInput" required placeholder="Enter wholesale access code">
         </div>
         <div class="modal-btns">
           <button type="button" class="btn-cancel" onclick="closeLoginModal()">Cancel</button>
@@ -318,17 +304,16 @@
         <span>Grand Total Amount:</span>
         <span id="summaryGrandTotal">$0.00</span>
       </div>
-      <p class="summary-shipping-note">Shipping costs will be added to the order total.</p>
+      <p class="summary-shipping-note" style="margin:-8px 0 15px; color:#666; font-size:0.8rem; text-align:right;">Shipping costs will be added to the order total.</p>
 
-      <!-- Formspree 폼 연동 -->
       <form id="summaryOrderForm" action="https://formspree.io/f/mljjkdqq" method="POST" onsubmit="submitOrderFromSummary(event)" style="margin-top:20px;">
         <input type="hidden" name="form_type" value="[Wholesale Order]">
         <input type="hidden" id="hiddenOrderDetails" name="order_details">
         <input type="hidden" id="hiddenGrandTotal" name="grand_total">
 
         <div class="form-group">
-          <label>Account Number *</label>
-          <input type="text" id="sumAccountNumber" name="account_number" required oninput="validateOrderForm()" placeholder="Enter your account number">
+          <label>Wholesale Account Number *</label>
+          <input type="text" id="sumAccountNumber" name="account_number" required oninput="validateOrderForm()" placeholder="Enter your assigned account number" autocomplete="off">
           <p id="sumAccountNumberError" style="color:#b42318; font-size:0.8rem; margin:-8px 0 10px;" aria-live="polite"></p>
         </div>
         <div style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -359,9 +344,10 @@
           <strong>Order Review:</strong> Your order request will be forwarded to your assigned sales representative for review. Order processing will proceed after the review. Please contact your sales representative with questions about order progress or processing.
         </div>
         <p style="font-size:0.8rem; color:#666; margin:0 0 12px;">Complete all fields marked * and enter a matching account number to enable submission.</p>
+        <p class="order-prototype-status" id="orderSubmissionStatus" aria-live="polite"></p>
         <div class="modal-btns">
-          <button type="button" class="btn-cancel" onclick="closeOrderSummaryModal()">Continue Shopping</button>
-          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Submit Order Inquiry</button>
+          <button type="button" class="btn-cancel" onclick="browseCatalogFromModal('orderSummaryModal')">Add Items</button>
+          <button type="submit" id="submitOrderBtn" class="btn-submit" disabled>Submit Order</button>
         </div>
       </form>
     </div>
@@ -371,6 +357,7 @@
   <div class="modal-overlay" id="inquireModal">
     <div class="modal-card">
       <h3>Wholesale Account Inquiry</h3>
+      <p class="inquiry-eligibility">Wholesale accounts are available only to businesses with a valid Seller's Permit or Resale Certificate.</p>
       <form id="inquireForm" action="https://formspree.io/f/mljjkdqq" method="POST" onsubmit="submitInquiry(event)">
         <input type="hidden" name="form_type" value="[Account Inquiry]">
         <div class="form-group">
@@ -399,6 +386,7 @@
         </div>
         <div class="modal-btns">
           <button type="button" class="btn-cancel" onclick="closeInquireModal()">Cancel</button>
+          <button type="button" class="btn-cancel" onclick="browseCatalogFromModal('inquireModal')">Add Items</button>
           <button type="submit" id="inquireSubmitBtn" class="btn-submit" disabled>Inquiry</button>
         </div>
       </form>
@@ -436,9 +424,9 @@
     async function handleLogin(event) {
       event.preventDefault();
       const code = document.getElementById('authInput').value.trim();
-
       const submitButton = event.submitter || event.target.querySelector('button[type="submit"]');
       if (submitButton) submitButton.disabled = true;
+
       try {
         if (await window.verifyWholesaleAccount(code)) {
           isWholesaleLoggedIn = true;
@@ -450,7 +438,7 @@
           alert('Invalid account number or authorization code.');
         }
       } catch (error) {
-        alert(error.message || 'Account verification is temporarily unavailable.');
+        alert(error.message || 'Unable to verify the account. Please try again.');
       } finally {
         if (submitButton) submitButton.disabled = false;
       }
@@ -465,8 +453,8 @@
 
     function openOrderSummaryModal() {
       renderSummaryTable();
-      validateOrderForm();
       document.getElementById('orderSummaryModal').classList.add('active');
+      updateOrderSubmitButton();
     }
 
     function renderSummaryTable() {
@@ -523,6 +511,54 @@
       document.getElementById('hiddenOrderDetails').value = orderSummaryText || "No items selected";
       document.getElementById('hiddenGrandTotal').value = `$${grandTotal.toFixed(2)}`;
       calculateGrandTotal();
+      updateOrderSubmitButton();
+    }
+
+    let orderAccountVerified = false;
+    let orderAccountCheckVersion = 0;
+    let orderAccountCheckTimeout;
+
+    function updateOrderSubmitButton() {
+      const form = document.getElementById('summaryOrderForm');
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const allRequiredFieldsValid = requiredFields.every(field => field.value.trim() !== '' && field.validity.valid);
+      const hasItems = Object.values(orderQuantities).some(qty => Number(qty) > 0);
+      const canSubmit = orderAccountVerified && allRequiredFieldsValid && hasItems && isWholesaleLoggedIn;
+      document.getElementById('submitOrderBtn').disabled = !canSubmit;
+      return canSubmit;
+    }
+
+    function validateOrderForm() {
+      const accountInput = document.getElementById('sumAccountNumber');
+      const errorMessage = document.getElementById('sumAccountNumberError');
+      const accountNumber = accountInput.value.trim();
+      const checkVersion = ++orderAccountCheckVersion;
+
+      clearTimeout(orderAccountCheckTimeout);
+      orderAccountVerified = false;
+      updateOrderSubmitButton();
+
+      if (!accountNumber) {
+        errorMessage.textContent = '';
+        return;
+      }
+
+      errorMessage.textContent = 'Checking account number...';
+      errorMessage.style.color = '#666';
+      orderAccountCheckTimeout = setTimeout(async () => {
+        try {
+          const isVerified = await window.verifyWholesaleAccount(accountNumber);
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          orderAccountVerified = isVerified;
+          errorMessage.textContent = isVerified ? 'Account verified.' : 'Account number not recognized.';
+          errorMessage.style.color = isVerified ? '#22623b' : '#b42318';
+        } catch (error) {
+          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
+          errorMessage.textContent = error.message || 'Unable to verify account number. Please try again.';
+          errorMessage.style.color = '#b42318';
+        }
+        updateOrderSubmitButton();
+      }, 350);
     }
 
     function updateSummaryQty(title, delta) {
@@ -547,68 +583,24 @@
       document.getElementById('orderSummaryModal').classList.remove('active');
     }
 
-    let orderAccountVerified = false;
-    let orderAccountCheckVersion = 0;
-    let orderAccountCheckTimeout;
-
-    function updateOrderSubmitButton() {
-      const form = document.getElementById('summaryOrderForm');
-      const requiredFields = Array.from(form.querySelectorAll('[required]'));
-      const allRequiredFieldsValid = requiredFields.every(field => field.value.trim() !== '' && field.validity.valid);
-      const canSubmit = orderAccountVerified && allRequiredFieldsValid;
-      document.getElementById('submitOrderBtn').disabled = !canSubmit;
-      return canSubmit;
-    }
-
-    function validateOrderForm() {
-      const accountInput = document.getElementById('sumAccountNumber');
-      const errorMessage = document.getElementById('sumAccountNumberError');
-      const accountNumber = accountInput.value.trim();
-      const checkVersion = ++orderAccountCheckVersion;
-
-      clearTimeout(orderAccountCheckTimeout);
-      orderAccountVerified = false;
-      accountInput.setCustomValidity('');
-
-      if (!accountNumber) {
-        errorMessage.textContent = '';
-        return updateOrderSubmitButton();
-      }
-
-      errorMessage.textContent = 'Checking account number...';
-      errorMessage.style.color = '#666';
-      updateOrderSubmitButton();
-      orderAccountCheckTimeout = setTimeout(async () => {
-        try {
-          const isVerified = await window.verifyWholesaleAccount(accountNumber);
-          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
-          orderAccountVerified = isVerified;
-          errorMessage.textContent = isVerified ? 'Account verified.' : 'Account number not recognized.';
-          errorMessage.style.color = isVerified ? '#22623b' : '#b42318';
-        } catch (error) {
-          if (checkVersion !== orderAccountCheckVersion || accountInput.value.trim() !== accountNumber) return;
-          errorMessage.textContent = error.message || 'Unable to verify account number. Please try again.';
-          errorMessage.style.color = '#b42318';
-        }
-        updateOrderSubmitButton();
-      }, 350);
-      return false;
+    function browseCatalogFromModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      document.getElementById('currentBrandTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     async function submitOrderFromSummary(event) {
       event.preventDefault();
       const form = event.target;
-      if (!updateOrderSubmitButton()) {
-        form.reportValidity();
-        return;
-      }
+      const status = document.getElementById('orderSubmissionStatus');
+      if (!form.reportValidity() || !updateOrderSubmitButton()) return;
 
-      const submitBtn = document.getElementById('submitOrderBtn');
+      const submitButton = document.getElementById('submitOrderBtn');
       const accountInput = document.getElementById('sumAccountNumber');
       const errorMessage = document.getElementById('sumAccountNumberError');
       const submittedAccountNumber = accountInput.value.trim();
-      submitBtn.innerText = "Submitting Order...";
-      submitBtn.disabled = true;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting Order...';
+      status.textContent = 'Submitting your order for sales representative review...';
 
       try {
         const accountIsStillValid = await window.verifyWholesaleAccount(submittedAccountNumber);
@@ -632,19 +624,18 @@
           headers: { 'Accept': 'application/json' }
         });
 
-        if (response.ok) {
-          alert('Your wholesale order inquiry has been successfully submitted! We will contact you soon.');
-          orderQuantities = {};
-          closeOrderSummaryModal();
-          updateAuthUI();
-          form.reset();
-        } else {
-          alert('There was a problem submitting your order. Please try again or email us directly.');
-        }
+        if (!response.ok) throw new Error('There was a problem submitting your order. Please try again.');
+
+        status.textContent = 'Your order request was sent to your sales representative for review.';
+        alert('Your order request has been submitted for review. Please contact your sales representative with questions about order processing.');
+        orderQuantities = {};
+        closeOrderSummaryModal();
+        updateAuthUI();
+        form.reset();
       } catch (error) {
-        alert(error.message || 'Network error occurred. Please check your connection.');
+        status.textContent = error.message || 'Network error occurred. Please check your connection.';
       } finally {
-        submitBtn.innerText = "Submit Order Inquiry";
+        submitButton.textContent = 'Submit Order';
         validateOrderForm();
       }
     }
@@ -1249,6 +1240,10 @@
         let currentQty = orderQuantities[p.title] || 0;
         let unitPriceNum = parseFloat(p.price.replace('$', ''));
         let subtotal = (unitPriceNum * currentQty).toFixed(2);
+        const imageSrc = getProductImage(p.title);
+        const productImage = imageSrc
+          ? `<img class="catalog-product-image" src="${imageSrc}" alt="${p.title}" loading="lazy" width="64" height="64">`
+          : `<div class="catalog-product-placeholder" role="img" aria-label="Photo coming soon">Photo coming soon</div>`;
 
         let rowContent = "";
         if (isWholesaleLoggedIn) {
@@ -1271,7 +1266,12 @@
 
         return `
           <tr>
-            <td class="col-title">${p.title}</td>
+            <td class="col-title product-title-cell">
+              <div class="catalog-product-info">
+                ${productImage}
+                <span class="catalog-product-name">${p.title}</span>
+              </div>
+            </td>
             ${rowContent}
           </tr>
         `;
@@ -1279,6 +1279,13 @@
     }
 
     updateAuthUI();
+  </script>
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.querySelectorAll('a[href="wholesale/"]').forEach((link) => {
+        link.href = 'wholesale/index.html';
+      });
+    }
   </script>
 </body>
 </html>

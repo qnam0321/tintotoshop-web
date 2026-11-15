@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TINTORO - B2B Wholesale Distribution</title>
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- 구글 웹폰트(Poppins) 로드 -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0f1115; color: #e1e1e6; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* 상단 네비게이션바 고정 (Sticky Header) */
+    .shop-header { position: sticky; top: 0; z-index: 999; background: #161920; border-bottom: 1px solid #252a34; color: #fff; padding: 22px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .header-brand-wrap { display: flex; flex-direction: column; }
+    .header-brand-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .shop-header h1 { font-size: 1.4rem; letter-spacing: 2px; color: #fff; font-weight: 800; }
+    .shop-header .subtitle { font-size: 0.72rem; color: #9ba1a6; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; font-weight: 500; }
+    .shop-return-link { color: #ffb74d; border: 1px solid rgba(255,143,0,0.4); border-radius: 999px; padding: 5px 11px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .shop-return-link:hover { background: #ff8f00; color: #161920; }
+
+    /* 우측 상단 K-Beauty 전용 채널 안내 뱃지/문구 */
+    .header-channel-tag { font-size: 0.78rem; color: #ff8f00; font-weight: 600; background: rgba(255,143,0,0.1); border: 1px solid rgba(255,143,0,0.25); padding: 6px 12px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+
+    /* 메인 히어로 섹션 */
+    .hero-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 50px 20px; background: radial-gradient(circle at center, #1a1f2c 0%, #0f1115 100%); }
+
+    .hero-card { background: #161920; border: 1px solid #252a34; border-radius: 12px; width: 100%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); overflow: hidden; text-align: center; }
+
+    /* 물류와 글로벌 유통을 상징하는 시각적 배너 영역 */
+    .hero-visual-banner {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, rgba(22, 25, 32, 0.85) 0%, rgba(15, 17, 21, 0.95) 100%),
+                  url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      border-bottom: 1px solid #252a34;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .banner-badge { font-size: 0.75rem; color: #ff8f00; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; z-index: 1; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,143,0,0.3); }
+
+    .hero-content-body { padding: 45px; }
+
+    /* 회사 소개 (About Us) 인트로 박스 */
+    .company-intro {
+      background: #1c212c;
+      border-left: 3px solid #ff8f00;
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .company-intro h3 { font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .company-intro p { font-size: 0.88rem; color: #a0a6b8; line-height: 1.6; }
+
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      color: #ffffff;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .hero-desc { font-size: 0.92rem; color: #a0a6b8; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 400; }
+
+    /* 버튼 그룹 영역 (PC버전 & 모바일버전 2개 버튼) */
+    .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
+
+    .catalog-btn { background: #ff8f00; color: #fff; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 15px rgba(255, 143, 0, 0.25); }
+    .catalog-btn:hover { background: #f57c00; transform: translateY(-1px); }
+
+    .catalog-btn.mobile-version { background: #252a34; border: 1px solid #ff8f00; color: #ff8f00; }
+    .catalog-btn.mobile-version:hover { background: #ff8f00; color: #fff; }
+    .portal-share { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 24px auto 0; padding: 14px 16px; border: 1px solid #303541; border-radius: 10px; background: #12151b; text-align: left; }
+    .portal-share-copy { display: flex; flex-direction: column; gap: 4px; }
+    .portal-share-label { color: #9ba1a6; font-size: 0.72rem; }
+    .portal-share code { color: #ffd08a; font-size: 0.86rem; font-weight: 700; }
+    .portal-copy-btn { padding: 9px 13px; border: 1px solid rgba(255,143,0,0.45); border-radius: 7px; background: rgba(255,143,0,0.12); color: #ffb74d; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+    .portal-copy-btn:hover { background: #ff8f00; color: #161920; }
+    .portal-copy-status { width: 100%; color: #b7bdc8; font-size: 0.75rem; text-align: center; }
+
+    /* 확장성 암시 텍스트 */
+    .expansion-notice { margin-top: 25px; font-size: 0.82rem; color: #8c92a4; border-top: 1px solid #252a34; padding-top: 20px; }
+    .expansion-notice span { color: #d0d4e2; font-weight: 600; }
+
+    /* 푸터 */
+    footer { background: #161920; border-top: 1px solid #252a34; color: #8c92a4; text-align: center; padding: 30px 20px; font-size: 0.82rem; line-height: 1.5; }
+    footer .footer-brand { color: #fff; font-weight: 700; margin-bottom: 5px; letter-spacing: 1px; }
+    footer .footer-note { font-size: 0.75rem; color: #606575; margin-top: 8px; }
+    footer .legal-entity { font-size: 0.68rem; color: #747b89; margin-top: 5px; letter-spacing: 0.04em; }
+    footer .footer-contact { font-size: 0.75rem; color: #8c92a4; margin-top: 6px; }
+    footer .footer-contact a { color: inherit; }
+
+    /* 스마트폰 화면 깨짐 방지 미디어쿼리 */
+    @media (max-width: 768px) {
+      .shop-header { padding: 15px 20px; flex-wrap: wrap; gap: 10px; }
+      .header-channel-tag { font-size: 0.7rem; padding: 5px 8px; }
+      .hero-content-body { padding: 25px 15px; }
+      .hero-title { font-size: 1.4rem; }
+      .hero-desc { font-size: 0.88rem; }
+      .button-group { flex-direction: column; gap: 10px; }
+      .catalog-btn { width: 100%; text-align: center; }
+      .portal-share { justify-content: space-between; }
+      .portal-copy-btn { flex: 0 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 네비게이션바 -->
+  <header class="shop-header">
+    <div class="header-brand-wrap">
+      <div class="header-brand-row">
+        <h1>TINTORO</h1>
+        <a class="shop-return-link" href="../index.html" aria-label="Back to TINTORO SHOP">TINTORO SHOP</a>
+      </div>
+      <span class="subtitle">B2B Wholesale Distribution</span>
+    </div>
+    <div class="header-channel-tag">Dedicated K-Beauty B2B Order Channel</div>
+  </header>
+
+  <!-- 메인 콘텐츠 카드 영역 -->
+  <main class="hero-container">
+    <div class="hero-card">
+      <!-- 물류와 글로벌 유통을 상징하는 시각적 배너 -->
+      <div class="hero-visual-banner">
+        <div class="banner-badge">Nationwide B2B Wholesale Distribution</div>
+      </div>
+
+      <div class="hero-content-body">
+
+        <!-- 회사 소개 (About Us) 인트로 섹션 -->
+        <div class="company-intro">
+          <h3>about tintoro</h3>
+          <p>TINTORO is a specialized B2B beauty wholesale distributor and supply chain partner based in California, dedicated to delivering reliable beauty brand portfolios and streamlined ordering solutions for retail partners nationwide.</p>
+        </div>
+
+        <h2 class="hero-title">K-Beauty Wholesale Catalog</h2>
+        <p class="hero-desc">Streamlining seamless re-ordering for existing retail partners, with plans to expand our curated portfolio into high-demand K-Beauty and innovative lifestyle items.</p>
+
+        <!-- PC버전과 모바일버전 선택 입장 버튼 2개 -->
+        <div class="button-group">
+          <a href="../kbeauty.html" class="catalog-btn">Browse Wholesale Catalog →</a>
+          <a href="../m_kbeauty.html" class="catalog-btn mobile-version">Open Mobile Order Page →</a>
+        </div>
+
+        <div class="portal-share">
+          <div class="portal-share-copy">
+            <span class="portal-share-label">Shareable wholesale address</span>
+            <code id="wholesaleShareUrl">tintoroshop.com/wholesale</code>
+          </div>
+          <button type="button" class="portal-copy-btn" id="copyWholesaleUrl">Copy URL</button>
+          <span class="portal-copy-status" id="copyWholesaleStatus" aria-live="polite"></span>
+        </div>
+
+        <div class="expansion-notice">
+          Optimized for existing partner orders &bull; <span>Expanding into specialty K-Beauty & lifestyle items</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-brand">TINTORO B2B WHOLESALE DISTRIBUTION</div>
+    <div>Wholesale Supply & Distribution Partner</div>
+    <div class="footer-note">&copy; 2026 TINTORO. All Rights Reserved.</div>
+    <div class="footer-note"><a href="../admin/">Wholesale account admin</a></div>
+    <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
+    <div class="legal-entity">Website managed by ASTERIKA LLC</div>
+  </footer>
+
+  <script>
+    const copyWholesaleUrl = document.getElementById('copyWholesaleUrl');
+    const copyWholesaleStatus = document.getElementById('copyWholesaleStatus');
+    const wholesaleShareUrl = 'https://tintoroshop.com/wholesale';
+
+    copyWholesaleUrl.addEventListener('click', async () => {
+      if (!navigator.clipboard || !window.isSecureContext) {
+        copyWholesaleStatus.textContent = 'Copy unavailable here. Select the URL above to copy it.';
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(wholesaleShareUrl);
+        copyWholesaleStatus.textContent = 'Wholesale URL copied.';
+      } catch (error) {
+        console.error('Unable to copy the wholesale URL.', error);
+        copyWholesaleStatus.textContent = 'Copy failed. Select the URL above to copy it.';
+      }
+    });
+  </script>
+</body>
+</html>
