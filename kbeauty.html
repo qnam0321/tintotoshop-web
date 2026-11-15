@@ -125,6 +125,10 @@
     .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
     .form-group input, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; outline: none; }
     .form-group input:focus { border-color: #111; }
+    .access-code-field { display: flex; align-items: center; gap: 8px; }
+    .access-code-field input { flex: 1; min-width: 0; width: auto; }
+    .access-code-toggle { flex-shrink: 0; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; background: #f1f3f5; color: #333; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .access-code-toggle:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
     .modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .btn-cancel { background: #f1f3f5; color: #333; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
     .btn-submit { background: #111; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
@@ -304,8 +308,11 @@
       <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Enter the wholesale access code provided by TINTORO to view wholesale pricing.</p>
       <form onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label>Wholesale Access Code *</label>
-          <input type="password" id="authInput" required placeholder="Enter wholesale access code">
+          <label for="authInput">Wholesale Access Code *</label>
+          <div class="access-code-field">
+            <input type="password" id="authInput" required placeholder="Enter wholesale access code">
+            <button type="button" class="access-code-toggle" aria-controls="authInput" aria-label="Show access code" aria-pressed="false" onclick="toggleAccessCodeVisibility(this)">Show</button>
+          </div>
         </div>
         <div class="modal-btns">
           <button type="button" class="btn-cancel" onclick="closeLoginModal()">Cancel</button>
@@ -565,6 +572,15 @@
     }
     function closeLoginModal() {
       document.getElementById('loginModal').classList.remove('active');
+    }
+
+    function toggleAccessCodeVisibility(button) {
+      const input = document.getElementById('authInput');
+      const isVisible = input.type === 'text';
+      input.type = isVisible ? 'password' : 'text';
+      button.textContent = isVisible ? 'Show' : 'Hide';
+      button.setAttribute('aria-label', `${isVisible ? 'Show' : 'Hide'} access code`);
+      button.setAttribute('aria-pressed', String(!isVisible));
     }
 
     async function handleLogin(event) {
