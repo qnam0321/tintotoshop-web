@@ -74,6 +74,24 @@ const productImagesByBrand = {
     "TOCOBO Double cleansing Duo": "TOCOBO Double cleansing Duo.webp",
     "Collagen Brightening Eye Gel Cream": "Collagen Brightening Eye Gel Cream.webp",
     "Cica Calming Aqua Toner 200ml": "Cica Calming Aqua Toner 200ml.webp"
+  },
+  Biodance: {
+    "COLLAGEN PEPTIDE JELLY SERUM MIST 50ML": "COLLAGEN PEPTIDE JELLY SERUM MIST 50ML.png",
+    "Hydro Ceramide Cleansing Powder 1g*30ea": "Hydro Ceramide Cleansing Powder 1g 30ea.webp",
+    "[EN][4ea] Bio-Collagen Real Deep Mask 4ea": "[EN][4ea] Bio-Collagen Real Deep Mask 4ea.png",
+    "Hydro Cera-nol Real Deep Mask 1Box (34g*4ea)": "Hydro Cera-nol Real Deep Mask 1Box (34g 4ea).png",
+    "REJUVENATING CAVIAR PDRN REAL DEEP MASK 4EA": "REJUVENATING CAVIAR PDRN REAL DEEP MASK 4EA.png",
+    "Refreshing Sea Kelp Real Deep Mask 1Box (34g*4ea)": "Refreshing Sea Kelp Real Deep Mask 1Box (34g 4ea).png",
+    "PORE PERFECTING COLLAGEN PEPTIDE CREAM 50ml": "PORE PERFECTING COLLAGEN PEPTIDE CREAM 50ml.png",
+    "Collagen Gel Toner Pads 60Pads": "Collagen Gel Toner Pads 60Pads.png",
+    "Cera-nol Gel Toner Pads 60Pads": "Cera-nol Gel Toner Pads 60Pads.webp",
+    "REFRESHING SEA KELP SERUM 30ml": "REFRESHING SEA KELP SERUM 30ml.webp",
+    "RADIANT VITA NIACINAMIDE SERUM 30ml": "RADIANT VITA NIACINAMIDE SERUM 30ml.png",
+    "Sea Kelp Gel Toner Pad (60ea)": "Sea Kelp Gel Toner Pad (60ea).png",
+    "Vita Niacinamide Gel Toner Pad (60ea)": "Vita Niacinamide Gel Toner Pad (60ea).png",
+    "Skin Glow Vital Ampoule 50ml": "Skin Glow Vital Ampoule 50ml.png",
+    "Collagen Ampoule 50ml": "Collagen Ampoule 50ml.webp",
+    "[US] Serum Discovery Set": "[US] Serum Discovery Set.png"
   }
 };
 

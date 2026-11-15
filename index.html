@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f6f2ff">
-  <meta name="description" content="Discover TINTORO SHOP's direction: selected K-beauty promotions, starting with skincare.">
-  <title>TINTORO SHOP — Curated K-Beauty Promotions</title>
+  <meta name="description" content="TINTORO SHOP partners with visionary brands to spotlight high-impact K-beauty and novelty drops through focused promotions.">
+  <title>TINTORO SHOP — Brand Curation & K-Beauty Drops</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -107,7 +107,7 @@
     }
     .hero::before { width: 410px; height: 410px; right: 7%; top: -220px; }
     .hero::after { width: 260px; height: 260px; left: 36%; bottom: -190px; }
-    .hero-copy { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; text-align: center; }
+    .hero-copy { position: relative; z-index: 1; max-width: 940px; margin: 0 auto; text-align: center; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -127,18 +127,49 @@
     h1 {
       margin: 0;
       font-family: "Manrope", sans-serif;
-      font-size: clamp(3.2rem, 6.7vw, 6rem);
+      font-size: clamp(3rem, 5.8vw, 5.5rem);
       font-weight: 800;
       letter-spacing: -.075em;
       line-height: .99;
     }
     h1 .accent { color: var(--purple); }
     .hero-copy p {
-      max-width: 470px;
+      max-width: 760px;
       margin: 22px auto 0;
       color: #625e70;
       font-size: clamp(1rem, 1.5vw, 1.12rem);
       line-height: 1.75;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 26px;
+    }
+    .partner-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 50px;
+      padding: 0 21px;
+      border: 1px solid var(--purple-dark);
+      border-radius: 999px;
+      background: var(--purple-dark);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 9px 24px rgba(96,66,194,.2);
+      transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .partner-cta-btn:hover {
+      transform: translateY(-2px);
+      background: #5034aa;
+      box-shadow: 0 12px 28px rgba(96,66,194,.28);
+    }
+    .partner-cta-btn:focus-visible, .teaser-card-mockup a:focus-visible {
+      outline: 3px solid #d88a24;
+      outline-offset: 3px;
     }
     .arrival-note {
       display: flex;
@@ -202,6 +233,90 @@
       font-size: .88rem;
       line-height: 1.65;
     }
+    .teaser-card-mockup {
+      margin-top: 18px;
+      padding: 15px;
+      border: 1px solid rgba(118,88,214,.15);
+      border-radius: 17px;
+      background: linear-gradient(145deg, #f8f3ff, #fff8f1);
+    }
+    .teaser-card-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .teaser-card-mockup .badge {
+      display: inline-flex;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--purple-dark);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .teaser-card-label {
+      color: #8a8597;
+      font-size: .57rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+    }
+    .teaser-card-art {
+      position: relative;
+      display: grid;
+      min-height: 116px;
+      margin-top: 12px;
+      overflow: hidden;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(125deg, #e6dcff, #ffd8cd 58%, #ffe9a8);
+    }
+    .teaser-card-art::before, .teaser-card-art::after {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 50%;
+      content: "";
+    }
+    .teaser-card-art::before { top: -76px; right: -25px; }
+    .teaser-card-art::after { bottom: -96px; left: -28px; width: 170px; height: 170px; }
+    .teaser-wordmark {
+      position: relative;
+      z-index: 1;
+      color: #33244f;
+      font-family: "Manrope", sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      line-height: 1.1;
+      text-align: center;
+    }
+    .teaser-wordmark strong {
+      color: #fff;
+      font-size: 2rem;
+      letter-spacing: -.08em;
+      text-shadow: 0 2px 10px rgba(70,46,117,.2);
+    }
+    .teaser-card-mockup h4 {
+      margin: 13px 0 5px;
+      font-family: "Manrope", sans-serif;
+      font-size: .9rem;
+      letter-spacing: -.03em;
+    }
+    .teaser-card-mockup p { font-size: .78rem; }
+    .teaser-card-mockup a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      color: var(--purple-dark);
+      font-size: .75rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .teaser-card-mockup a:hover { text-decoration: underline; }
     .shop-flow {
       margin-top: 34px;
       padding: 24px;
@@ -283,6 +398,11 @@
     footer .legal-entity { display: block; margin-top: 7px; color: #8a8597; font-size: .7rem; letter-spacing: .04em; }
     footer .footer-contact { margin-top: 7px; color: #716d80; font-size: .72rem; }
     footer .footer-contact a { color: inherit; }
+    @media (min-width: 761px) and (max-width: 900px) {
+      .direction-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .direction-card:first-child { grid-row: span 2; }
+      .shop-flow ol { grid-template-columns: 1fr; }
+    }
     @media (max-width: 760px) {
       .site-header, .hero, .retail-direction { width: min(100% - 32px, 560px); }
       .site-header { padding: 18px 0; }
@@ -299,7 +419,10 @@
       }
       .hero-copy { text-align: center; }
       .eyebrow { margin-bottom: 17px; font-size: .65rem; }
+      h1 { font-size: clamp(2.35rem, 8.7vw, 3.5rem); }
       .hero-copy p { margin: 17px auto 0; font-size: .96rem; }
+      .hero-actions { margin-top: 22px; }
+      .partner-cta-btn { width: 100%; max-width: 360px; padding: 0 14px; font-size: .82rem; }
       .arrival-note { justify-content: center; margin-top: 23px; font-size: .82rem; }
       .retail-direction { padding: 25px 0 46px; }
       .direction-grid, .shop-flow ol { grid-template-columns: 1fr; }
@@ -322,26 +445,41 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="eyebrow"><svg class="tint-mark" viewBox="0 0 20 20" fill="none" aria-hidden="true"><defs><linearGradient id="tintGrow" x1="3" y1="15" x2="16" y2="4" gradientUnits="userSpaceOnUse"><stop stop-color="#E8B4C4"/><stop offset="1" stop-color="#B875A0"/></linearGradient></defs><path d="M3 14.8c3.4-.8 5.8-2.4 7.7-5.1 1.7-2.4 3.3-4 6.3-5.1" stroke="url(#tintGrow)" stroke-width="2.4" stroke-linecap="round"/><path d="M5.2 17c3.4-.7 6.1-2 8.4-4.4" stroke="#E8B4C4" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="4.3" r="1.15" fill="#B875A0"/></svg> A thoughtful K-beauty edit</div>
-        <h1 id="hero-title">K-beauty finds,<br>with a <span class="accent">purposeful</span><br>point of view.</h1>
-        <p>TINTORO SHOP is being built to spotlight selected K-beauty promotions, starting with skincare. This page will introduce each offer and explain how to purchase when retail launches.</p>
-        <div class="arrival-note"><span class="dot" aria-hidden="true"></span>Retail promotions are in preparation.</div>
+        <div class="eyebrow"><svg class="tint-mark" viewBox="0 0 20 20" fill="none" aria-hidden="true"><defs><linearGradient id="tintGrow" x1="3" y1="15" x2="16" y2="4" gradientUnits="userSpaceOnUse"><stop stop-color="#E8B4C4"/><stop offset="1" stop-color="#B875A0"/></linearGradient></defs><path d="M3 14.8c3.4-.8 5.8-2.4 7.7-5.1 1.7-2.4 3.3-4 6.3-5.1" stroke="url(#tintGrow)" stroke-width="2.4" stroke-linecap="round"/><path d="M5.2 17c3.4-.7 6.1-2 8.4-4.4" stroke="#E8B4C4" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="4.3" r="1.15" fill="#B875A0"/></svg> A thoughtful curation partner</div>
+        <h1 id="hero-title">Spotlighting<br><span class="accent">high-impact K-beauty</span><br>&amp; novelty drops.</h1>
+        <p>TINTORO SHOP is engineered to feature selected concept-driven promotions—starting with the playful innovation of items like <a href="https://zzibupop.com/" target="_blank" rel="noopener noreferrer">ZZIBUPOP</a>. We partner with visionary brands to focus traffic, storytelling, and targeted retail drops.</p>
+        <div class="hero-actions">
+          <a class="partner-cta-btn" href="mailto:info@tintoroshop.com?subject=Brand%20Partnership%20Inquiry">For Brand Partners: Pitch Your Product <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="arrival-note"><span class="dot" aria-hidden="true"></span>Building focused showcases for the next generation of K-beauty and novelty brands.</div>
       </div>
     </section>
 
     <section class="retail-direction" aria-labelledby="direction-title">
-      <h2 id="direction-title">What to expect from TINTORO SHOP</h2>
-      <p>A focused introduction to the products and offers we choose to feature.</p>
+      <h2 id="direction-title">A platform for focused product discovery</h2>
+      <p>We bring distinctive products forward through clear stories, concentrated promotions, and flexible retail pathways.</p>
       <div class="direction-grid">
         <article class="direction-card">
           <span class="number">01 / THE EDIT</span>
-          <h3>Selected promotions</h3>
-          <p>Promotional K-beauty items will be introduced here with the details shoppers need before they buy.</p>
+          <h3>Focused Drop Promotions</h3>
+          <p>Instead of getting lost in crowded marketplaces, each featured brand receives a dedicated, single-focus promotional window designed to maximize impact and storytelling.</p>
+          <div class="teaser-card-mockup">
+            <div class="teaser-card-heading">
+              <span class="badge">Next Featured Drop</span>
+              <span class="teaser-card-label">CONCEPT PREVIEW</span>
+            </div>
+            <div class="teaser-card-art" aria-hidden="true">
+              <span class="teaser-wordmark">A NEW KIND OF<br><strong>DROP</strong></span>
+            </div>
+            <h4>Concept-Driven K-Beauty &amp; Cosmetoys</h4>
+            <p>A focused showcase inspired by playful innovators like ZZIBUPOP.</p>
+            <a href="https://zzibupop.com/" target="_blank" rel="noopener noreferrer">Explore ZZIBUPOP <span aria-hidden="true">↗</span></a>
+          </div>
         </article>
         <article class="direction-card">
           <span class="number">02 / FIRST CHAPTER</span>
-          <h3>Skincare first</h3>
-          <p>Our retail direction begins with skincare, then expands to more thoughtfully selected K-beauty finds.</p>
+          <h3>Concept-Driven Beauty &amp; Novelty</h3>
+          <p>Our curation begins with unique category-defining products—bridging playful innovation like cosmetoys and trend-forward K-beauty drops into high-engagement digital showcases.</p>
         </article>
         <article class="direction-card">
           <span class="number">03 / CHECKOUT</span>
@@ -357,7 +495,7 @@
           <li><span>3</span>Choose the purchase option provided with that offer.</li>
         </ol>
       </div>
-      <p class="retail-status">Product features, promotion details and purchase links will be added as the retail launch is prepared.</p>
+      <p class="retail-status">Brand features, promotion details, and purchase pathways will be added as retail launches are prepared.</p>
       <div class="wholesale-prompt">
         <div>
           <strong>Looking for wholesale ordering?</strong>
@@ -369,7 +507,7 @@
   </main>
 
   <footer>
-    <strong>TINTORO SHOP</strong> · Curated K-beauty promotions, in preparation
+    <strong>TINTORO SHOP</strong> · Curated K-beauty &amp; novelty drops
     <div class="footer-contact">Contact: <a href="mailto:info@tintoroshop.com">info@tintoroshop.com</a></div>
     <span class="legal-entity">Website managed by ASTERIKA LLC</span>
   </footer>
